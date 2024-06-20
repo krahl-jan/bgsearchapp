@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/favourite.dart';
-import 'pages/search.dart';
+import 'pages/game_search.dart';
 import 'pages/settings.dart';
 
 class Home extends StatefulWidget {
@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int index = 0;
-  final screens = [Search(), Favourite(), Settings()];
+  final screens = [GameSearch(), Favourite(), Settings()];
 
   @override
   Widget build(BuildContext context) {
