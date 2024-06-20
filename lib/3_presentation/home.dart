@@ -1,4 +1,6 @@
+import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/favourite.dart';
 import 'pages/search.dart';
@@ -16,17 +18,16 @@ class _HomeState extends State<Home> {
   final screens = [Search(), Favourite(), Settings()];
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('BottomNavigationBar Demo'),
-        ),
+  Widget build(BuildContext context) {
+    int index = context.watch<StateManager>().pageIndex;
+
+    return SafeArea(
+      child: Scaffold(
         body: screens[index],
         bottomNavigationBar: NavigationBar(
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           selectedIndex: index,
-          onDestinationSelected: (index) => setState(() {
-            this.index = index;
-          }), //TODO: replace with provider
+          onDestinationSelected: (index) => context.read<StateManager>().setPageIndex(index),
           destinations: const [
             NavigationDestination(
                 icon: Icon(Icons.search_outlined),
@@ -42,5 +43,7 @@ class _HomeState extends State<Home> {
                 label: 'Settings'),
           ],
         ),
-      );
+      ),
+    );
+  }
 }
