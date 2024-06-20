@@ -1,16 +1,17 @@
+import 'package:bgsearchapp/2_application/operators.dart';
 import 'package:bgsearchapp/2_application/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class OptionWidgetName extends StatefulWidget {
-  const OptionWidgetName({super.key});
+class OptionWidgetAge extends StatefulWidget {
+  const OptionWidgetAge({super.key});
 
   @override
-  State<StatefulWidget> createState() => _OptionWidgetNameState();
+  State<StatefulWidget> createState() => _OptionWidgetAgeState();
 }
 
-class _OptionWidgetNameState extends State<OptionWidgetName> {
-  Option option = OptionName("");
+class _OptionWidgetAgeState extends State<OptionWidgetAge> {
+  Option option = OptionAge(null, null);
   final textController = TextEditingController();
 
   @override
@@ -26,9 +27,14 @@ class _OptionWidgetNameState extends State<OptionWidgetName> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text("Name: "),
+              const Text("Age: "),
+              DropdownButton<String>(items: [
+                for (final value in Operator.values)
+                  DropdownMenuItem(value: value.string, child: Text(value.string))
+              ], onChanged: (String? value) {}
+              ),
               SizedBox(
-                width: 500,
+                width: 100,
                 height: 50,
                 child: TextField(
                   controller: textController,
