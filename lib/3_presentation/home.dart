@@ -22,6 +22,7 @@ class _HomeState extends State<Home> {
         ),
         body: screens[index],
         bottomNavigationBar: NavigationBar(
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           selectedIndex: index,
           onDestinationSelected: (index) => setState(() {
             this.index = index;
@@ -30,15 +31,15 @@ class _HomeState extends State<Home> {
             NavigationDestination(
                 icon: Icon(Icons.search_outlined),
                 selectedIcon: Icon(Icons.search),
-                label: 'search'),
+                label: 'Game Search'),
             NavigationDestination(
                 icon: Icon(Icons.star_border_outlined),
                 selectedIcon: Icon(Icons.star),
-                label: 'favourites'),
+                label: 'Favourites'),
             NavigationDestination(
                 icon: Icon(Icons.settings_outlined),
                 selectedIcon: Icon(Icons.settings),
-                label: 'search'),
+                label: 'Settings'),
           ],
         ),
       );
