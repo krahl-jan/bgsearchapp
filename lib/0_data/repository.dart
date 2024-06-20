@@ -22,4 +22,16 @@ class HttpSearchRepository {
 
     return result;
   }
+
+  Future<GameDetailedInfo> getDetailedInfo(int id) async {
+    http.Response response = await http.get(Uri.parse(baseUri + "games/" + id.toString() ));
+
+    String name = RegExp(r'<h1 class="text-center">([^<]*)').firstMatch(response.body)?.group(1) ?? "error";
+    String imageUri = RegExp(r'img src="/image-mirror/([^"]*)').firstMatch(response.body)?.group(1) ?? "error";
+    String description = RegExp(r'Description.*?<p>([^<]*)').firstMatch(response.body)?.group(1) ?? "error";
+
+
+    return GameDetailedInfo(id, name, imageUri, description);
+  }
+
 }

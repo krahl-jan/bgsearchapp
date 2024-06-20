@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+import '../options/name.dart';
 
 class GameSearch extends StatefulWidget {
   const GameSearch({super.key});
@@ -8,11 +11,14 @@ class GameSearch extends StatefulWidget {
 }
 
 class _GameSearchState extends State<GameSearch> {
+  List<Widget> searchOptions = [const OptionWidgetName(), const IconButton(onPressed: null, icon:  Icon(Icons.add))];
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('implement me'),
+    return Scaffold(
+      body: ListView(
+        shrinkWrap: true,
+        children: searchOptions,
       ),
     );
   }
