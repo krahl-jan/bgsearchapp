@@ -1,43 +1,121 @@
-import 'package:bgsearchapp/2_application/operators.dart';
+// option types:
+
+// field contains string
+// filed comparison with int/float
+// boolean
+// select string(s) from choice
 
 abstract class Option {
-  String getQuery();
+  int getType();
+  String getName();
+  int getOrder();
 }
 
-class OptionName implements Option {
-  String? name;
+class OptionString implements Option {
+  String value = "";
+  String name;
+  int order;
 
-  OptionName(
-    this.name,
-  );
+  OptionString({required this.name, required this.order});
+
+  setValue(String value) {
+    this.value = value;
+  }
 
   @override
-  String getQuery() {
-    return 'n:"$name"';
+  int getType() {
+    return 0;
+  }
+
+  @override
+  String getName() {
+    return name;
+  }
+
+  @override
+  int getOrder() {
+    return order;
   }
 }
 
-class OptionAge implements Option {
-  int? age;
-  Operator? operator;
+class OptionInt implements Option {
+  int value;
+  String name;
+  int order;
 
-  OptionAge(
-    this.age,
-    this.operator,
-  );
+  OptionInt({required this.name, required this.order, required this.value});
 
   @override
-  String getQuery() {
-    return "age$operator$age";
+  int getType() {
+    return 1;
+  }
+
+  @override
+  String getName() {
+    return name;
+  }
+
+  @override
+  int getOrder() {
+    return order;
   }
 }
 
-class OptionCategories implements Option {
-  List<String> categories = [];
-
-
+abstract class OptionFloat implements Option {
   @override
-  String getQuery() {
-    String res = categories.map((c) => 'c:"$c"').join(" or ");
-    return "($res)";
-  }}
+  int getType() {
+    return 2;
+  }
+}
+
+abstract class OptionBoolean implements Option {
+  @override
+  int getType() {
+    return 3;
+  }
+}
+
+abstract class OptionStrings implements Option {
+  @override
+  int getType() {
+    return 4;
+  }
+}
+
+// class OptionName extends OptionString {
+//   String? name;
+//
+//   OptionName(
+//     this.name,
+//   );
+//
+//   @override
+//   String getName() {
+//     return "Name";
+//   }
+// }
+//
+// class OptionAge extends OptionInt {
+//   int? age;
+//   Operator? operator;
+//
+//   OptionAge(
+//     this.age,
+//     this.operator,
+//   );
+//
+//   @override
+//   String getName() {
+//     return "Age";
+//   }
+// }
+//
+// class OptionCategories implements Option {
+//   List<String> categories = [];
+//
+//
+//   @override
+//   String getName() {
+//     String res = categories.map((c) => 'c:"$c"').join(" or ");
+//     return "($res)";
+//   }}

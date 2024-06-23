@@ -1,7 +1,8 @@
-import 'package:bgsearchapp/3_presentation/options/age.dart';
 import 'package:flutter/material.dart';
 
-import '../options/name.dart';
+import '../../2_application/options.dart';
+import '../options/add_option.dart';
+import '../options/option_widget.dart';
 
 class GameSearch extends StatefulWidget {
   const GameSearch({super.key});
@@ -11,16 +12,18 @@ class GameSearch extends StatefulWidget {
 }
 
 class _GameSearchState extends State<GameSearch> {
-  List<Widget> searchOptions = [const OptionWidgetAge(),const OptionWidgetName(), const IconButton(onPressed: null, icon:  Icon(Icons.add))];
+  List<Option> searchOptions = [OptionString(name: "Nameyname", order: 1), OptionInt(name: "Age", order: 2, value: 12)];
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: null, child: const Icon(Icons.search),),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           shrinkWrap: true,
-          children: searchOptions,
+          children: <Widget>[for (var o in searchOptions) OptionWidgetImp(option: o)] + [const OptionWidgetAddOption()],
         ),
       ),
     );
