@@ -27,7 +27,7 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.option.getName()),
+                Text(widget.option.name),
                 Expanded(
                   child: TextFormField(
                     onChanged: (name) {

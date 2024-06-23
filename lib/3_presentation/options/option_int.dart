@@ -30,7 +30,7 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.option.getName()),
+                Text(widget.option.name),
                 DropdownButton<String>(items: [
                   for (final value in Operator.values)
                     DropdownMenuItem(value: value.string, child: Text(value.string))

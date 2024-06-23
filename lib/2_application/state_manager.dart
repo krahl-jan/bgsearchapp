@@ -16,7 +16,7 @@ class StateManager extends ChangeNotifier {
   }
 
   List<Option> searchOptions = [
-    OptionString(name: "Name", order: 1),
-    OptionInt(name: "Age", order: 2, value: 18, operator: Operator.lessEqual)
+    OptionString(name: "Name"),
+    OptionInt(name: "Age", value: 18, operator: Operator.lessEqual)
   ];
 }

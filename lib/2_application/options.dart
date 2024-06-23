@@ -8,81 +8,44 @@
 import 'operators.dart';
 
 abstract class Option {
-  int getType();
   String getName();
-  int getOrder();
 }
 
 class OptionString implements Option {
   String value = "";
   String name;
-  int order;
 
-  OptionString({required this.name, required this.order});
-
-  setValue(String value) {
-    this.value = value;
-  }
-
-  @override
-  int getType() {
-    return 0;
-  }
+  OptionString({required this.name});
 
   @override
   String getName() {
     return name;
-  }
-
-  @override
-  int getOrder() {
-    return order;
   }
 }
 
 class OptionInt implements Option {
   int value;
   String name;
-  int order;
   Operator operator;
 
-  OptionInt({required this.name, required this.order, required this.value, required this.operator});
-
-  @override
-  int getType() {
-    return 1;
-  }
+  OptionInt({required this.name, required this.value, required this.operator});
 
   @override
   String getName() {
     return name;
   }
-
-  @override
-  int getOrder() {
-    return order;
-  }
 }
 
 abstract class OptionFloat implements Option {
-  @override
-  int getType() {
-    return 2;
-  }
+
 }
 
 abstract class OptionBoolean implements Option {
-  @override
-  int getType() {
-    return 3;
-  }
+
 }
 
 abstract class OptionStrings implements Option {
-  @override
-  int getType() {
-    return 4;
-  }
+
 }
 
 // class OptionName extends OptionString {
