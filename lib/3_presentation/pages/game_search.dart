@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../2_application/options.dart';
-import '../options/add_option.dart';
-import '../options/option_widget.dart';
+import '../options/option_add.dart';
+import '../options/option.dart';
 
 class GameSearch extends StatefulWidget {
   const GameSearch({super.key});
