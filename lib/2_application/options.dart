@@ -5,6 +5,8 @@
 // boolean
 // select string(s) from choice
 
+import 'operators.dart';
+
 abstract class Option {
   int getType();
   String getName();
@@ -42,8 +44,9 @@ class OptionInt implements Option {
   int value;
   String name;
   int order;
+  Operator operator;
 
-  OptionInt({required this.name, required this.order, required this.value});
+  OptionInt({required this.name, required this.order, required this.value, required this.operator});
 
   @override
   int getType() {

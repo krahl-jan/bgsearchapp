@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class OptionWidgetInt extends StatefulWidget {
   const OptionWidgetInt({super.key, required this.option});
 
-  final Option option;
+  final OptionInt option;
 
   @override
   State<StatefulWidget> createState() => _OptionWidgetIntState();

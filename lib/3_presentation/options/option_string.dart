@@ -4,15 +4,13 @@ import 'package:flutter/material.dart';
 class OptionWidgetString extends StatefulWidget {
   const OptionWidgetString({super.key, required this.option});
 
-  final Option option;
+  final OptionString option;
 
   @override
   State<StatefulWidget> createState() => _OptionWidgetStringState();
 }
 
 class _OptionWidgetStringState extends State<OptionWidgetString> {
-  final textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -31,8 +29,10 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
               children: [
                 Text(widget.option.getName()),
                 Expanded(
-                  child: TextField(
-                    controller: textController,
+                  child: TextFormField(
+                    onChanged: (name) {
+                      widget.option.value = name;
+                    },
                   ),
                 ),
                 const IconButton(onPressed: null, icon: Icon(Icons.delete)),

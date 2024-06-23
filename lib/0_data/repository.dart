@@ -1,12 +1,18 @@
 import 'dart:async';
 import 'package:bgsearchapp/1_domain/game_entity.dart';
+import 'package:bgsearchapp/2_application/options.dart';
 
 import 'package:http/http.dart' as http;
 
 String baseUri = "https://bgs.nafarlee.dev/";
 
 class HttpSearchRepository {
-  Future<List<GameShortInfo>> getShortGameInfos(String query) async {
+  Future<List<GameShortInfo>> getShortGameInfos(List<Option> options) async {
+
+    String query = [for (var option in options) optionToQueryString(option)].join(" ");
+
+    print("query: ${query}");
+
     http.Response response = await http.get(Uri.parse(baseUri + "search?query=" + query + "&limit=10&order=bayes_rating&direction=DESC"));
 
     Iterable<RegExpMatch> matches = RegExp(r'img src="/image-mirror/([^"]*).*?/games/(\d+)">([^<]*)').allMatches(response.body);
@@ -23,15 +29,14 @@ class HttpSearchRepository {
     return result;
   }
 
-  Future<GameDetailedInfo> getDetailedInfo(int id) async {
-    http.Response response = await http.get(Uri.parse(baseUri + "games/" + id.toString() ));
-
-    String name = RegExp(r'<h1 class="text-center">([^<]*)').firstMatch(response.body)?.group(1) ?? "error";
-    String imageUri = RegExp(r'img src="/image-mirror/([^"]*)').firstMatch(response.body)?.group(1) ?? "error";
-    String description = RegExp(r'Description.*?<p>([^<]*)').firstMatch(response.body)?.group(1) ?? "error";
-
-
-    return GameDetailedInfo(id, name, imageUri, description);
+  String optionToQueryString(Option option) {
+    if (option.getName() == "Age") {
+      return "age${(option as OptionInt).operator.toString()}${(option as OptionInt).value.toString()}";
+    }
+    if (option.getName() == "Name") {
+      return 'name:"${(option as OptionString).value.toString()}"';
+    }
+    return "";
   }
 
 }

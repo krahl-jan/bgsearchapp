@@ -19,11 +19,11 @@ class _OptionWidgetImpState extends State<OptionWidgetImp> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.option.getType() == 0) {
-      return OptionWidgetString(option: widget.option);
+    if (widget.option is OptionString) {
+      return OptionWidgetString(option: (widget.option as OptionString));
     }
-    if (widget.option.getType() == 1) {
-      return OptionWidgetInt(option: widget.option);
+    if (widget.option is OptionInt) {
+      return OptionWidgetInt(option: (widget.option as OptionInt));
     }
     else {
       return Container();
