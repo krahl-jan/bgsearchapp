@@ -31,16 +31,28 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.option.name),
-                DropdownButton<String>(items: [
-                  for (final value in Operator.values)
-                    DropdownMenuItem(value: value.string, child: Text(value.string))
-                ], onChanged: (String? value) {}
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: DropdownButton<String>(items: [
+                    for (final value in Operator.values)
+                      DropdownMenuItem(value: value.string, child: Text(value.string))
+                  ],
+                      onChanged: (String? value) {
+                    if (value != null) {
+                        setState(() {
+                          widget.option.operator = operatorFromString(value);
+                        });
+                    }
+                  }, value: widget.option.operator.toString(),
+                  ),
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: TextField(
-                      controller: textController,
+                    child: TextFormField(
+                      onChanged: (value) {
+                        widget.option.value = int.parse(value);
+                      },
                     ),
                   ),
                 ),

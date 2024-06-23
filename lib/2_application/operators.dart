@@ -19,3 +19,12 @@ enum Operator {
 
 
 }
+
+Operator operatorFromString(String s) {
+  for (var v in Operator.values) {
+    if (v.toString() == s) {
+      return v;
+    }
+  }
+  return Operator.equal;
+}
