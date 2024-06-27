@@ -6,9 +6,14 @@ import '../0_data/repository.dart';
 import 'options/options.dart';
 
 class StateManager extends ChangeNotifier {
+  // todo implement repository pattern with interface
   int pageIndex = 0;
 
-  // todo implement repository pattern with interface
+  List<Option> searchOptions = [
+    OptionString(optionField: OptionField.nameContains),
+    OptionInt(optionField: OptionField.age, value: 18, operator: Operator.lessEqual)
+  ];
+
   HttpSearchRepository repository = HttpSearchRepository();
 
   setPageIndex(int i) {
@@ -16,8 +21,13 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Option> searchOptions = [
-    OptionString(name: "Name"),
-    OptionInt(name: "Age", value: 18, operator: Operator.lessEqual)
-  ];
+  addSearchOption(Option option) {
+    searchOptions.add(option);
+    notifyListeners();
+  }
+
+  removeSearchOption(Option option) {
+    searchOptions.remove(option);
+    notifyListeners();
+  }
 }

@@ -42,10 +42,10 @@ class OptionString implements Option {
 
 class OptionInt implements Option {
   int value;
-  String name;
+  OptionField optionField;
   Operator operator;
 
-  OptionInt({required this.name, required this.value, required this.operator});
+  OptionInt({required this.optionField, required this.value, required this.operator});
 
   @override
   OptionField getOptionField() {
