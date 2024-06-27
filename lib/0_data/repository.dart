@@ -11,10 +11,9 @@ class HttpSearchRepository {
   Future<List<GameShortInfo>> getShortGameInfos(List<Option> options) async {
 
     String query = [for (var option in options) optionToQueryString(option)].join(" ");
-
     print("query: ${query}");
 
-    http.Response response = await http.get(Uri.parse(baseUri + "search?query=" + query + "&limit=10&order=bayes_rating&direction=DESC"));
+    http.Response response = await http.get(Uri.parse(baseUri + "search?query=" + query + "&limit=30&order=bayes_rating&direction=DESC"));
 
     Iterable<RegExpMatch> matches = RegExp(r'img src="/image-mirror/([^"]*).*?/games/(\d+)">([^<]*)').allMatches(response.body);
 
@@ -31,13 +30,18 @@ class HttpSearchRepository {
   }
 
   String optionToQueryString(Option option) {
-    if (option.getOptionField() == OptionField.age.displayString) {
-      return "age${(option as OptionInt).operator.toString()}${(option as OptionInt).value.toString()}";
+    if (!option.hasValue()) {
+      return "";
     }
-    if (option.getOptionField() == OptionField.nameContains.displayString) {
-      return 'name:"${(option as OptionString).value.toString()}"';
-    }
-    return "";
+    return switch (option.getOptionField()) {
+      OptionField.age => 'name:"${(option as OptionString).value.toString()}"',
+      OptionField.nameContains => "age${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.maxPlaytime => "max-playtime${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.category => "",
+      OptionField.bestPlayers => "best-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.maxPlayers => "max-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.bestOrGoodPlayerCount => "quorum-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+    };
   }
 
 }

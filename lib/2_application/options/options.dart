@@ -10,22 +10,32 @@ import 'library/option_fields.dart';
 
 abstract class Option {
   OptionField getOptionField();
+  bool hasValue();
 }
 
 Option optionFactory(OptionField optionField) {
-  if (optionField == OptionField.nameContains) {
-    return OptionString(optionField: optionField);
+  switch (optionField) {
+    case OptionField.nameContains: {
+      return OptionString(optionField: optionField);
+    }
+    case OptionField.age:
+      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+    case OptionField.maxPlaytime:
+      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+    case OptionField.category:
+      // TODO: Handle this case.
+    case OptionField.bestPlayers:
+      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+    case OptionField.maxPlayers:
+      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+    case OptionField.bestOrGoodPlayerCount:
+      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
   }
-  if (optionField == OptionField.age) {
-    return OptionInt(optionField: optionField, value: 12, operator: Operator.lessEqual);
-  }
-  return OptionString(optionField: optionField);
+  
 }
 
-
-
 class OptionString implements Option {
-  String value = "";
+  String? value;
   OptionField optionField;
 
   OptionString({required this.optionField});
@@ -38,23 +48,29 @@ class OptionString implements Option {
   OptionString factory(OptionField optionField) {
     return OptionString(optionField: optionField);
   }
+
+  @override
+  bool hasValue() {
+    return value != null;
+  }
 }
 
 class OptionInt implements Option {
-  int value;
+  int? value;
   OptionField optionField;
   Operator operator;
 
-  OptionInt({required this.optionField, required this.value, required this.operator});
+  OptionInt({required this.optionField, required this.operator});
 
   @override
   OptionField getOptionField() {
     return optionField;
   }
-}
 
-abstract class OptionFloat implements Option {
-
+  @override
+  bool hasValue() {
+    return value != null;
+  }
 }
 
 abstract class OptionBoolean implements Option {

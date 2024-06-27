@@ -3,6 +3,7 @@ import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
 import 'package:flutter/material.dart';
 
 import '../0_data/repository.dart';
+import '../1_domain/game_entity.dart';
 import 'options/options.dart';
 
 class StateManager extends ChangeNotifier {
@@ -11,13 +12,22 @@ class StateManager extends ChangeNotifier {
 
   List<Option> searchOptions = [
     OptionString(optionField: OptionField.nameContains),
-    OptionInt(optionField: OptionField.age, value: 18, operator: Operator.lessEqual)
+    OptionInt(optionField: OptionField.age, operator: Operator.lessEqual)
   ];
+
+  List<GameShortInfo> searchResults = [];
 
   HttpSearchRepository repository = HttpSearchRepository();
 
   setPageIndex(int i) {
     pageIndex = i;
+    notifyListeners();
+  }
+
+  retrieveSearchResults() async {
+    searchResults.clear();
+    var infos = await repository.getShortGameInfos(searchOptions);
+    searchResults.addAll(infos);
     notifyListeners();
   }
 

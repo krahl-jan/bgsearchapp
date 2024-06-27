@@ -38,8 +38,13 @@ dependencies:
   http: ^1.2.1
   html_parser_plus: ^0.1.4
   provider: ^6.1.2
+  url_launcher: ^6.3.0
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
 
 dev_dependencies:
+  isar_generator: ^3.1.0+1
+  build_runner: any
   flutter_test:
     sdk: flutter
 

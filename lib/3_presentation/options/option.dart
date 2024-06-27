@@ -2,8 +2,8 @@ import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'option_int.dart';
-import 'option_string.dart';
+import 'option_widget_int.dart';
+import 'option_widget_string.dart';
 
 class OptionWidgetImp extends StatefulWidget {
   const OptionWidgetImp({super.key, required this.option});
