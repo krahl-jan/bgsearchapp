@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../pages/option_selection.dart';
+
 class OptionWidgetAddOption extends StatefulWidget {
   const OptionWidgetAddOption({super.key});
-
-  static const int priority = 1000;
 
   @override
   State<StatefulWidget> createState() => _OptionWidgetAddOptionState();
@@ -12,8 +12,21 @@ class OptionWidgetAddOption extends StatefulWidget {
 
 class _OptionWidgetAddOptionState extends State<OptionWidgetAddOption> {
 
-  @override
+  _showFullModal(context) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: false, // should dialog be dismissed when tapped outside
+        barrierLabel: "Add Option", // label for barrier
+        transitionDuration: Duration(milliseconds: 500), // how long it takes to popup dialog after button click
+    pageBuilder: (_, __, ___) {
+          return const OptionSelection();
+    },);
+  }
+
+    @override
   Widget build(BuildContext context) {
-    return const IconButton(onPressed: null, icon:  Icon(Icons.add));
+    return IconButton(onPressed: () { _showFullModal(context);}, icon:  Icon(Icons.add));
   }
 }
+
+

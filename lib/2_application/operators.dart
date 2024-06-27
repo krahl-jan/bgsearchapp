@@ -17,7 +17,6 @@ enum Operator {
 
   final String string;
 
-
 }
 
 Operator operatorFromString(String s) {

@@ -2,7 +2,7 @@ import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../2_application/options.dart';
+import '../../2_application/options/options.dart';
 import '../options/option_add.dart';
 import '../options/option.dart';
 

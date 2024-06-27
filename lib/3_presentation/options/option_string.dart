@@ -1,5 +1,7 @@
-import 'package:bgsearchapp/2_application/options.dart';
+import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
+
+import 'option_delete.dart';
 
 class OptionWidgetString extends StatefulWidget {
   const OptionWidgetString({super.key, required this.option});
@@ -27,7 +29,7 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.option.name),
+                Text(widget.option.optionField.displayString),
                 Expanded(
                   child: TextFormField(
                     onChanged: (name) {
@@ -35,7 +37,7 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
                     },
                   ),
                 ),
-                const IconButton(onPressed: null, icon: Icon(Icons.delete)),
+                OptionWidgetDeleteOption(option: widget.option),
               ],
             ),
           ),

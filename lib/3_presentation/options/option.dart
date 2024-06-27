@@ -1,4 +1,4 @@
-import 'package:bgsearchapp/2_application/options.dart';
+import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

@@ -1,6 +1,8 @@
 import 'package:bgsearchapp/2_application/operators.dart';
-import 'package:bgsearchapp/2_application/options.dart';
+import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
+
+import 'option_delete.dart';
 
 class OptionWidgetInt extends StatefulWidget {
   const OptionWidgetInt({super.key, required this.option});
@@ -30,7 +32,7 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.option.name),
+                Text(widget.option.optionField.displayString),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: DropdownButton<String>(items: [
@@ -56,7 +58,7 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
                     ),
                   ),
                 ),
-                const IconButton(onPressed: null, icon: Icon(Icons.delete)),
+                OptionWidgetDeleteOption(option: widget.option),
               ],
             ),
           ),

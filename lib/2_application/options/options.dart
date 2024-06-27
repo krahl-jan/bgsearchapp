@@ -5,21 +5,38 @@
 // boolean
 // select string(s) from choice
 
-import 'operators.dart';
+import '../operators.dart';
+import 'library/option_fields.dart';
 
 abstract class Option {
-  String getName();
+  OptionField getOptionField();
 }
+
+Option optionFactory(OptionField optionField) {
+  if (optionField == OptionField.nameContains) {
+    return OptionString(optionField: optionField);
+  }
+  if (optionField == OptionField.age) {
+    return OptionInt(optionField: optionField, value: 12, operator: Operator.lessEqual);
+  }
+  return OptionString(optionField: optionField);
+}
+
+
 
 class OptionString implements Option {
   String value = "";
-  String name;
+  OptionField optionField;
 
-  OptionString({required this.name});
+  OptionString({required this.optionField});
 
   @override
-  String getName() {
-    return name;
+  OptionField getOptionField() {
+    return optionField;
+  }
+
+  OptionString factory(OptionField optionField) {
+    return OptionString(optionField: optionField);
   }
 }
 
@@ -31,8 +48,8 @@ class OptionInt implements Option {
   OptionInt({required this.name, required this.value, required this.operator});
 
   @override
-  String getName() {
-    return name;
+  OptionField getOptionField() {
+    return optionField;
   }
 }
 

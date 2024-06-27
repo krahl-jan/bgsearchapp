@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bgsearchapp/1_domain/game_entity.dart';
-import 'package:bgsearchapp/2_application/options.dart';
+import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
+import 'package:bgsearchapp/2_application/options/options.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -30,10 +31,10 @@ class HttpSearchRepository {
   }
 
   String optionToQueryString(Option option) {
-    if (option.getName() == "Age") {
+    if (option.getOptionField() == OptionField.age.displayString) {
       return "age${(option as OptionInt).operator.toString()}${(option as OptionInt).value.toString()}";
     }
-    if (option.getName() == "Name") {
+    if (option.getOptionField() == OptionField.nameContains.displayString) {
       return 'name:"${(option as OptionString).value.toString()}"';
     }
     return "";
