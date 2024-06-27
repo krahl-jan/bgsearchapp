@@ -1,4 +1,5 @@
 import 'package:bgsearchapp/2_application/options/options.dart';
+import 'package:bgsearchapp/3_presentation/options/option_widget_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -26,7 +27,7 @@ class _OptionWidgetImpState extends State<OptionWidgetImp> {
       return OptionWidgetInt(option: (widget.option as OptionInt));
     }
     else {
-      return Container();
+      return OptionWidgetDropdown(option: (widget.option as OptionDropdownList));
     }
 
   }

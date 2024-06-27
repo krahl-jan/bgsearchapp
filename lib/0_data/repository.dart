@@ -34,10 +34,10 @@ class HttpSearchRepository {
       return "";
     }
     return switch (option.getOptionField()) {
-      OptionField.age => 'name:"${(option as OptionString).value.toString()}"',
-      OptionField.nameContains => "age${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.nameContains => 'name:"${(option as OptionString).value.toString()}"',
+      OptionField.age => "age${(option as OptionInt).operator.toString()}${(option).value.toString()}",
       OptionField.maxPlaytime => "max-playtime${(option as OptionInt).operator.toString()}${(option).value.toString()}",
-      OptionField.category => "",
+      OptionField.category => 'category:"${(option as OptionDropdownList).value.getDisplayString()}"',
       OptionField.bestPlayers => "best-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
       OptionField.maxPlayers => "max-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
       OptionField.bestOrGoodPlayerCount => "quorum-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",

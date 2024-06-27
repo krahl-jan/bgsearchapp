@@ -1,4 +1,9 @@
+import 'package:isar/isar.dart';
+part 'game_entity.g.dart';
+
+@collection
 class GameShortInfo {
+  Id dbId = Isar.autoIncrement;
   int id;
   String name;
   String imageUri;

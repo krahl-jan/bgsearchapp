@@ -1,6 +1,7 @@
 import 'package:bgsearchapp/2_application/operators.dart';
 import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 
 import '../0_data/repository.dart';
 import '../1_domain/game_entity.dart';
@@ -16,6 +17,10 @@ class StateManager extends ChangeNotifier {
   ];
 
   List<GameShortInfo> searchResults = [];
+
+  late Isar isar;
+  late Stream<void> searchOptionsChanged;
+
 
   HttpSearchRepository repository = HttpSearchRepository();
 

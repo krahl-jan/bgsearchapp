@@ -5,7 +5,10 @@
 // boolean
 // select string(s) from choice
 
+import 'package:bgsearchapp/2_application/options/library/categories.dart';
+
 import '../operators.dart';
+import 'library/dropdown_option.dart';
 import 'library/option_fields.dart';
 
 abstract class Option {
@@ -23,7 +26,7 @@ Option optionFactory(OptionField optionField) {
     case OptionField.maxPlaytime:
       return OptionInt(optionField: optionField, operator: Operator.lessEqual);
     case OptionField.category:
-      // TODO: Handle this case.
+      return OptionDropdownList<CategoriesList>(optionField: optionField, value: CategoriesList.values.first);
     case OptionField.bestPlayers:
       return OptionInt(optionField: optionField, operator: Operator.lessEqual);
     case OptionField.maxPlayers:
@@ -77,7 +80,22 @@ abstract class OptionBoolean implements Option {
 
 }
 
-abstract class OptionStrings implements Option {
+class OptionDropdownList<T extends Enum> implements Option {
+
+  OptionField optionField;
+  DropdownListElement value;
+
+  OptionDropdownList({required this.optionField, required this.value});
+
+  @override
+  OptionField getOptionField() {
+    return optionField;
+  }
+
+  @override
+  bool hasValue() {
+    return (value != null);
+  }
 
 }
 
