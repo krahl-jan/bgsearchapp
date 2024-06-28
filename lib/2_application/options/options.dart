@@ -12,8 +12,12 @@ import 'library/dropdown_option.dart';
 import 'library/option_fields.dart';
 
 abstract class Option {
-  OptionField getOptionField();
+  final OptionField optionField;
   bool hasValue();
+
+  Option({required this.optionField, required OptionFieldType optionFieldType}) {
+    if (optionField.optionFieldType != optionFieldType) throw const FormatException("option field types dont match");
+  }
 }
 
 Option optionFactory(OptionField optionField) {
@@ -21,33 +25,27 @@ Option optionFactory(OptionField optionField) {
     case OptionField.nameContains:
       return OptionString(optionField: optionField);
     case OptionField.age:
-      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+      return OptionInt(optionField: optionField);
     case OptionField.maxPlaytime:
-      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+      return OptionInt(optionField: optionField);
     case OptionField.category:
       return OptionDropdownList<CategoriesList>(optionField: optionField, value: CategoriesList.values.first);
     case OptionField.bestPlayers:
-      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+      return OptionInt(optionField: optionField);
     case OptionField.maxPlayers:
-      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+      return OptionInt(optionField: optionField);
     case OptionField.bestOrGoodPlayerCount:
-      return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+      return OptionInt(optionField: optionField);
     case OptionField.descriptionContains:
       return OptionString(optionField: optionField);
   }
   
 }
 
-class OptionString implements Option {
+class OptionString extends Option {
   String? value;
-  OptionField optionField;
 
-  OptionString({required this.optionField});
-
-  @override
-  OptionField getOptionField() {
-    return optionField;
-  }
+  OptionString({required super.optionField, this.value}) : super(optionFieldType: OptionFieldType.string);
 
   OptionString factory(OptionField optionField) {
     return OptionString(optionField: optionField);
@@ -59,17 +57,11 @@ class OptionString implements Option {
   }
 }
 
-class OptionInt implements Option {
+class OptionInt extends Option {
   int? value;
-  OptionField optionField;
   Operator operator;
 
-  OptionInt({required this.optionField, required this.operator});
-
-  @override
-  OptionField getOptionField() {
-    return optionField;
-  }
+  OptionInt({required super.optionField, this.operator = Operator.lessEqual}) : super(optionFieldType: OptionFieldType.int);
 
   @override
   bool hasValue() {
@@ -81,21 +73,16 @@ abstract class OptionBoolean implements Option {
 
 }
 
-class OptionDropdownList<T extends Enum> implements Option {
+class OptionDropdownList<T extends Enum> extends Option {
 
-  OptionField optionField;
   DropdownListElement value;
+  OptionFieldType type = OptionFieldType.dropdown;
 
-  OptionDropdownList({required this.optionField, required this.value});
-
-  @override
-  OptionField getOptionField() {
-    return optionField;
-  }
+  OptionDropdownList({required super.optionField, required this.value}) : super(optionFieldType: OptionFieldType.dropdown);
 
   @override
   bool hasValue() {
-    return (value != null);
+    return true;
   }
 
 }

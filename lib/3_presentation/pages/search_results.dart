@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResultsPage extends StatefulWidget {
-
   ResultsPage({super.key});
 
   @override
@@ -18,11 +17,7 @@ class _ResultsPageState extends State<ResultsPage> {
     'https://via.placeholder.com/250'
   ];
 
-  final List<String> titles = [
-    'Title 1',
-    'Title 2',
-    'Title 3'
-  ];
+  final List<String> titles = ['Title 1', 'Title 2', 'Title 3'];
 
   final List<String> webLinks = [
     'https://www.example.com/1',
@@ -50,10 +45,27 @@ class _ResultsPageState extends State<ResultsPage> {
         itemBuilder: (context, index) {
           return Card(
             margin: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Image.network(list[index].imageUri, fit: BoxFit.cover),
-              title: Text(list[index].name),
-              onTap: () => _launchURL("https:/bgg.cc/boardgame/${list[index].id.toString()}"),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ListTile(
+                    leading:
+                        Image.network(list[index].imageUri, fit: BoxFit.cover),
+                    title: Text(list[index].name),
+                    trailing: Wrap(
+                      spacing: 12, // space between two icons
+                      children: <Widget>[
+                        IconButton(
+                            onPressed: () => _launchURL(
+                                "https:/bgg.cc/boardgame/${list[index].id.toString()}"),
+                            icon: const Icon(Icons.link)), // icon-1
+                        const IconButton(onPressed: null, icon: Icon(Icons.arrow_drop_down)),
+                        const IconButton(onPressed: null, icon: Icon(Icons.favorite)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },

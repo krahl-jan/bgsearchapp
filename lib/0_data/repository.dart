@@ -33,7 +33,7 @@ class HttpSearchRepository {
     if (!option.hasValue()) {
       return "";
     }
-    return switch (option.getOptionField()) {
+    return switch (option.optionField) {
       OptionField.nameContains => 'name:"${(option as OptionString).value.toString()}"',
       OptionField.age => "age${(option as OptionInt).operator.toString()}${(option).value.toString()}",
       OptionField.maxPlaytime => "max-playtime${(option as OptionInt).operator.toString()}${(option).value.toString()}",

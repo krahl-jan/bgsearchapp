@@ -25,14 +25,44 @@ class _GameSearchState extends State<GameSearch> {
       Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage()));
     }
 
+    void saveFilters(BuildContext context) {
+
+    }
+
+    void loadFilters(BuildContext context) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage()));
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: () => doSearch(context), child: const Icon(Icons.search),),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          shrinkWrap: true,
-          children: <Widget>[for (var o in searchOptions) OptionWidgetImp(option: o)] + [const OptionWidgetAddOption()],
-        ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[for (var o in searchOptions) OptionWidgetImp(option: o)] + [const OptionWidgetAddOption()],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+            child: Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () => saveFilters(context),
+                  child: const Text("save"),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("load"),
+                ),
+              ]
+            )
+          )
+        ],
       ),
     );
   }
