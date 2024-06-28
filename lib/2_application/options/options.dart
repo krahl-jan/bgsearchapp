@@ -18,9 +18,8 @@ abstract class Option {
 
 Option optionFactory(OptionField optionField) {
   switch (optionField) {
-    case OptionField.nameContains: {
+    case OptionField.nameContains:
       return OptionString(optionField: optionField);
-    }
     case OptionField.age:
       return OptionInt(optionField: optionField, operator: Operator.lessEqual);
     case OptionField.maxPlaytime:
@@ -33,6 +32,8 @@ Option optionFactory(OptionField optionField) {
       return OptionInt(optionField: optionField, operator: Operator.lessEqual);
     case OptionField.bestOrGoodPlayerCount:
       return OptionInt(optionField: optionField, operator: Operator.lessEqual);
+    case OptionField.descriptionContains:
+      return OptionString(optionField: optionField);
   }
   
 }

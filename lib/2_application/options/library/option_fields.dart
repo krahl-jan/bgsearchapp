@@ -1,5 +1,6 @@
 enum OptionField {
   nameContains(displayString: "Name contains"),
+  descriptionContains(displayString: "Description contains"),
   age(displayString: "Age"),
   maxPlaytime(displayString: "Max. Playtime"),
   category(displayString: "Category"),

@@ -41,6 +41,7 @@ class HttpSearchRepository {
       OptionField.bestPlayers => "best-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
       OptionField.maxPlayers => "max-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
       OptionField.bestOrGoodPlayerCount => "quorum-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.descriptionContains => 'desc:"${(option as OptionString).value.toString()}"',
     };
   }
 

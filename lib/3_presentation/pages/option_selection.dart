@@ -12,29 +12,44 @@ class OptionSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Enum Button Page'),
+        title: const Text('Enum Button Page'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: OptionField.values.map((OptionField value) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical:8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  context.read<StateManager>().addSearchOption(optionFactory(value));
-                  // Handle button press
-                  Navigator.pop(context);
-
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   SnackBar(content: Text('Pressed: ${value.string}')),
-                  //
-                  // );
-                },
-                child: Text(value.displayString),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Select an Option',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            );
-          }).toList(),
+              const SizedBox(height: 24.0),
+              Wrap(
+                spacing: 20.0, // Horizontal space between buttons
+                runSpacing: 20.0, // Vertical space between lines
+                alignment: WrapAlignment.center,
+                children: OptionField.values.map((OptionField value) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Theme.of(context).primaryColor, padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      context.read<StateManager>().addSearchOption(optionFactory(value));
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      value.displayString,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );
