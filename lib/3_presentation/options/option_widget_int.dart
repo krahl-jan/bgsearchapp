@@ -15,7 +15,7 @@ class OptionWidgetInt extends StatefulWidget {
 
 class _OptionWidgetIntState extends State<OptionWidgetInt> {
   final textController = TextEditingController();
-
+  RangeValues _currentRangeValues = const RangeValues(3, 15);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -51,14 +51,23 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: TextFormField(
-                      initialValue: widget.option.hasValue() ? widget.option.value.toString() : "",
-                      onChanged: (value) {
-                        widget.option.value = int.parse(value);
+                    child: RangeSlider(
+                      values: _currentRangeValues,
+                      min: widget.option.ranges.low,
+                      max: widget.option.ranges.high,
+                      divisions: widget.option.ranges.steps,
+                      labels: RangeLabels(
+                        _currentRangeValues.start.round().toString(),
+                        _currentRangeValues.end.round() == 18 ? "Any" : _currentRangeValues.end.round().toString(),
+                      ),
+                      onChanged: (RangeValues values) {
+                        setState(() {
+                          _currentRangeValues = values;
+                        });
                       },
+                    )
                     ),
                   ),
-                ),
                 OptionWidgetDeleteOption(option: widget.option),
               ],
             ),

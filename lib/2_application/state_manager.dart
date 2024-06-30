@@ -1,5 +1,6 @@
 import 'package:bgsearchapp/2_application/operators.dart';
 import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
+import 'package:bgsearchapp/2_application/options/library/option_int_ranges.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
@@ -14,7 +15,7 @@ class StateManager extends ChangeNotifier {
 
   List<Option> searchOptions = [
     OptionString(optionField: OptionField.nameContains),
-    OptionInt(optionField: OptionField.age, operator: Operator.lessEqual)
+    OptionInt(optionField: OptionField.age, operator: Operator.lessEqual, ranges: OptionIntRanges.age)
   ];
 
   bool isOptionSelected(OptionField optionField) {

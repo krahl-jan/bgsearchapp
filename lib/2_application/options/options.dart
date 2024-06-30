@@ -10,6 +10,7 @@ import 'package:bgsearchapp/2_application/options/library/categories.dart';
 import '../operators.dart';
 import 'library/dropdown_option.dart';
 import 'library/option_fields.dart';
+import 'library/option_int_ranges.dart';
 
 abstract class Option {
   final OptionField optionField;
@@ -35,7 +36,8 @@ Option optionFactory(
     OptionFieldType.int => OptionInt(
         optionField: optionField,
         value: value != null ? int.tryParse(value) : null,
-        operator: operator ?? Operator.lessEqual),
+        operator: operator ?? Operator.lessEqual,
+        ranges: OptionIntRanges.age),
     OptionFieldType.dropdown => OptionDropdownList<CategoriesList>(
         optionField: optionField,
         value: value != null
@@ -73,12 +75,16 @@ class OptionString extends Option {
 
 class OptionInt extends Option {
   int? value;
+  int? highValue;
   Operator operator;
+  OptionIntRanges ranges;
 
   OptionInt(
       {required super.optionField,
       this.operator = Operator.lessEqual,
-      this.value})
+      this.value,
+      this.highValue,
+      required this.ranges})
       : super(optionFieldType: OptionFieldType.int);
 
   @override
