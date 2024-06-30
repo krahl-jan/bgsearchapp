@@ -14,6 +14,8 @@ class GameShortInfo {
 
 class GameDetailedInfo {
   int id;
+  String name;
+  String imageUri;
   String description;
   float rating;
   int ratingVotes;
@@ -26,6 +28,8 @@ class GameDetailedInfo {
 
   GameDetailedInfo(
       this.id,
+      this.name,
+      this.imageUri,
       this.description,
       this.rating,
       this.ratingVotes,

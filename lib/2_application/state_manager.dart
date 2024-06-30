@@ -17,6 +17,8 @@ class StateManager extends ChangeNotifier {
     OptionInt(optionField: OptionField.age, operator: Operator.lessEqual)
   ];
 
+  List<int> favourites = [];
+
   List<GameShortInfo> searchResults = [];
   Map<int, GameDetailedInfo> searchResultsDetails= {};
 
@@ -36,9 +38,28 @@ class StateManager extends ChangeNotifier {
     searchResults.addAll(infos);
     notifyListeners();
     for (var info in infos) {
-      searchResultsDetails[info.id] = await repository.getDetailedInfo(info.id);
+      if (!searchResultsDetails.containsKey(info.id)) {
+        searchResultsDetails[info.id] =
+        await repository.getDetailedInfo(info.id);
+      }
     }
     notifyListeners();
+  }
+
+  addFavourite(int id) {
+    if (!favourites.contains(id)) {
+      favourites.add(id);
+      notifyListeners();
+      print("Added $id to favourites");
+    }
+  }
+
+  removeFavourite(int id) {
+    if (favourites.contains(id)) {
+      favourites.remove(id);
+      notifyListeners();
+      print("Removed $id to favourites");
+    }
   }
 
   addSearchOption(Option option) {

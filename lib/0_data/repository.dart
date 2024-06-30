@@ -36,21 +36,25 @@ class HttpSearchRepository {
   Future<GameDetailedInfo> getDetailedInfo(int id) async {
     http.Response response = await http.get(Uri.parse("${baseUri}games/$id"));
     Iterable<RegExpMatch> matches = RegExp(
-            r'<summary>Description</summary>[\s\S]*?<p>([\s\S]*?)</p>[\s\S]*?<summary>Rating</summary>[\s\S]*?Votes: ([\s\S]*?)</li>[\s\S]*?Average: ([\s\S]*?)</li>[\s\S]*?<summary>Playtime</summary>[\s\S]*?Minimum: ([\s\S]*?)</li>[\s\S]*?Maximum: ([\s\S]*?)</li>[\s\S]*?<summary>Players</summary>[\s\S]*?Minimum: ([\s\S]*?)</li>[\s\S]*?Maximum: ([\s\S]*?)</li>[\s\S]*?<summary>Weight</summary>[\s\S]*?Votes: ([\s\S]*?)</li>[\s\S]*?Average: ([\s\S]*?)</li>')
+            r'<h1 class="text-center">([^<]*)</h1>[\s\S]*?src=".*?image-mirror/([^"]*)[\s\S]*?<summary>Description</summary>[\s\S]*?<p>([\s\S]*?)</p>[\s\S]*?<summary>Rating</summary>[\s\S]*?Votes: ([\s\S]*?)</li>[\s\S]*?Average: ([\s\S]*?)</li>[\s\S]*?<summary>Playtime</summary>[\s\S]*?Minimum: ([\s\S]*?)</li>[\s\S]*?Maximum: ([\s\S]*?)</li>[\s\S]*?<summary>Players</summary>[\s\S]*?Minimum: ([\s\S]*?)</li>[\s\S]*?Maximum: ([\s\S]*?)</li>[\s\S]*?<summary>Weight</summary>[\s\S]*?Votes: ([\s\S]*?)</li>[\s\S]*?Average: ([\s\S]*?)</li>')
         .allMatches(response.body);
     var match = matches.first;
-    String description = match.group(1) ?? "";
-    String ratingVotes = match.group(2) ?? "";
-    String rating = match.group(3) ?? "";
-    String minPlaytime = match.group(4) ?? "";
-    String maxPlaytime = match.group(8) ?? "";
-    String minPlayers = match.group(6) ?? "";
-    String maxPlayers = match.group(7) ?? "";
-    String weightVotes = match.group(8) ?? "";
-    String weight = match.group(9) ?? "";
+    String name = match.group(1) ?? "";
+    String uri = match.group(2) ?? "";
+    String description = match.group(3) ?? "";
+    String ratingVotes = match.group(4) ?? "";
+    String rating = match.group(5) ?? "";
+    String minPlaytime = match.group(6) ?? "";
+    String maxPlaytime = match.group(7) ?? "";
+    String minPlayers = match.group(8) ?? "";
+    String maxPlayers = match.group(9) ?? "";
+    String weightVotes = match.group(10) ?? "";
+    String weight = match.group(11) ?? "";
     var unescape = new HtmlUnescape();
     var result = GameDetailedInfo(
         id,
+        name,
+        uri,
         unescape.convert(description),
         double.parse(rating),
         int.parse(ratingVotes),
