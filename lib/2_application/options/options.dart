@@ -21,15 +21,11 @@ abstract class Option {
 }
 
 Option optionFactory(OptionField optionField) {
-  return switch (optionField) {
-    OptionField.nameContains => OptionString(optionField: optionField),
-    OptionField.age => OptionInt(optionField: optionField),
-    OptionField.maxPlaytime => OptionInt(optionField: optionField),
-    OptionField.category => OptionDropdownList<CategoriesList>(optionField: optionField, value: CategoriesList.values.first),
-    OptionField.bestPlayers => OptionInt(optionField: optionField),
-    OptionField.maxPlayers => OptionInt(optionField: optionField),
-    OptionField.bestOrGoodPlayerCount => OptionInt(optionField: optionField),
-    OptionField.descriptionContains => OptionString(optionField: optionField),
+  return switch (optionField.optionFieldType) {
+    OptionFieldType.string => OptionString(optionField: optionField),
+    OptionFieldType.int => OptionInt(optionField: optionField),
+    OptionFieldType.dropdown => OptionDropdownList<CategoriesList>(optionField: optionField, value: CategoriesList.values.first),
+    OptionFieldType.boolean => throw UnimplementedError(),
   };
 }
 
