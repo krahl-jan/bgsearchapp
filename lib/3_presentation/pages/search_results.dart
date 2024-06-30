@@ -1,5 +1,6 @@
 import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -50,7 +51,7 @@ class _ResultsPageState extends State<ResultsPage> {
                 Expanded(
                   child: ListTile(
                     leading:
-                        Image.network(list[index].imageUri, fit: BoxFit.cover),
+                        list[index].imageUri.isNotEmpty ? Image.network(list[index].imageUri, fit: BoxFit.cover) : const SizedBox(),
                     title: Text(list[index].name),
                     trailing: Wrap(
                       spacing: 12, // space between two icons
