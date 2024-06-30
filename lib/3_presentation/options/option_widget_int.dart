@@ -42,7 +42,7 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
                       onChanged: (String? value) {
                     if (value != null) {
                         setState(() {
-                          widget.option.operator = operatorFromString(value);
+                          widget.option.operator = operatorFromStringDefaultEqual(value);
                         });
                     }
                   }, value: widget.option.operator.toString(),

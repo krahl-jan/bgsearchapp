@@ -118,6 +118,6 @@ class OptionDropdownList<T extends Enum> extends Option {
 
   @override
   getValue() {
-    return value;
+    return value.getName();
   }
 }

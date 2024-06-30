@@ -46,4 +46,9 @@ class StateManager extends ChangeNotifier {
     searchOptions.remove(option);
     notifyListeners();
   }
+
+  setSearchOptions(List<Option> newSearchOptions) {
+    searchOptions = newSearchOptions;
+    notifyListeners();
+  }
 }

@@ -71,18 +71,22 @@ enum CategoriesList implements DropdownListElement{
     required this.linkString
   });
 
+  @override
   String getDisplayString() {
     return displayString;
   }
 
+  @override
   String getLinkString() {
     return linkString;
   }
 
+  @override
   List<DropdownListElement> getAllValues() {
     return CategoriesList.values;
   }
 
+  @override
   DropdownListElement factoryFromString(String s) {
     for (var v in CategoriesList.values) {
       if (v.linkString == s) {
@@ -94,5 +98,10 @@ enum CategoriesList implements DropdownListElement{
 
   final String displayString;
   final String linkString;
+
+  @override
+  String getName() {
+    return name;
+  }
 
 }
