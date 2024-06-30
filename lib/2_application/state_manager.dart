@@ -17,10 +17,10 @@ class StateManager extends ChangeNotifier {
   ];
 
   List<GameShortInfo> searchResults = [];
+  Map<int, GameDetailedInfo> searchResultsDetails= {};
 
   late Isar isar;
   late Stream<void> searchOptionsChanged;
-
 
   HttpSearchRepository repository = HttpSearchRepository();
 
@@ -33,6 +33,10 @@ class StateManager extends ChangeNotifier {
     searchResults.clear();
     var infos = await repository.getShortGameInfos(searchOptions);
     searchResults.addAll(infos);
+    notifyListeners();
+    for (var info in infos) {
+      searchResultsDetails[info.id] = await repository.getDetailedInfo(info.id);
+    }
     notifyListeners();
   }
 

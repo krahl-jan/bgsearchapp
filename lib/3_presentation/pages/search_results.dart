@@ -44,30 +44,29 @@ class _ResultsPageState extends State<ResultsPage> {
       body: ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
-          return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: ListTile(
-                    leading:
-                        list[index].imageUri.isNotEmpty ? Image.network(list[index].imageUri, fit: BoxFit.cover) : const SizedBox(),
-                    title: Text(list[index].name),
-                    trailing: Wrap(
-                      spacing: 12, // space between two icons
-                      children: <Widget>[
-                        IconButton(
-                            onPressed: () => _launchURL(
-                                "https:/bgg.cc/boardgame/${list[index].id.toString()}"),
-                            icon: const Icon(Icons.link)), // icon-1
-                        const IconButton(onPressed: null, icon: Icon(Icons.arrow_drop_down)),
-                        const IconButton(onPressed: null, icon: Icon(Icons.favorite)),
-                      ],
+          return ExpansionTile(
+            title: Card(
+              margin: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      leading:
+                          list[index].imageUri.isNotEmpty ? SizedBox(
+                              height: 200,
+                              width: 100,
+                              child: Image.network(list[index].imageUri, fit: BoxFit.cover, alignment: Alignment.topCenter,)) : const SizedBox(),
+                      title: Text(list[index].name),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            children: [IconButton(
+              onPressed: () => _launchURL(
+              "https:/bgg.cc/boardgame/${list[index].id.toString()}"),
+          icon: const Icon(Icons.link)), // icon-1,
+          Text(context.read<StateManager>().searchResultsDetails[list[index].id]?.description ?? "loading description ...")],
           );
         },
       ),

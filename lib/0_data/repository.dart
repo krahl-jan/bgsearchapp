@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:bgsearchapp/1_domain/game_entity.dart';
 import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
 import 'package:bgsearchapp/2_application/options/options.dart';
@@ -9,13 +10,16 @@ String baseUri = "https://bgs.nafarlee.dev/";
 
 class HttpSearchRepository {
   Future<List<GameShortInfo>> getShortGameInfos(List<Option> options) async {
-
-    String query = [for (var option in options) optionToQueryString(option)].join(" ");
+    String query =
+        [for (var option in options) optionToQueryString(option)].join(" ");
     print("query: ${query}");
 
-    http.Response response = await http.get(Uri.parse(baseUri + "search?query=" + query + "&limit=30&order=bayes_rating&direction=DESC"));
+    http.Response response = await http.get(Uri.parse(
+        "${baseUri}search?query=$query&limit=30&order=bayes_rating&direction=DESC"));
 
-    Iterable<RegExpMatch> matches = RegExp(r'img src="/image-mirror/([^"]*).*?/games/(\d+)">([^<]*)').allMatches(response.body);
+    Iterable<RegExpMatch> matches =
+        RegExp(r'img src="/image-mirror/([^"]*).*?/games/(\d+)">([^<]*)')
+            .allMatches(response.body);
 
     List<GameShortInfo> result = [];
 
@@ -29,20 +33,58 @@ class HttpSearchRepository {
     return result;
   }
 
+  Future<GameDetailedInfo> getDetailedInfo(int id) async {
+    http.Response response = await http.get(Uri.parse("${baseUri}games/$id"));
+    Iterable<RegExpMatch> matches = RegExp(
+            r'<summary>Description</summary>[\s\S]*?<p>([\s\S]*?)</p>[\s\S]*?<summary>Rating</summary>[\s\S]*?Votes: ([\s\S]*?)</li>[\s\S]*?Average: ([\s\S]*?)</li>[\s\S]*?<summary>Playtime</summary>[\s\S]*?Minimum: ([\s\S]*?)</li>[\s\S]*?Maximum: ([\s\S]*?)</li>[\s\S]*?<summary>Players</summary>[\s\S]*?Minimum: ([\s\S]*?)</li>[\s\S]*?Maximum: ([\s\S]*?)</li>[\s\S]*?<summary>Weight</summary>[\s\S]*?Votes: ([\s\S]*?)</li>[\s\S]*?Average: ([\s\S]*?)</li>')
+        .allMatches(response.body);
+    var match = matches.first;
+    String description = match.group(1) ?? "";
+    String ratingVotes = match.group(2) ?? "";
+    String rating = match.group(3) ?? "";
+    String minPlaytime = match.group(4) ?? "";
+    String maxPlaytime = match.group(8) ?? "";
+    String minPlayers = match.group(6) ?? "";
+    String maxPlayers = match.group(7) ?? "";
+    String weightVotes = match.group(8) ?? "";
+    String weight = match.group(9) ?? "";
+    var unescape = new HtmlUnescape();
+    var result = GameDetailedInfo(
+        id,
+        unescape.convert(description),
+        double.parse(rating),
+        int.parse(ratingVotes),
+        int.parse(minPlaytime),
+        int.parse(maxPlaytime),
+        int.parse(minPlayers),
+        int.parse(maxPlayers),
+        double.parse(weight),
+        int.parse(weightVotes));
+
+    return result;
+  }
+
   String optionToQueryString(Option option) {
     if (!option.hasValue()) {
       return "";
     }
     return switch (option.optionField) {
-      OptionField.nameContains => 'name:"${(option as OptionString).value.toString()}"',
-      OptionField.age => "age${(option as OptionInt).operator.toString()}${(option).value.toString()}",
-      OptionField.maxPlaytime => "max-playtime${(option as OptionInt).operator.toString()}${(option).value.toString()}",
-      OptionField.category => 'category:"${(option as OptionDropdownList).value.getDisplayString()}"',
-      OptionField.bestPlayers => "best-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
-      OptionField.maxPlayers => "max-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
-      OptionField.bestOrGoodPlayerCount => "quorum-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
-      OptionField.descriptionContains => 'desc:"${(option as OptionString).value.toString()}"',
+      OptionField.nameContains =>
+        'name:"${(option as OptionString).value.toString()}"',
+      OptionField.age =>
+        "age${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.maxPlaytime =>
+        "max-playtime${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.category =>
+        'category:"${(option as OptionDropdownList).value.getDisplayString()}"',
+      OptionField.bestPlayers =>
+        "best-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.maxPlayers =>
+        "max-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.bestOrGoodPlayerCount =>
+        "quorum-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+      OptionField.descriptionContains =>
+        'desc:"${(option as OptionString).value.toString()}"',
     };
   }
-
 }
