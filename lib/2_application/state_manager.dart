@@ -17,6 +17,15 @@ class StateManager extends ChangeNotifier {
     OptionInt(optionField: OptionField.age, operator: Operator.lessEqual)
   ];
 
+  bool isOptionSelected(OptionField optionField) {
+    for (var o in searchOptions) {
+      if (o.optionField.displayString == optionField.displayString) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   List<int> favourites = [];
 
   List<GameShortInfo> searchResults = [];
