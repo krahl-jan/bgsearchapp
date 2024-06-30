@@ -4,14 +4,14 @@ import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ResultsPage extends StatefulWidget {
-  ResultsPage({super.key});
+class FavouritesPage extends StatefulWidget {
+  FavouritesPage({super.key});
 
   @override
-  State<ResultsPage> createState() => _ResultsPageState();
+  State<FavouritesPage> createState() => _FavouritesPageState();
 }
 
-class _ResultsPageState extends State<ResultsPage> {
+class _FavouritesPageState extends State<FavouritesPage> {
   Future<void> _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -22,29 +22,29 @@ class _ResultsPageState extends State<ResultsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var list = context.watch<StateManager>().searchResults;
     var favourites = context.watch<StateManager>().favourites;
+    var detailedInfos = context.watch<StateManager>().searchResultsDetails;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search Results'),
+        title: const Text('Favourites'),
       ),
       body: ListView.builder(
-        itemCount: list.length,
+        itemCount: favourites.length,
         itemBuilder: (context, index) {
           return ExpansionTile(
             title: Row(
               children: [
-                list[index].imageUri.isNotEmpty
+                detailedInfos[favourites[index]] != null && detailedInfos[favourites[index]]!.imageUri.isNotEmpty
                     ? SizedBox(
                         height: 100,
                         width: 100,
                         child: Image.network(
-                          list[index].imageUri,
+                          detailedInfos[favourites[index]]!.imageUri,
                           fit: BoxFit.cover,
                           alignment: Alignment.topCenter,
                         ))
                     : const SizedBox(),
-                Expanded(child: Text(list[index].name))
+                Expanded(child: Text(detailedInfos[favourites[index]]!.name))
               ],
             ),
             children: [
@@ -53,21 +53,21 @@ class _ResultsPageState extends State<ResultsPage> {
                 children: [
                   IconButton(
                       onPressed: () => _launchURL(
-                          "https:/bgg.cc/boardgame/${list[index].id.toString()}"),
+                          "https:/bgg.cc/boardgame/${detailedInfos[favourites[index]]!.id.toString()}"),
                       icon: const Icon(Icons.link)),
                   IconButton(
                       onPressed: () {
-                        if (favourites.contains(list[index].id)) {
+                        if (favourites.contains(detailedInfos[favourites[index]]!.id)) {
                           context
                               .read<StateManager>()
-                              .removeFavourite(list[index].id);
+                              .removeFavourite(detailedInfos[favourites[index]]!.id);
                         } else {
                           context
                               .read<StateManager>()
-                              .addFavourite(list[index].id);
+                              .addFavourite(detailedInfos[favourites[index]]!.id);
                         }
                       },
-                      color: favourites.contains(list[index].id)
+                      color: favourites.contains(detailedInfos[favourites[index]]!.id)
                           ? Colors.red
                           : Colors.black,
                       icon: const Icon(Icons.favorite)),
@@ -75,7 +75,7 @@ class _ResultsPageState extends State<ResultsPage> {
               ),
               Text(context
                       .read<StateManager>()
-                      .searchResultsDetails[list[index].id]
+                      .searchResultsDetails[detailedInfos[favourites[index]]!.id]
                       ?.description ??
                   "loading description ...")
             ],
