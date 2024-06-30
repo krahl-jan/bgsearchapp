@@ -1,3 +1,4 @@
+import 'package:bgsearchapp/1_domain/filter_set.dart';
 import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:bgsearchapp/3_presentation/home.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,14 @@ import 'package:provider/provider.dart';
 
 import '1_domain/game_entity.dart';
 
-
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final isar = await initializeDatabase();
+
   runApp(ChangeNotifierProvider(
     create: (BuildContext context) {
-      initializeDatabase(context);
-      return StateManager();
-      },
+      return StateManager(isar);
+    },
     child: MaterialApp(
       title: 'BoardGame Search',
       theme: ThemeData(
@@ -25,11 +27,10 @@ Future<void> main() async {
   ));
 }
 
-void initializeDatabase(BuildContext context) async {
+Future<Isar> initializeDatabase() async {
   final dir = await getApplicationDocumentsDirectory();
-  final isar = await Isar.open(
-    [GameShortInfoSchema],
+  return await Isar.open(
+    [GameShortInfoSchema, FilterSetSchema],
     directory: dir.path,
   );
-  // context.read<StateManager>().
 }

@@ -75,15 +75,16 @@ FilterSet _filterSetDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = FilterSet();
+  final object = FilterSet(
+    reader.readObjectList<Filter>(
+          offsets[0],
+          FilterSchema.deserialize,
+          allOffsets,
+          Filter(),
+        ) ??
+        [],
+  );
   object.dbId = id;
-  object.filterList = reader.readObjectList<Filter>(
-        offsets[0],
-        FilterSchema.deserialize,
-        allOffsets,
-        Filter(),
-      ) ??
-      [];
   return object;
 }
 
@@ -462,12 +463,13 @@ Filter _filterDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Filter();
-  object.operator = reader.readStringOrNull(offsets[0]);
-  object.optionField =
-      _FilteroptionFieldValueEnumMap[reader.readByteOrNull(offsets[1])] ??
-          OptionField.nameContains;
-  object.value = reader.readStringOrNull(offsets[2]);
+  final object = Filter(
+    operator: reader.readStringOrNull(offsets[0]),
+    optionField:
+        _FilteroptionFieldValueEnumMap[reader.readByteOrNull(offsets[1])] ??
+            OptionField.nameContains,
+    value: reader.readStringOrNull(offsets[2]),
+  );
   return object;
 }
 

@@ -8,6 +8,7 @@ import '../1_domain/game_entity.dart';
 import 'options/options.dart';
 
 class StateManager extends ChangeNotifier {
+  StateManager(this.isar);
   // todo implement repository pattern with interface
   int pageIndex = 0;
 
