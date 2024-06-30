@@ -52,6 +52,7 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: TextFormField(
+                      initialValue: widget.option.hasValue() ? widget.option.value.toString() : "",
                       onChanged: (value) {
                         widget.option.value = int.parse(value);
                       },

@@ -32,6 +32,7 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
                 Text(widget.option.optionField.displayString),
                 Expanded(
                   child: TextFormField(
+                    initialValue: widget.option.value,
                     onChanged: (name) {
                       widget.option.value = name;
                     },
