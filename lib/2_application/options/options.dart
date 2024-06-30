@@ -7,6 +7,7 @@
 
 import 'package:bgsearchapp/2_application/options/library/categories.dart';
 
+import '../../1_domain/filter_set.dart';
 import '../operators.dart';
 import 'library/dropdown_option.dart';
 import 'library/option_fields.dart';
@@ -20,13 +21,22 @@ abstract class Option {
   }
 }
 
-Option optionFactory(OptionField optionField) {
+Option optionFactory({required OptionField optionField, Operator? operator, String? value}) {
   return switch (optionField.optionFieldType) {
-    OptionFieldType.string => OptionString(optionField: optionField),
-    OptionFieldType.int => OptionInt(optionField: optionField),
-    OptionFieldType.dropdown => OptionDropdownList<CategoriesList>(optionField: optionField, value: CategoriesList.values.first),
+    OptionFieldType.string => OptionString(optionField: optionField, value: value),
+    OptionFieldType.int => OptionInt(optionField: optionField, value: value != null ? int.tryParse(value) : null, operator: operator ?? Operator.lessEqual),
+    OptionFieldType.dropdown => OptionDropdownList<CategoriesList>(optionField: optionField, value: value != null ? CategoriesList.values.byName(value) : CategoriesList.values.first),
     OptionFieldType.boolean => throw UnimplementedError(),
   };
+}
+
+List<Option> fromDbFilterSet(FilterSet filterSet) {
+  List<Option> l = List.empty(growable: true);
+  for (Filter f in filterSet.filterList) {
+    Operator? operator = f.operator != null ? Operator.values.byName(f.operator!) : null;
+    l.add(optionFactory(optionField: f.optionField, operator: operator, value: f.value));
+  }
+  return l;
 }
 
 class OptionString extends Option {
@@ -48,7 +58,7 @@ class OptionInt extends Option {
   int? value;
   Operator operator;
 
-  OptionInt({required super.optionField, this.operator = Operator.lessEqual}) : super(optionFieldType: OptionFieldType.int);
+  OptionInt({required super.optionField, this.operator = Operator.lessEqual, this.value}) : super(optionFieldType: OptionFieldType.int);
 
   @override
   bool hasValue() {
