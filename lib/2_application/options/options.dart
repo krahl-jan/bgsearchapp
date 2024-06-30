@@ -21,25 +21,16 @@ abstract class Option {
 }
 
 Option optionFactory(OptionField optionField) {
-  switch (optionField) {
-    case OptionField.nameContains:
-      return OptionString(optionField: optionField);
-    case OptionField.age:
-      return OptionInt(optionField: optionField);
-    case OptionField.maxPlaytime:
-      return OptionInt(optionField: optionField);
-    case OptionField.category:
-      return OptionDropdownList<CategoriesList>(optionField: optionField, value: CategoriesList.values.first);
-    case OptionField.bestPlayers:
-      return OptionInt(optionField: optionField);
-    case OptionField.maxPlayers:
-      return OptionInt(optionField: optionField);
-    case OptionField.bestOrGoodPlayerCount:
-      return OptionInt(optionField: optionField);
-    case OptionField.descriptionContains:
-      return OptionString(optionField: optionField);
-  }
-  
+  return switch (optionField) {
+    OptionField.nameContains => OptionString(optionField: optionField),
+    OptionField.age => OptionInt(optionField: optionField),
+    OptionField.maxPlaytime => OptionInt(optionField: optionField),
+    OptionField.category => OptionDropdownList<CategoriesList>(optionField: optionField, value: CategoriesList.values.first),
+    OptionField.bestPlayers => OptionInt(optionField: optionField),
+    OptionField.maxPlayers => OptionInt(optionField: optionField),
+    OptionField.bestOrGoodPlayerCount => OptionInt(optionField: optionField),
+    OptionField.descriptionContains => OptionString(optionField: optionField),
+  };
 }
 
 class OptionString extends Option {
@@ -86,41 +77,3 @@ class OptionDropdownList<T extends Enum> extends Option {
   }
 
 }
-
-// class OptionName extends OptionString {
-//   String? name;
-//
-//   OptionName(
-//     this.name,
-//   );
-//
-//   @override
-//   String getName() {
-//     return "Name";
-//   }
-// }
-//
-// class OptionAge extends OptionInt {
-//   int? age;
-//   Operator? operator;
-//
-//   OptionAge(
-//     this.age,
-//     this.operator,
-//   );
-//
-//   @override
-//   String getName() {
-//     return "Age";
-//   }
-// }
-//
-// class OptionCategories implements Option {
-//   List<String> categories = [];
-//
-//
-//   @override
-//   String getName() {
-//     String res = categories.map((c) => 'c:"$c"').join(" or ");
-//     return "($res)";
-//   }}
