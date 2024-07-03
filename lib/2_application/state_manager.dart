@@ -50,9 +50,10 @@ class StateManager extends ChangeNotifier {
       if (!searchResultsDetails.containsKey(info.id)) {
         searchResultsDetails[info.id] =
         await repository.getDetailedInfo(info.id);
+        notifyListeners();
       }
     }
-    notifyListeners();
+
   }
 
   addFavourite(int id) {
