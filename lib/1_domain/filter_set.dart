@@ -8,12 +8,13 @@ part 'filter_set.g.dart';
 @collection
 class FilterSet {
   Id dbId = Isar.autoIncrement;
+  String name;
   List<Filter> filterList = List.empty();
 
-  FilterSet(this.filterList);
+  FilterSet(this.name, this.filterList);
 }
 
-FilterSet toDbFilterSet(List<Option> options) {
+FilterSet toDbFilterSet(String name, List<Option> options) {
   List<Filter> f = List.empty(growable: true);
   for (Option o in options) {
     dynamic value = o.getValue();
@@ -23,7 +24,7 @@ FilterSet toDbFilterSet(List<Option> options) {
         value: value?.toString(),
         value2: value2.toString()));
   }
-  return FilterSet(f);
+  return FilterSet(name, f);
 }
 
 List<Option> toOptionList(FilterSet filterSet) {
@@ -37,6 +38,7 @@ List<Option> toOptionList(FilterSet filterSet) {
 
 @embedded
 class Filter {
+
   String? value;
   @enumerated
   String? value2;

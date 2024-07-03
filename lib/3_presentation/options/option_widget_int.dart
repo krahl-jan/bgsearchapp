@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,9 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
 
   @override
   Widget build(BuildContext context) {
-    var currentRangeValues = RangeValues(widget.option.lowValue.toDouble(), widget.option.highValue.toDouble());
+    var lowValue = max(widget.option.lowValue.toDouble(), widget.option.range.low.toDouble());
+    var highValue = min(widget.option.highValue.toDouble(), widget.option.range.high.toDouble());
+    var currentRangeValues = RangeValues(lowValue, highValue);
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Center(
@@ -38,8 +42,8 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: RangeSlider(
                       values: currentRangeValues,
-                      min: widget.option.range.low,
-                      max: widget.option.range.high,
+                      min: widget.option.range.low.toDouble(),
+                      max: widget.option.range.high.toDouble(),
                       divisions: widget.option.range.steps,
                       labels: RangeLabels(
                         currentRangeValues.start.round().toString(),
@@ -48,11 +52,8 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
                       onChanged: (RangeValues values) {
                         setState(() {
                           currentRangeValues = values;
-                          widget.option.lowValue = values.start.round();
-                          widget.option.highValue = values.end.round();
-                          if (widget.option.highValue == widget.option.range.high) {
-                            widget.option.highValue = 10000;
-                          }
+                          widget.option.lowValue = values.start.round().toInt();
+                          widget.option.highValue = values.end.round().toInt();
                         });
                       },
                     )

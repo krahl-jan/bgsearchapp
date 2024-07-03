@@ -14,7 +14,7 @@ enum OptionIntRange {
   });
 
 
-  final double low;
-  final double high;
+  final int low;
+  final int high;
   final int steps;
 }

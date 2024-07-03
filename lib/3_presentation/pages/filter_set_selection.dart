@@ -43,7 +43,7 @@ class _FilterSetSelectionState extends State<FilterSetSelection> {
               itemBuilder: (context, i) {
                 return ListTile(
                   title: Center(
-                    child: setWidget(filterSets![i]),
+                    child: Text(filterSets![i].name),
                   ),
                   onTap: () => setFilterSet(context, filterSets![i]),
                 );
