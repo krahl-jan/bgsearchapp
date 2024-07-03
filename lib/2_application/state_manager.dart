@@ -46,14 +46,14 @@ class StateManager extends ChangeNotifier {
     var infos = await repository.getShortGameInfos(searchOptions);
     searchResults.addAll(infos);
     notifyListeners();
-    for (var info in infos) {
-      if (!searchResultsDetails.containsKey(info.id)) {
-        searchResultsDetails[info.id] =
-        await repository.getDetailedInfo(info.id);
-        notifyListeners();
-      }
-    }
+  }
 
+  retrieveDetailedInfo(int id) async {
+    if (!searchResultsDetails.containsKey(id)) {
+      searchResultsDetails[id] =
+      await repository.getDetailedInfo(id);
+      notifyListeners();
+    }
   }
 
   addFavourite(int id) {
