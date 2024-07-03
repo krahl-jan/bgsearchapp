@@ -25,7 +25,7 @@ class _OptionWidgetAddOptionState extends State<OptionWidgetAddOption> {
 
     @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: () { _showFullModal(context);}, icon:  Icon(Icons.add));
+    return IconButton(onPressed: () { _showFullModal(context);}, icon:  const Icon(Icons.add));
   }
 }
 

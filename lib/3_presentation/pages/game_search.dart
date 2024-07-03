@@ -49,7 +49,7 @@ class _GameSearchState extends State<GameSearch> {
             ConstrainedBox(
               constraints: BoxConstraints.loose(Size.fromHeight(constraints.maxHeight * 0.9)),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: searchOptions.length,
@@ -61,20 +61,23 @@ class _GameSearchState extends State<GameSearch> {
             ),
             const OptionWidgetAddOption(),
             SizedBox(
-                height: 20,
-                child: Row(children: [
-                  ElevatedButton(
-                    onPressed: () => saveFilters(context),
-                    child: const Text("save"),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  ElevatedButton(
-                    onPressed: () => loadFilters(context),
-                    child: const Text("load"),
-                  ),
-                ]))
+                height: 30,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Row(children: [
+                    FilledButton(
+                      onPressed: () => saveFilters(context),
+                      child: const Text("save"),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    FilledButton(
+                      onPressed: () => loadFilters(context),
+                      child: const Text("load"),
+                    ),
+                  ]),
+                ))
           ],
         ),
       ),
