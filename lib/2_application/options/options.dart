@@ -6,8 +6,6 @@
 // select string(s) from choice
 
 import 'package:bgsearchapp/2_application/options/library/categories.dart';
-
-import '../operators.dart';
 import 'library/dropdown_option.dart';
 import 'library/option_fields.dart';
 import 'library/option_int_ranges.dart';

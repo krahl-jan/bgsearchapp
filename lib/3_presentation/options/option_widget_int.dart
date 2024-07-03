@@ -19,7 +19,6 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
 
   @override
   Widget build(BuildContext context) {
-    var watch = context.watch<StateManager>().searchOptions;
     var currentRangeValues = RangeValues(widget.option.lowValue.toDouble(), widget.option.highValue.toDouble());
     return Padding(
       padding: const EdgeInsets.all(4.0),
