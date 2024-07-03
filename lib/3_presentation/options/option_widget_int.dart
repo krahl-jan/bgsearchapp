@@ -1,6 +1,8 @@
 import 'package:bgsearchapp/2_application/operators.dart';
 import 'package:bgsearchapp/2_application/options/options.dart';
+import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'option_delete.dart';
 
@@ -14,16 +16,12 @@ class OptionWidgetInt extends StatefulWidget {
 }
 
 class _OptionWidgetIntState extends State<OptionWidgetInt> {
-  final textController = TextEditingController();
-  late RangeValues _currentRangeValues;
-  @override
-  void initState() {
-    super.initState();
-    _currentRangeValues = RangeValues(widget.option.range.low, widget.option.range.high);
-  }
+
 
   @override
   Widget build(BuildContext context) {
+    var watch = context.watch<StateManager>().searchOptions;
+    var currentRangeValues = RangeValues(widget.option.lowValue.toDouble(), widget.option.highValue.toDouble());
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Center(
@@ -43,17 +41,17 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: RangeSlider(
-                      values: _currentRangeValues,
+                      values: currentRangeValues,
                       min: widget.option.range.low,
                       max: widget.option.range.high,
                       divisions: widget.option.range.steps,
                       labels: RangeLabels(
-                        _currentRangeValues.start.round().toString(),
-                        _currentRangeValues.end.round() == widget.option.range.high ? "Any" : _currentRangeValues.end.round().toString(),
+                        currentRangeValues.start.round().toString(),
+                        currentRangeValues.end.round() == widget.option.range.high ? "Any" : currentRangeValues.end.round().toString(),
                       ),
                       onChanged: (RangeValues values) {
                         setState(() {
-                          _currentRangeValues = values;
+                          currentRangeValues = values;
                           widget.option.lowValue = values.start.round();
                           widget.option.highValue = values.end.round();
                           if (widget.option.highValue == widget.option.range.high) {

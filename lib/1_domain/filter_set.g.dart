@@ -432,7 +432,7 @@ int _filterEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.operator;
+    final value = object.value2;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -452,7 +452,7 @@ void _filterSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.operator);
+  writer.writeString(offsets[0], object.value2);
   writer.writeByte(offsets[1], object.optionField.index);
   writer.writeString(offsets[2], object.value);
 }
@@ -464,7 +464,7 @@ Filter _filterDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Filter(
-    operator: reader.readStringOrNull(offsets[0]),
+    value2: reader.readStringOrNull(offsets[0]),
     optionField:
         _FilteroptionFieldValueEnumMap[reader.readByteOrNull(offsets[1])] ??
             OptionField.nameContains,

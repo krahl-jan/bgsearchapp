@@ -28,13 +28,15 @@ abstract class Option {
 }
 
 Option optionFactory(
-    {required OptionField optionField, Operator? operator, String? value}) {
+    {required OptionField optionField, String? value, String? value2}) {
   return switch (optionField.optionFieldType) {
     OptionFieldType.string =>
       OptionString(optionField: optionField, value: value),
     OptionFieldType.int => OptionInt(
         optionField,
-        intRangeMap[optionField] ?? OptionIntRange.fallback),
+        intRangeMap[optionField] ?? OptionIntRange.fallback,
+        int.parse(value ?? intRangeMap[optionField]!.low.toString()),
+        int.parse(value2 ?? intRangeMap[optionField]!.high.toString())),
     OptionFieldType.dropdown => OptionDropdownList<CategoriesList>(
         optionField: optionField,
         value: value != null
@@ -77,11 +79,19 @@ class OptionInt extends Option {
   int lowValue;
   int highValue;
 
-  factory OptionInt(OptionField optionField, OptionIntRange optionIntRange) {
-    final int lowValue = optionIntRange.low.round();
-    final int highValue = optionIntRange.high.round();
+  factory OptionInt(OptionField optionField, OptionIntRange optionIntRange, int? low, int? high) {
+    int lowValue = low ?? optionIntRange.low.round();
+    int highValue = high ?? optionIntRange.high.round();
+    if (lowValue < optionIntRange.low.round()) {
+      lowValue = optionIntRange.low.round();
+    }
+    if (highValue > optionIntRange.high.round()) {
+      highValue = optionIntRange.high.round();
+    }
+
     return  OptionInt._(optionField: optionField, range: optionIntRange, lowValue:  lowValue, highValue:  highValue);
   }
+
 
   OptionInt._(
       {required super.optionField,

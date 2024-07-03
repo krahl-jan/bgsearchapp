@@ -24,7 +24,7 @@ class FilterDbView extends StatelessWidget {
               children: [
                 Text(filter.optionField.displayString),
                 SizedBox(width: 15),
-                Text(filter.operator ?? ""),
+                Text(filter.value2 ?? ""),
                 SizedBox(width: 15),
                 Text(filter.value ?? "")
               ],

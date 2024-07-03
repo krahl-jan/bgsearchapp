@@ -18,11 +18,11 @@ FilterSet toDbFilterSet(List<Option> options) {
   List<Filter> f = List.empty(growable: true);
   for (Option o in options) {
     dynamic value = o.getValue();
-    dynamic operator = o.getValue2();
+    dynamic value2 = o.getValue2();
     f.add(Filter(
         optionField: o.optionField,
         value: value?.toString(),
-        operator: operator.toString()));
+        value2: value2.toString()));
   }
   return FilterSet(f);
 }
@@ -30,9 +30,8 @@ FilterSet toDbFilterSet(List<Option> options) {
 List<Option> toOptionList(FilterSet filterSet) {
   List<Option> l = List.empty(growable: true);
   for (Filter f in filterSet.filterList) {
-    Operator? operator = operatorFromString(f.operator);
     l.add(optionFactory(
-        optionField: f.optionField, operator: operator, value: f.value));
+        optionField: f.optionField, value: f.value, value2: f.value2));
   }
   return l;
 }
@@ -41,10 +40,10 @@ List<Option> toOptionList(FilterSet filterSet) {
 class Filter {
   String? value;
   @enumerated
-  String? operator;
+  String? value2;
   @enumerated
   late OptionField optionField;
 
   Filter(
-      {this.optionField = OptionField.nameContains, this.value, this.operator});
+      {this.optionField = OptionField.nameContains, this.value, this.value2});
 }
