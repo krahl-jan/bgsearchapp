@@ -76,17 +76,17 @@ class HttpSearchRepository {
       OptionField.nameContains =>
         'name:"${(option as OptionString).value.toString()}"',
       OptionField.age =>
-        "age${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "age>=${(option as OptionInt).lowValue.toString()} age<=${(option).highValue.toString()}",
       OptionField.maxPlaytime =>
-        "max-playtime${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "max-playtime>=${(option as OptionInt).lowValue.toString()} max-playtime<=${(option).highValue.toString()}",
       OptionField.category =>
         'category:"${(option as OptionDropdownList).value.getDisplayString()}"',
       OptionField.bestPlayers =>
-        "best-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "best-players>=${(option as OptionInt).lowValue.toString()} best-players<=${(option).highValue.toString()}",
       OptionField.maxPlayers =>
-        "max-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "max-players>=${(option as OptionInt).lowValue.toString()} max-players<=${(option).highValue.toString()}",
       OptionField.bestOrGoodPlayerCount =>
-        "quorum-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "quorum-players>=${(option as OptionInt).lowValue.toString()} quorum-players<=${(option).highValue.toString()}",
       OptionField.descriptionContains =>
         'desc:"${(option as OptionString).value.toString()}"',
     };

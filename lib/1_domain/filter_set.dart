@@ -18,7 +18,7 @@ FilterSet toDbFilterSet(List<Option> options) {
   List<Filter> f = List.empty(growable: true);
   for (Option o in options) {
     dynamic value = o.getValue();
-    dynamic operator = o.getOperator();
+    dynamic operator = o.getValue2();
     f.add(Filter(
         optionField: o.optionField,
         value: value?.toString(),

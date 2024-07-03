@@ -18,8 +18,7 @@ abstract class Option {
   bool hasValue();
 
   getValue();
-
-  Operator? getOperator();
+  getValue2();
 
   Option(
       {required this.optionField, required OptionFieldType optionFieldType}) {
@@ -34,16 +33,15 @@ Option optionFactory(
     OptionFieldType.string =>
       OptionString(optionField: optionField, value: value),
     OptionFieldType.int => OptionInt(
-        optionField: optionField,
-        value: value != null ? int.tryParse(value) : null,
-        operator: operator ?? Operator.lessEqual,
-        ranges: OptionIntRanges.age),
+        optionField,
+        intRangeMap[optionField] ?? OptionIntRange.fallback),
     OptionFieldType.dropdown => OptionDropdownList<CategoriesList>(
         optionField: optionField,
         value: value != null
             ? CategoriesList.values.byName(value)
             : CategoriesList.values.first),
     OptionFieldType.boolean => throw UnimplementedError(),
+
   };
 }
 
@@ -68,38 +66,44 @@ class OptionString extends Option {
   }
 
   @override
-  Operator? getOperator() {
-    return null;
+  getValue2() {
+    return "";
   }
+
 }
 
 class OptionInt extends Option {
-  int? value;
-  int? highValue;
-  Operator operator;
-  OptionIntRanges ranges;
+  OptionIntRange range;
+  int lowValue;
+  int highValue;
 
-  OptionInt(
+  factory OptionInt(OptionField optionField, OptionIntRange optionIntRange) {
+    final int lowValue = optionIntRange.low.round();
+    final int highValue = optionIntRange.high.round();
+    return  OptionInt._(optionField: optionField, range: optionIntRange, lowValue:  lowValue, highValue:  highValue);
+  }
+
+  OptionInt._(
       {required super.optionField,
-      this.operator = Operator.lessEqual,
-      this.value,
-      this.highValue,
-      required this.ranges})
+      required this.range,
+      required this.lowValue,
+      required this.highValue})
       : super(optionFieldType: OptionFieldType.int);
 
   @override
   bool hasValue() {
-    return value != null;
+    return true;
   }
 
-  @override
-  Operator? getOperator() {
-    return operator;
-  }
 
   @override
   getValue() {
-    return value;
+    return lowValue;
+  }
+
+  @override
+  getValue2() {
+    return highValue;
   }
 }
 
@@ -125,5 +129,10 @@ class OptionDropdownList<T extends Enum> extends Option {
   @override
   getValue() {
     return value.getName();
+  }
+
+  @override
+  getValue2() {
+    return "";
   }
 }

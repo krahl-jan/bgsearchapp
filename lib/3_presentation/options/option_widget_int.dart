@@ -15,7 +15,13 @@ class OptionWidgetInt extends StatefulWidget {
 
 class _OptionWidgetIntState extends State<OptionWidgetInt> {
   final textController = TextEditingController();
-  RangeValues _currentRangeValues = const RangeValues(3, 15);
+  late RangeValues _currentRangeValues;
+  @override
+  void initState() {
+    super.initState();
+    _currentRangeValues = RangeValues(widget.option.range.low, widget.option.range.high);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,36 +39,26 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.option.optionField.displayString),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: DropdownButton<String>(items: [
-                    for (final value in Operator.values)
-                      DropdownMenuItem(value: value.string, child: Text(value.string))
-                  ],
-                      onChanged: (String? value) {
-                    if (value != null) {
-                        setState(() {
-                          widget.option.operator = operatorFromStringDefaultEqual(value);
-                        });
-                    }
-                  }, value: widget.option.operator.toString(),
-                  ),
-                ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: RangeSlider(
                       values: _currentRangeValues,
-                      min: widget.option.ranges.low,
-                      max: widget.option.ranges.high,
-                      divisions: widget.option.ranges.steps,
+                      min: widget.option.range.low,
+                      max: widget.option.range.high,
+                      divisions: widget.option.range.steps,
                       labels: RangeLabels(
                         _currentRangeValues.start.round().toString(),
-                        _currentRangeValues.end.round() == 18 ? "Any" : _currentRangeValues.end.round().toString(),
+                        _currentRangeValues.end.round() == widget.option.range.high ? "Any" : _currentRangeValues.end.round().toString(),
                       ),
                       onChanged: (RangeValues values) {
                         setState(() {
                           _currentRangeValues = values;
+                          widget.option.lowValue = values.start.round();
+                          widget.option.highValue = values.end.round();
+                          if (widget.option.highValue == widget.option.range.high) {
+                            widget.option.highValue = 10000;
+                          }
                         });
                       },
                     )
