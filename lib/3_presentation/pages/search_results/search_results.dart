@@ -29,19 +29,25 @@ class _ResultsPageState extends State<ResultsPage> {
     return Scaffold(
       body: const ResultsPageBody(),
       bottomNavigationBar: Card(
-        child: NumberPaginator(
-          numberPages: 10,
-          controller: _controller,
-          initialPage: index,
-          contentBuilder: (index) => Expanded(
-            child: Center(
-              child: Text("Search Results Page: ${index + 1}"),
+        child: Row(
+          children: [const BackButton(),
+            Expanded(
+              child: NumberPaginator(
+                numberPages: 10,
+                controller: _controller,
+                initialPage: index,
+                contentBuilder: (index) => Expanded(
+                  child: Center(
+                    child: Text("Search Results Page: ${index + 1}"),
+                  ),
+                ),
+                onPageChange: (int index) {
+                  print(index);
+                  context.read<StateManager>().changeResultsPage(index);
+                },
+              ),
             ),
-          ),
-          onPageChange: (int index) {
-            print(index);
-            context.read<StateManager>().changeResultsPage(index);
-          },
+          ],
         ),
       ),
     );
