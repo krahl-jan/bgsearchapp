@@ -37,10 +37,10 @@ class OptionSelection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: !context.read<StateManager>().isOptionSelected(optionField) ? () {
                       context.read<StateManager>().addSearchOption(optionFactory(optionField: optionField));
                       Navigator.pop(context);
-                    },
+                    }  : null,
                     child: Text(
                       optionField.displayString,
                       style: const TextStyle(fontSize: 18),
