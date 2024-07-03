@@ -21,7 +21,7 @@ class _OptionWidgetDropdownState extends State<OptionWidgetDropdown> {
         padding: const EdgeInsets.all(4.0),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.cyanAccent,
+            color: Theme.of(context).focusColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(

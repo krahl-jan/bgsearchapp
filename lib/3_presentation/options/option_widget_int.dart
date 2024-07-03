@@ -29,7 +29,7 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
       child: Center(
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.cyanAccent,
+            color: Theme.of(context).focusColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
