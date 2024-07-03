@@ -25,7 +25,7 @@ class _GameSearchState extends State<GameSearch> {
     Isar isar = context.read<StateManager>().isar;
 
     void doSearch(BuildContext context) {
-      context.read<StateManager>().retrieveSearchResults();
+      context.read<StateManager>().retrieveSearchResults(0);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const ResultsPage()));
     }

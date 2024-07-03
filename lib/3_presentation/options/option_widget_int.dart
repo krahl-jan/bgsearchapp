@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../2_application/state_manager.dart';
 import 'option_delete.dart';
 
 class OptionWidgetInt extends StatefulWidget {
@@ -50,6 +52,7 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
                         currentRangeValues.end.round() == widget.option.range.high ? "Any" : currentRangeValues.end.round().toString(),
                       ),
                       onChanged: (RangeValues values) {
+                        context.read<StateManager>().hasNewFilters = true;
                         setState(() {
                           currentRangeValues = values;
                           widget.option.lowValue = values.start.round().toInt();

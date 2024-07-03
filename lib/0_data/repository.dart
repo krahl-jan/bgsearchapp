@@ -9,13 +9,14 @@ import 'package:http/http.dart' as http;
 String baseUri = "https://bgs.nafarlee.dev/";
 
 class HttpSearchRepository {
-  Future<List<GameShortInfo>> getShortGameInfos(List<Option> options) async {
+  int resultsPerPage = 10;
+  Future<List<GameShortInfo>> getShortGameInfos(List<Option> options, int page) async {
     String query =
         [for (var option in options) optionToQueryString(option)].join(" ");
     print("query: $query");
 
     http.Response response = await http.get(Uri.parse(
-        "${baseUri}search?query=$query&limit=30&order=bayes_rating&direction=DESC"));
+        "${baseUri}search?query=$query&limit=$resultsPerPage&order=bayes_rating&direction=DESC&offset=${page * resultsPerPage}"));
 
     Iterable<RegExpMatch> matches =
         RegExp(r'img src="/image-mirror/([^"]*).*?/games/(\d+)">([^<]*)')
