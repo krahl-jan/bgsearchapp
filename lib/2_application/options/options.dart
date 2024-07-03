@@ -131,10 +131,6 @@ class OptionDropdownList<T extends Enum> extends Option {
     return true;
   }
 
-  @override
-  Operator? getOperator() {
-    return null;
-  }
 
   @override
   getValue() {

@@ -1,4 +1,3 @@
-import 'package:bgsearchapp/2_application/operators.dart';
 import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';

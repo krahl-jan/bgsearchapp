@@ -1,6 +1,5 @@
 import 'package:isar/isar.dart';
 
-import '../2_application/operators.dart';
 import '../2_application/options/library/option_fields.dart';
 import '../2_application/options/options.dart';
 
