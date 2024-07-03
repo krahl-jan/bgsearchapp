@@ -1,18 +1,19 @@
 import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'game_details.dart';
+import '../game_details.dart';
 
-class ResultsPage extends StatefulWidget {
-  const ResultsPage({super.key});
+class ResultsPageBody extends StatefulWidget {
+  const ResultsPageBody({super.key});
 
   @override
-  State<ResultsPage> createState() => _ResultsPageState();
+  State<ResultsPageBody> createState() => _ResultsPageBodyState();
 }
 
-class _ResultsPageState extends State<ResultsPage> {
+class _ResultsPageBodyState extends State<ResultsPageBody> {
   Future<void> _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -29,11 +30,7 @@ class _ResultsPageState extends State<ResultsPage> {
     if (map[page] == null) {
       return const Center(child: CircularProgressIndicator());
     }
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search Results'),
-      ),
-      body: ListView.builder(
+    return ListView.builder(
         itemCount: map[page]!.length,
         itemBuilder: (context, index) {
           return ExpansionTile(
@@ -86,7 +83,6 @@ class _ResultsPageState extends State<ResultsPage> {
             ],
           );
         },
-      ),
-    );
+      );
   }
 }

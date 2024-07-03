@@ -45,6 +45,7 @@ dependencies:
   loading_animation_widget: ^1.2.1
   html_unescape: ^2.0.0
   google_fonts: ^6.2.1
+  number_paginator: ^0.4.1
 
 dev_dependencies:
   isar_generator: ^3.1.0+1

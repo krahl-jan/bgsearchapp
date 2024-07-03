@@ -1,7 +1,7 @@
 import 'package:bgsearchapp/1_domain/filter_set.dart';
 import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:bgsearchapp/3_presentation/pages/filter_set_selection.dart';
-import 'package:bgsearchapp/3_presentation/pages/search_results.dart';
+import 'package:bgsearchapp/3_presentation/pages/search_results/search_results.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
