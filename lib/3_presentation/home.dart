@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int index = 0;
-  final screens = [GameSearch(), FavouritesPage(), Settings()];
+  final screens = [const GameSearch(), const FavouritesPage(), const Settings()];
 
   @override
   Widget build(BuildContext context) {

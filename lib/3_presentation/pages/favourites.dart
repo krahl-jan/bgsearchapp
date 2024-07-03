@@ -1,11 +1,10 @@
 import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FavouritesPage extends StatefulWidget {
-  FavouritesPage({super.key});
+  const FavouritesPage({super.key});
 
   @override
   State<FavouritesPage> createState() => _FavouritesPageState();

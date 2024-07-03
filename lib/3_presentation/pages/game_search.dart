@@ -26,7 +26,7 @@ class _GameSearchState extends State<GameSearch> {
 
     void doSearch(BuildContext context) {
       context.read<StateManager>().retrieveSearchResults();
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const ResultsPage()));
     }
 
     void saveFilters(BuildContext context) async {
@@ -34,7 +34,7 @@ class _GameSearchState extends State<GameSearch> {
     }
 
     void loadFilters(BuildContext context) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => FilterSetSelection()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const FilterSetSelection()));
     }
 
     return Scaffold(

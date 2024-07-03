@@ -20,8 +20,9 @@ abstract class Option {
 
   Option(
       {required this.optionField, required OptionFieldType optionFieldType}) {
-    if (optionField.optionFieldType != optionFieldType)
+    if (optionField.optionFieldType != optionFieldType) {
       throw const FormatException("option field types dont match");
+    }
   }
 }
 

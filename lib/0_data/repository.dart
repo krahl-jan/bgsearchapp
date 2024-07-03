@@ -12,7 +12,7 @@ class HttpSearchRepository {
   Future<List<GameShortInfo>> getShortGameInfos(List<Option> options) async {
     String query =
         [for (var option in options) optionToQueryString(option)].join(" ");
-    print("query: ${query}");
+    print("query: $query");
 
     http.Response response = await http.get(Uri.parse(
         "${baseUri}search?query=$query&limit=30&order=bayes_rating&direction=DESC"));
@@ -50,7 +50,7 @@ class HttpSearchRepository {
     String maxPlayers = match.group(9) ?? "";
     String weightVotes = match.group(10) ?? "";
     String weight = match.group(11) ?? "";
-    var unescape = new HtmlUnescape();
+    var unescape = HtmlUnescape();
     var result = GameDetailedInfo(
         id,
         name,

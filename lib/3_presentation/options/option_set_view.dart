@@ -2,7 +2,7 @@ import 'package:bgsearchapp/1_domain/filter_set.dart';
 import 'package:flutter/material.dart';
 
 class FilterDbView extends StatelessWidget {
-  FilterDbView({super.key, required this.filter});
+  const FilterDbView({super.key, required this.filter});
 
   final Filter filter;
 
@@ -23,9 +23,9 @@ class FilterDbView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(filter.optionField.displayString),
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
                 Text(filter.value2 ?? ""),
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
                 Text(filter.value ?? "")
               ],
             ),

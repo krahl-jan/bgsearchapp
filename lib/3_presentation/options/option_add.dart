@@ -17,7 +17,7 @@ class _OptionWidgetAddOptionState extends State<OptionWidgetAddOption> {
         context: context,
         barrierDismissible: false, // should dialog be dismissed when tapped outside
         barrierLabel: "Add Option", // label for barrier
-        transitionDuration: Duration(milliseconds: 300), // how long it takes to popup dialog after button click
+        transitionDuration: const Duration(milliseconds: 300), // how long it takes to popup dialog after button click
     pageBuilder: (_, __, ___) {
           return const OptionSelection();
     },);
@@ -25,7 +25,7 @@ class _OptionWidgetAddOptionState extends State<OptionWidgetAddOption> {
 
     @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: () { _showFullModal(context);}, icon:  Icon(Icons.add));
+    return IconButton(onPressed: () { _showFullModal(context);}, icon:  const Icon(Icons.add));
   }
 }
 
