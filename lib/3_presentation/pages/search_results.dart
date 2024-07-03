@@ -27,7 +27,7 @@ class _ResultsPageState extends State<ResultsPage> {
     var map = context.watch<StateManager>().searchResultPages;
     var favourites = context.watch<StateManager>().favourites;
     if (map[page] == null) {
-      return Container(color: Colors.white, child: const Center(child: CircularProgressIndicator()));
+      return const Center(child: CircularProgressIndicator());
     }
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +77,7 @@ class _ResultsPageState extends State<ResultsPage> {
                       },
                       color: favourites.contains(map[page]![index].id)
                           ? Colors.red
-                          : Colors.black,
+                          : Theme.of(context).disabledColor,
                       icon: const Icon(Icons.favorite)),
                 ],
               ),
