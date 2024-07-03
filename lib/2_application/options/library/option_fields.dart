@@ -16,7 +16,10 @@ enum OptionField {
   bestPlayers(
       displayString: "Best Player Count", optionFieldType: OptionFieldType.int),
   bestOrGoodPlayerCount(
-      displayString: "Good Player Count", optionFieldType: OptionFieldType.int);
+      displayString: "Good Player Count", optionFieldType: OptionFieldType.int),
+  releaseYear(
+      displayString: "Release Year", optionFieldType: OptionFieldType.int),
+      ;
 
   const OptionField({
     required this.displayString,
@@ -44,4 +47,5 @@ var intRangeMap = <OptionField, OptionIntRange>{
   OptionField.bestPlayers: OptionIntRange.bestPlayers,
   OptionField.maxPlaytime: OptionIntRange.maxPlaytime,
   OptionField.maxPlayers: OptionIntRange.maxPlayers,
+  OptionField.releaseYear: OptionIntRange.releaseYear,
 };
