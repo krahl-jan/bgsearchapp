@@ -4,6 +4,7 @@ enum OptionIntRange {
   maxPlayers(low: 0, high: 20, steps: 20),
   bestPlayers(low: 0, high: 20, steps: 20),
   bestOrGoodPlayerCount(low: 0, high: 20, steps: 20),
+  releaseYear(low: 1980, high: 2026, steps: 46),
   fallback(low: 0, high: 20, steps: 20)
   ;
 

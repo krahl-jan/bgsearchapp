@@ -37,6 +37,13 @@ class StateManager extends ChangeNotifier {
   late Stream<void> searchOptionsChanged;
 
   int results_page = 0;
+
+  void changeResultsPage(int page) {
+    results_page = page;
+    notifyListeners();
+    retrieveSearchResults(page);
+  }
+
   bool hasNewFilters = true;
 
   HttpSearchRepository repository = HttpSearchRepository();

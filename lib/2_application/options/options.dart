@@ -112,6 +112,10 @@ class OptionInt extends Option {
 
   @override
   getValue2() {
+    if (highValue == range.high) {
+      // maximum of range means any value
+      return 10000;
+    }
     return highValue;
   }
 }
