@@ -18,6 +18,7 @@ class GameSearch extends StatefulWidget {
 }
 
 class _GameSearchState extends State<GameSearch> {
+
   @override
   Widget build(BuildContext context) {
     List<Option> searchOptions = context.watch<StateManager>().searchOptions;
@@ -26,16 +27,51 @@ class _GameSearchState extends State<GameSearch> {
     void doSearch(BuildContext context) {
       context.read<StateManager>().retrieveSearchResults();
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ResultsPage()));
+          context, MaterialPageRoute(builder: (context) => const ResultsPage()));
+    }
+
+    Future<String?> showTextFieldDialog(BuildContext context) async {
+      TextEditingController _textFieldController = TextEditingController();
+      String? result = await showDialog<String>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Enter Text'),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: "Type something"),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(_textFieldController.text);
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return result;
     }
 
     void saveFilters(BuildContext context) async {
-      isar.writeTxn(() => isar.filterSets.put(toDbFilterSet(searchOptions)));
+      String? enteredText = await showTextFieldDialog(context);
+      if (enteredText != null && enteredText.isNotEmpty) {
+        isar.writeTxn(() => isar.filterSets.put(toDbFilterSet(enteredText ,searchOptions)));
+      }
+
     }
 
     void loadFilters(BuildContext context) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => FilterSetSelection()));
+          MaterialPageRoute(builder: (context) => const FilterSetSelection()));
     }
 
     return Scaffold(

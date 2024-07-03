@@ -1,11 +1,12 @@
 import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'game_details.dart';
+
 class ResultsPage extends StatefulWidget {
-  ResultsPage({super.key});
+  const ResultsPage({super.key});
 
   @override
   State<ResultsPage> createState() => _ResultsPageState();
@@ -32,6 +33,9 @@ class _ResultsPageState extends State<ResultsPage> {
         itemCount: list.length,
         itemBuilder: (context, index) {
           return ExpansionTile(
+            onExpansionChanged: (bool isExpanded) {
+              context.read<StateManager>().retrieveDetailedInfo(list[index].id);
+            },
             title: Row(
               children: [
                 list[index].imageUri.isNotEmpty
@@ -73,11 +77,8 @@ class _ResultsPageState extends State<ResultsPage> {
                       icon: const Icon(Icons.favorite)),
                 ],
               ),
-              Text(context
-                      .read<StateManager>()
-                      .searchResultsDetails[list[index].id]
-                      ?.description ??
-                  "loading description ...")
+              GameDetails(gameId: list[index].id),
+
             ],
           );
         },

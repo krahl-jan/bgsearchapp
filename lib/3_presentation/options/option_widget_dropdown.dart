@@ -1,7 +1,5 @@
 import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
-
-import '../../2_application/options/library/dropdown_option.dart';
 import 'option_delete.dart';
 
 class OptionWidgetDropdown extends StatefulWidget {

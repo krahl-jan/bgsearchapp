@@ -1,5 +1,5 @@
-import 'package:bgsearchapp/2_application/operators.dart';
 import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
+import 'package:bgsearchapp/2_application/options/library/option_int_ranges.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
@@ -14,7 +14,7 @@ class StateManager extends ChangeNotifier {
 
   List<Option> searchOptions = [
     OptionString(optionField: OptionField.nameContains),
-    OptionInt(optionField: OptionField.age, operator: Operator.lessEqual)
+    OptionInt(OptionField.age, OptionIntRange.age, null, null)
   ];
 
   bool isOptionSelected(OptionField optionField) {
@@ -46,13 +46,14 @@ class StateManager extends ChangeNotifier {
     var infos = await repository.getShortGameInfos(searchOptions);
     searchResults.addAll(infos);
     notifyListeners();
-    for (var info in infos) {
-      if (!searchResultsDetails.containsKey(info.id)) {
-        searchResultsDetails[info.id] =
-        await repository.getDetailedInfo(info.id);
-      }
+  }
+
+  retrieveDetailedInfo(int id) async {
+    if (!searchResultsDetails.containsKey(id)) {
+      searchResultsDetails[id] =
+      await repository.getDetailedInfo(id);
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   addFavourite(int id) {
