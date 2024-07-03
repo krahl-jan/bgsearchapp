@@ -32,6 +32,7 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.option.optionField.displayString),
+                SizedBox(width: 10,),
                 Expanded(
                   child: TextFormField(
                     initialValue: widget.option.value,

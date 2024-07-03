@@ -45,6 +45,24 @@ dependencies:
   loading_animation_widget: ^1.2.1
   html_unescape: ^2.0.0
   google_fonts: ^6.2.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "lib/3_presentation/assets/icon.png"
+  adaptive_icon_background: "lib/3_presentation/assets/icon.png"
+  adaptive_icon_foreground: "lib/3_presentation/assets/icon.png"
+
+flutter_native_splash:
+  background_image: "lib/3_presentation/assets/bg2.png"
+  android_gravity: fill
+  fullscreen: true
+  android_12:
+    image: "lib/3_presentation/assets/icon.png"
+    color: "#FFDAD6"
+    color_dark: "#2C1511"
 
 dev_dependencies:
   isar_generator: ^3.1.0+1
