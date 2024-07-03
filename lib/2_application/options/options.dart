@@ -6,10 +6,9 @@
 // select string(s) from choice
 
 import 'package:bgsearchapp/2_application/options/library/categories.dart';
-
-import '../operators.dart';
 import 'library/dropdown_option.dart';
 import 'library/option_fields.dart';
+import 'library/option_int_ranges.dart';
 
 abstract class Option {
   final OptionField optionField;
@@ -17,31 +16,33 @@ abstract class Option {
   bool hasValue();
 
   getValue();
-
-  Operator? getOperator();
+  getValue2();
 
   Option(
       {required this.optionField, required OptionFieldType optionFieldType}) {
-    if (optionField.optionFieldType != optionFieldType)
+    if (optionField.optionFieldType != optionFieldType) {
       throw const FormatException("option field types dont match");
+    }
   }
 }
 
 Option optionFactory(
-    {required OptionField optionField, Operator? operator, String? value}) {
+    {required OptionField optionField, String? value, String? value2}) {
   return switch (optionField.optionFieldType) {
     OptionFieldType.string =>
       OptionString(optionField: optionField, value: value),
     OptionFieldType.int => OptionInt(
-        optionField: optionField,
-        value: value != null ? int.tryParse(value) : null,
-        operator: operator ?? Operator.lessEqual),
+        optionField,
+        intRangeMap[optionField] ?? OptionIntRange.fallback,
+        int.parse(value ?? intRangeMap[optionField]!.low.toString()),
+        int.parse(value2 ?? intRangeMap[optionField]!.high.toString())),
     OptionFieldType.dropdown => OptionDropdownList<CategoriesList>(
         optionField: optionField,
         value: value != null
             ? CategoriesList.values.byName(value)
             : CategoriesList.values.first),
     OptionFieldType.boolean => throw UnimplementedError(),
+
   };
 }
 
@@ -66,34 +67,52 @@ class OptionString extends Option {
   }
 
   @override
-  Operator? getOperator() {
-    return null;
+  getValue2() {
+    return "";
   }
+
 }
 
 class OptionInt extends Option {
-  int? value;
-  Operator operator;
+  OptionIntRange range;
+  int lowValue;
+  int highValue;
 
-  OptionInt(
+  factory OptionInt(OptionField optionField, OptionIntRange optionIntRange, int? low, int? high) {
+    int lowValue = low ?? optionIntRange.low.round();
+    int highValue = high ?? optionIntRange.high.round();
+    if (lowValue < optionIntRange.low.round()) {
+      lowValue = optionIntRange.low.round();
+    }
+    if (highValue > optionIntRange.high.round()) {
+      highValue = optionIntRange.high.round();
+    }
+
+    return  OptionInt._(optionField: optionField, range: optionIntRange, lowValue:  lowValue, highValue:  highValue);
+  }
+
+
+  OptionInt._(
       {required super.optionField,
-      this.operator = Operator.lessEqual,
-      this.value})
+      required this.range,
+      required this.lowValue,
+      required this.highValue})
       : super(optionFieldType: OptionFieldType.int);
 
   @override
   bool hasValue() {
-    return value != null;
+    return true;
   }
 
-  @override
-  Operator? getOperator() {
-    return operator;
-  }
 
   @override
   getValue() {
-    return value;
+    return lowValue;
+  }
+
+  @override
+  getValue2() {
+    return highValue;
   }
 }
 
@@ -111,13 +130,14 @@ class OptionDropdownList<T extends Enum> extends Option {
     return true;
   }
 
-  @override
-  Operator? getOperator() {
-    return null;
-  }
 
   @override
   getValue() {
     return value.getName();
+  }
+
+  @override
+  getValue2() {
+    return "";
   }
 }

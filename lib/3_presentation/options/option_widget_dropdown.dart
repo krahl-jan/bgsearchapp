@@ -1,7 +1,7 @@
 import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
-
-import '../../2_application/options/library/dropdown_option.dart';
+import 'package:provider/provider.dart';
+import '../../2_application/state_manager.dart';
 import 'option_delete.dart';
 
 class OptionWidgetDropdown extends StatefulWidget {
@@ -38,6 +38,7 @@ class _OptionWidgetDropdownState extends State<OptionWidgetDropdown> {
                       DropdownMenuItem(value: value.getLinkString(), child: Text(value.getDisplayString()))
                   ],
                     onChanged: (String? value) {
+                      context.read<StateManager>().hasNewFilters = true;
                       if (value != null) {
                         setState(() {
                           widget.option.value = widget.option.value.factoryFromString(value);

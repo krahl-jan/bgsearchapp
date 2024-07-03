@@ -1,5 +1,5 @@
-import 'package:bgsearchapp/2_application/operators.dart';
 import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
+import 'package:bgsearchapp/2_application/options/library/option_int_ranges.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
@@ -16,7 +16,7 @@ class StateManager extends ChangeNotifier {
 
   List<Option> searchOptions = [
     OptionString(optionField: OptionField.nameContains),
-    OptionInt(optionField: OptionField.age, operator: Operator.lessEqual)
+    OptionInt(OptionField.age, OptionIntRange.age, null, null)
   ];
 
   bool isOptionSelected(OptionField optionField) {
@@ -30,11 +30,14 @@ class StateManager extends ChangeNotifier {
 
   List<int> favourites = [];
 
-  List<GameShortInfo> searchResults = [];
-  Map<int, GameDetailedInfo> searchResultsDetails = {};
+  Map<int, List<GameShortInfo>> searchResultPages = {};
+  Map<int, GameDetailedInfo> searchResultsDetails= {};
 
   late Isar isar;
   late Stream<void> searchOptionsChanged;
+
+  int results_page = 0;
+  bool hasNewFilters = true;
 
   HttpSearchRepository repository = HttpSearchRepository();
 
@@ -45,18 +48,27 @@ class StateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  retrieveSearchResults() async {
-    searchResults.clear();
-    var infos = await repository.getShortGameInfos(searchOptions);
-    searchResults.addAll(infos);
-    notifyListeners();
-    for (var info in infos) {
-      if (!searchResultsDetails.containsKey(info.id)) {
-        searchResultsDetails[info.id] =
-            await repository.getDetailedInfo(info.id);
+  retrieveSearchResults(int page) async {
+    if (hasNewFilters) {
+      hasNewFilters = false;
+      searchResultPages.clear();
+      var infos = await repository.getShortGameInfos(searchOptions, page);
+      searchResultPages[page] = infos;
+      notifyListeners();
+    } else {
+      if (!searchResultPages.containsKey(page)) {
+        searchResultPages[page] = await repository.getShortGameInfos(searchOptions, page);
+        notifyListeners();
       }
     }
-    notifyListeners();
+  }
+
+  retrieveDetailedInfo(int id) async {
+    if (!searchResultsDetails.containsKey(id)) {
+      searchResultsDetails[id] =
+      await repository.getDetailedInfo(id);
+      notifyListeners();
+    }
   }
 
   addFavourite(int id) {
@@ -77,16 +89,19 @@ class StateManager extends ChangeNotifier {
 
   addSearchOption(Option option) {
     searchOptions.add(option);
+    hasNewFilters = true;
     notifyListeners();
   }
 
   removeSearchOption(Option option) {
     searchOptions.remove(option);
+    hasNewFilters = true;
     notifyListeners();
   }
 
   setSearchOptions(List<Option> newSearchOptions) {
     searchOptions = newSearchOptions;
+    hasNewFilters = true;
     notifyListeners();
   }
 

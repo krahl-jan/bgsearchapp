@@ -9,13 +9,14 @@ import 'package:http/http.dart' as http;
 String baseUri = "https://bgs.nafarlee.dev/";
 
 class HttpSearchRepository {
-  Future<List<GameShortInfo>> getShortGameInfos(List<Option> options) async {
+  int resultsPerPage = 10;
+  Future<List<GameShortInfo>> getShortGameInfos(List<Option> options, int page) async {
     String query =
         [for (var option in options) optionToQueryString(option)].join(" ");
-    print("query: ${query}");
+    print("query: $query");
 
     http.Response response = await http.get(Uri.parse(
-        "${baseUri}search?query=$query&limit=30&order=bayes_rating&direction=DESC"));
+        "${baseUri}search?query=$query&limit=$resultsPerPage&order=bayes_rating&direction=DESC&offset=${page * resultsPerPage}"));
 
     Iterable<RegExpMatch> matches =
         RegExp(r'img src="/image-mirror/([^"]*).*?/games/(\d+)">([^<]*)')
@@ -50,7 +51,7 @@ class HttpSearchRepository {
     String maxPlayers = match.group(9) ?? "";
     String weightVotes = match.group(10) ?? "";
     String weight = match.group(11) ?? "";
-    var unescape = new HtmlUnescape();
+    var unescape = HtmlUnescape();
     var result = GameDetailedInfo(
         id,
         name,
@@ -76,17 +77,17 @@ class HttpSearchRepository {
       OptionField.nameContains =>
         'name:"${(option as OptionString).value.toString()}"',
       OptionField.age =>
-        "age${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "age>=${(option as OptionInt).lowValue.toString()} age<=${(option).highValue.toString()}",
       OptionField.maxPlaytime =>
-        "max-playtime${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "max-playtime>=${(option as OptionInt).lowValue.toString()} max-playtime<=${(option).highValue.toString()}",
       OptionField.category =>
         'category:"${(option as OptionDropdownList).value.getDisplayString()}"',
       OptionField.bestPlayers =>
-        "best-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "best-players>=${(option as OptionInt).lowValue.toString()} best-players<=${(option).highValue.toString()}",
       OptionField.maxPlayers =>
-        "max-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "max-players>=${(option as OptionInt).lowValue.toString()} max-players<=${(option).highValue.toString()}",
       OptionField.bestOrGoodPlayerCount =>
-        "quorum-players${(option as OptionInt).operator.toString()}${(option).value.toString()}",
+        "quorum-players>=${(option as OptionInt).lowValue.toString()} quorum-players<=${(option).highValue.toString()}",
       OptionField.descriptionContains =>
         'desc:"${(option as OptionString).value.toString()}"',
     };

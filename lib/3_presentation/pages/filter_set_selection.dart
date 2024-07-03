@@ -8,7 +8,7 @@ import '../../2_application/state_manager.dart';
 import '../options/option_set_view.dart';
 
 class FilterSetSelection extends StatefulWidget {
-  FilterSetSelection({super.key});
+  const FilterSetSelection({super.key});
 
   @override
   State<FilterSetSelection> createState() => _FilterSetSelectionState();
@@ -35,7 +35,7 @@ class _FilterSetSelectionState extends State<FilterSetSelection> {
     loadFilterSets(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('FilterSet Selection'),
+        title: const Text('FilterSet Selection'),
       ),
       body: filterSets != null
           ? ListView.builder(
@@ -43,7 +43,7 @@ class _FilterSetSelectionState extends State<FilterSetSelection> {
               itemBuilder: (context, i) {
                 return ListTile(
                   title: Center(
-                    child: setWidget(filterSets![i]),
+                    child: Text(filterSets![i].name),
                   ),
                   onTap: () => setFilterSet(context, filterSets![i]),
                 );

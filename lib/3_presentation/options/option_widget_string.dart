@@ -1,6 +1,8 @@
 import 'package:bgsearchapp/2_application/options/options.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../2_application/state_manager.dart';
 import 'option_delete.dart';
 
 class OptionWidgetString extends StatefulWidget {
@@ -34,6 +36,7 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
                   child: TextFormField(
                     initialValue: widget.option.value,
                     onChanged: (name) {
+                      context.read<StateManager>().hasNewFilters = true;
                       widget.option.value = name;
                     },
                   ),
