@@ -18,7 +18,6 @@ class GameSearch extends StatefulWidget {
 }
 
 class _GameSearchState extends State<GameSearch> {
-
   @override
   Widget build(BuildContext context) {
     List<Option> searchOptions = context.watch<StateManager>().searchOptions;
@@ -26,7 +25,8 @@ class _GameSearchState extends State<GameSearch> {
 
     void doSearch(BuildContext context) {
       context.read<StateManager>().retrieveSearchResults();
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ResultsPage()));
     }
 
     void saveFilters(BuildContext context) async {
@@ -34,39 +34,49 @@ class _GameSearchState extends State<GameSearch> {
     }
 
     void loadFilters(BuildContext context) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => FilterSetSelection()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => FilterSetSelection()));
     }
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () => doSearch(context), child: const Icon(Icons.search),),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              shrinkWrap: true,
-              children: <Widget>[for (var o in searchOptions) OptionWidgetImp(option: o)] + [const OptionWidgetAddOption()],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => doSearch(context),
+        child: const Icon(Icons.search),
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) => Column(
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints.loose(Size.fromHeight(constraints.maxHeight * 0.9)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: searchOptions.length,
+                  itemBuilder: (context, i) {
+                    return OptionWidgetImp(option: searchOptions[i]);
+                  },
+                ),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-            child: Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () => saveFilters(context),
-                  child: const Text("save"),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                ElevatedButton(
-                  onPressed: () => loadFilters(context),
-                  child: const Text("load"),
-                ),
-              ]
-            )
-          )
-        ],
+            const OptionWidgetAddOption(),
+            SizedBox(
+                height: 20,
+                child: Row(children: [
+                  ElevatedButton(
+                    onPressed: () => saveFilters(context),
+                    child: const Text("save"),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  ElevatedButton(
+                    onPressed: () => loadFilters(context),
+                    child: const Text("load"),
+                  ),
+                ]))
+          ],
+        ),
       ),
     );
   }
