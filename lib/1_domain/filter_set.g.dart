@@ -21,7 +21,7 @@ const FilterSetSchema = CollectionSchema(
       id: 0,
       name: r'filterList',
       type: IsarType.objectList,
-      target: r'Filter',
+      target: r'FilterDB',
     ),
     r'name': PropertySchema(
       id: 1,
@@ -36,7 +36,7 @@ const FilterSetSchema = CollectionSchema(
   idName: r'dbId',
   indexes: {},
   links: {},
-  embeddedSchemas: {r'Filter': FilterSchema},
+  embeddedSchemas: {r'FilterDB': FilterDBSchema},
   getId: _filterSetGetId,
   getLinks: _filterSetGetLinks,
   attach: _filterSetAttach,
@@ -51,10 +51,10 @@ int _filterSetEstimateSize(
   var bytesCount = offsets.last;
   bytesCount += 3 + object.filterList.length * 3;
   {
-    final offsets = allOffsets[Filter]!;
+    final offsets = allOffsets[FilterDB]!;
     for (var i = 0; i < object.filterList.length; i++) {
       final value = object.filterList[i];
-      bytesCount += FilterSchema.estimateSize(value, offsets, allOffsets);
+      bytesCount += FilterDBSchema.estimateSize(value, offsets, allOffsets);
     }
   }
   bytesCount += 3 + object.name.length * 3;
@@ -67,10 +67,10 @@ void _filterSetSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeObjectList<Filter>(
+  writer.writeObjectList<FilterDB>(
     offsets[0],
     allOffsets,
-    FilterSchema.serialize,
+    FilterDBSchema.serialize,
     object.filterList,
   );
   writer.writeString(offsets[1], object.name);
@@ -84,11 +84,11 @@ FilterSet _filterSetDeserialize(
 ) {
   final object = FilterSet(
     reader.readString(offsets[1]),
-    reader.readObjectList<Filter>(
+    reader.readObjectList<FilterDB>(
           offsets[0],
-          FilterSchema.deserialize,
+          FilterDBSchema.deserialize,
           allOffsets,
-          Filter(),
+          FilterDB(),
         ) ??
         [],
   );
@@ -104,11 +104,11 @@ P _filterSetDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readObjectList<Filter>(
+      return (reader.readObjectList<FilterDB>(
             offset,
-            FilterSchema.deserialize,
+            FilterDBSchema.deserialize,
             allOffsets,
-            Filter(),
+            FilterDB(),
           ) ??
           []) as P;
     case 1:
@@ -486,7 +486,7 @@ extension FilterSetQueryFilter
 extension FilterSetQueryObject
     on QueryBuilder<FilterSet, FilterSet, QFilterCondition> {
   QueryBuilder<FilterSet, FilterSet, QAfterFilterCondition> filterListElement(
-      FilterQuery<Filter> q) {
+      FilterQuery<FilterDB> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'filterList');
     });
@@ -555,7 +555,8 @@ extension FilterSetQueryProperty
     });
   }
 
-  QueryBuilder<FilterSet, List<Filter>, QQueryOperations> filterListProperty() {
+  QueryBuilder<FilterSet, List<FilterDB>, QQueryOperations>
+      filterListProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'filterList');
     });
@@ -575,15 +576,15 @@ extension FilterSetQueryProperty
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-const FilterSchema = Schema(
-  name: r'Filter',
-  id: 4479994633252671336,
+const FilterDBSchema = Schema(
+  name: r'FilterDB',
+  id: 5576215066464661988,
   properties: {
-    r'optionField': PropertySchema(
+    r'filter': PropertySchema(
       id: 0,
-      name: r'optionField',
+      name: r'filter',
       type: IsarType.byte,
-      enumMap: _FilteroptionFieldEnumValueMap,
+      enumMap: _FilterDBfilterEnumValueMap,
     ),
     r'value': PropertySchema(
       id: 1,
@@ -596,14 +597,14 @@ const FilterSchema = Schema(
       type: IsarType.string,
     )
   },
-  estimateSize: _filterEstimateSize,
-  serialize: _filterSerialize,
-  deserialize: _filterDeserialize,
-  deserializeProp: _filterDeserializeProp,
+  estimateSize: _filterDBEstimateSize,
+  serialize: _filterDBSerialize,
+  deserialize: _filterDBDeserialize,
+  deserializeProp: _filterDBDeserializeProp,
 );
 
-int _filterEstimateSize(
-  Filter object,
+int _filterDBEstimateSize(
+  FilterDB object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -623,34 +624,33 @@ int _filterEstimateSize(
   return bytesCount;
 }
 
-void _filterSerialize(
-  Filter object,
+void _filterDBSerialize(
+  FilterDB object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeByte(offsets[0], object.optionField.index);
+  writer.writeByte(offsets[0], object.filter.index);
   writer.writeString(offsets[1], object.value);
   writer.writeString(offsets[2], object.value2);
 }
 
-Filter _filterDeserialize(
+FilterDB _filterDBDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Filter(
-    optionField:
-        _FilteroptionFieldValueEnumMap[reader.readByteOrNull(offsets[0])] ??
-            OptionField.nameContains,
+  final object = FilterDB(
+    filter: _FilterDBfilterValueEnumMap[reader.readByteOrNull(offsets[0])] ??
+        FilterEnum.nameContains,
     value: reader.readStringOrNull(offsets[1]),
     value2: reader.readStringOrNull(offsets[2]),
   );
   return object;
 }
 
-P _filterDeserializeProp<P>(
+P _filterDBDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -658,8 +658,8 @@ P _filterDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (_FilteroptionFieldValueEnumMap[reader.readByteOrNull(offset)] ??
-          OptionField.nameContains) as P;
+      return (_FilterDBfilterValueEnumMap[reader.readByteOrNull(offset)] ??
+          FilterEnum.nameContains) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
@@ -669,7 +669,7 @@ P _filterDeserializeProp<P>(
   }
 }
 
-const _FilteroptionFieldEnumValueMap = {
+const _FilterDBfilterEnumValueMap = {
   'nameContains': 0,
   'descriptionContains': 1,
   'age': 2,
@@ -680,64 +680,65 @@ const _FilteroptionFieldEnumValueMap = {
   'bestOrGoodPlayerCount': 7,
   'releaseYear': 8,
 };
-const _FilteroptionFieldValueEnumMap = {
-  0: OptionField.nameContains,
-  1: OptionField.descriptionContains,
-  2: OptionField.age,
-  3: OptionField.maxPlaytime,
-  4: OptionField.category,
-  5: OptionField.maxPlayers,
-  6: OptionField.bestPlayers,
-  7: OptionField.bestOrGoodPlayerCount,
-  8: OptionField.releaseYear,
+const _FilterDBfilterValueEnumMap = {
+  0: FilterEnum.nameContains,
+  1: FilterEnum.descriptionContains,
+  2: FilterEnum.age,
+  3: FilterEnum.maxPlaytime,
+  4: FilterEnum.category,
+  5: FilterEnum.maxPlayers,
+  6: FilterEnum.bestPlayers,
+  7: FilterEnum.bestOrGoodPlayerCount,
+  8: FilterEnum.releaseYear,
 };
 
-extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> optionFieldEqualTo(
-      OptionField value) {
+extension FilterDBQueryFilter
+    on QueryBuilder<FilterDB, FilterDB, QFilterCondition> {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> filterEqualTo(
+      FilterEnum value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'optionField',
+        property: r'filter',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> optionFieldGreaterThan(
-    OptionField value, {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> filterGreaterThan(
+    FilterEnum value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'optionField',
+        property: r'filter',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> optionFieldLessThan(
-    OptionField value, {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> filterLessThan(
+    FilterEnum value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'optionField',
+        property: r'filter',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> optionFieldBetween(
-    OptionField lower,
-    OptionField upper, {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> filterBetween(
+    FilterEnum lower,
+    FilterEnum upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'optionField',
+        property: r'filter',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -746,7 +747,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueIsNull() {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'value',
@@ -754,7 +755,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueIsNotNull() {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'value',
@@ -762,7 +763,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueEqualTo(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -775,7 +776,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueGreaterThan(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -790,7 +791,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueLessThan(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -805,7 +806,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueBetween(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -824,7 +825,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueStartsWith(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -837,7 +838,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueEndsWith(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -850,7 +851,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueContains(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -862,7 +863,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueMatches(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -874,7 +875,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueIsEmpty() {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'value',
@@ -883,7 +884,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> valueIsNotEmpty() {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> valueIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'value',
@@ -892,7 +893,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2IsNull() {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2IsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'value2',
@@ -900,7 +901,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2IsNotNull() {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2IsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'value2',
@@ -908,7 +909,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2EqualTo(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2EqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -921,7 +922,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2GreaterThan(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2GreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -936,7 +937,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2LessThan(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2LessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -951,7 +952,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2Between(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2Between(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -970,7 +971,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2StartsWith(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2StartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -983,7 +984,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2EndsWith(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2EndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -996,7 +997,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2Contains(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2Contains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1008,7 +1009,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2Matches(
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2Matches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1020,7 +1021,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2IsEmpty() {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2IsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'value2',
@@ -1029,7 +1030,7 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Filter, Filter, QAfterFilterCondition> value2IsNotEmpty() {
+  QueryBuilder<FilterDB, FilterDB, QAfterFilterCondition> value2IsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'value2',
@@ -1039,4 +1040,5 @@ extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {
   }
 }
 
-extension FilterQueryObject on QueryBuilder<Filter, Filter, QFilterCondition> {}
+extension FilterDBQueryObject
+    on QueryBuilder<FilterDB, FilterDB, QFilterCondition> {}

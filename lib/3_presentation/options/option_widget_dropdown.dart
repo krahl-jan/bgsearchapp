@@ -1,4 +1,4 @@
-import 'package:bgsearchapp/2_application/options/options.dart';
+import 'package:bgsearchapp/2_application/options/filters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../2_application/state_manager.dart';
@@ -30,7 +30,7 @@ class _OptionWidgetDropdownState extends State<OptionWidgetDropdown> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.option.optionField.displayString),
+                Text(widget.option.filterType.displayString),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: DropdownButton<String>(items: [

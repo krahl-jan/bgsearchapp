@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:bgsearchapp/1_domain/repository_interface.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:bgsearchapp/1_domain/game_entity.dart';
-import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
-import 'package:bgsearchapp/2_application/options/options.dart';
+import 'package:bgsearchapp/2_application/options/library/filter_types.dart';
+import 'package:bgsearchapp/2_application/options/filters.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -11,7 +11,7 @@ String baseUri = "https://bgs.nafarlee.dev/";
 
 class HttpSearchRepository implements SearchRepository{
   int resultsPerPage = 10;
-  Future<List<GameShortInfo>> getShortGameInfos(List<Option> options, int page) async {
+  Future<List<GameShortInfo>> getShortGameInfos(List<Filter> options, int page) async {
     String query =
         [for (var option in options) optionToQueryString(option)].join(" ");
     print("query: $query");
@@ -70,28 +70,28 @@ class HttpSearchRepository implements SearchRepository{
     return result;
   }
 
-  String optionToQueryString(Option option) {
+  String optionToQueryString(Filter option) {
     if (!option.hasValue()) {
       return "";
     }
-    return switch (option.optionField) {
-      OptionField.nameContains =>
-        'name:"${(option as OptionString).value.toString()}"',
-      OptionField.age =>
-        "age>=${(option as OptionInt).lowValue.toString()} age<=${(option).getValue2().toString()}",
-      OptionField.maxPlaytime =>
-        "max-playtime>=${(option as OptionInt).lowValue.toString()} max-playtime<=${(option).getValue2().toString()}",
-      OptionField.category =>
+    return switch (option.filterType) {
+      FilterEnum.nameContains =>
+        'name:"${(option as FilterString).value.toString()}"',
+      FilterEnum.age =>
+        "age>=${(option as FilterInt).lowValue.toString()} age<=${(option).getValue2().toString()}",
+      FilterEnum.maxPlaytime =>
+        "max-playtime>=${(option as FilterInt).lowValue.toString()} max-playtime<=${(option).getValue2().toString()}",
+      FilterEnum.category =>
         'category:"${(option as OptionDropdownList).value.getDisplayString()}"',
-      OptionField.bestPlayers =>
-        "best-players>=${(option as OptionInt).lowValue.toString()} best-players<=${(option).getValue2().toString()}",
-      OptionField.maxPlayers =>
-        "max-players>=${(option as OptionInt).lowValue.toString()} max-players<=${(option).getValue2().toString()}",
-      OptionField.bestOrGoodPlayerCount =>
-        "quorum-players>=${(option as OptionInt).lowValue.toString()} quorum-players<=${(option).getValue2().toString()}",
-      OptionField.descriptionContains =>
-        'desc:"${(option as OptionString).value.toString()}"',
-      OptionField.releaseYear =>  "year>=${(option as OptionInt).lowValue.toString()} year<=${(option).getValue2().toString()}",
+      FilterEnum.bestPlayers =>
+        "best-players>=${(option as FilterInt).lowValue.toString()} best-players<=${(option).getValue2().toString()}",
+      FilterEnum.maxPlayers =>
+        "max-players>=${(option as FilterInt).lowValue.toString()} max-players<=${(option).getValue2().toString()}",
+      FilterEnum.bestOrGoodPlayerCount =>
+        "quorum-players>=${(option as FilterInt).lowValue.toString()} quorum-players<=${(option).getValue2().toString()}",
+      FilterEnum.descriptionContains =>
+        'desc:"${(option as FilterString).value.toString()}"',
+      FilterEnum.releaseYear =>  "year>=${(option as FilterInt).lowValue.toString()} year<=${(option).getValue2().toString()}",
     };
   }
 }

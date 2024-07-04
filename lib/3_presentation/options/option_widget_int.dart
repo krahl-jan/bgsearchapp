@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bgsearchapp/2_application/options/options.dart';
+import 'package:bgsearchapp/2_application/options/filters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ import 'option_delete.dart';
 class OptionWidgetInt extends StatefulWidget {
   const OptionWidgetInt({super.key, required this.option});
 
-  final OptionInt option;
+  final FilterInt option;
 
   @override
   State<StatefulWidget> createState() => _OptionWidgetIntState();
@@ -38,7 +38,7 @@ class _OptionWidgetIntState extends State<OptionWidgetInt> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.option.optionField.displayString),
+                Text(widget.option.filterType.displayString),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class FilterDbView extends StatelessWidget {
   const FilterDbView({super.key, required this.filter});
 
-  final Filter filter;
+  final FilterDB filter;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class FilterDbView extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(filter.optionField.displayString),
+                Text(filter.filter.displayString),
                 const SizedBox(width: 15),
                 Text(filter.value2 ?? ""),
                 const SizedBox(width: 15),

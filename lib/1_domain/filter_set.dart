@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
 
-import '../2_application/options/library/option_fields.dart';
-import '../2_application/options/options.dart';
+import '../2_application/options/library/filter_types.dart';
+import '../2_application/options/filters.dart';
 
 part 'filter_set.g.dart';
 
@@ -9,41 +9,41 @@ part 'filter_set.g.dart';
 class FilterSet {
   Id dbId = Isar.autoIncrement;
   String name;
-  List<Filter> filterList = List.empty();
+  List<FilterDB> filterList = List.empty();
 
   FilterSet(this.name, this.filterList);
 }
 
-FilterSet toDbFilterSet(String name, List<Option> options) {
-  List<Filter> f = List.empty(growable: true);
-  for (Option o in options) {
+FilterSet toDbFilterSet(String name, List<Filter> options) {
+  List<FilterDB> f = List.empty(growable: true);
+  for (Filter o in options) {
     dynamic value = o.getValue();
     dynamic value2 = o.getValue2();
-    f.add(Filter(
-        optionField: o.optionField,
+    f.add(FilterDB(
+        filter: o.filterType,
         value: value?.toString(),
         value2: value2.toString()));
   }
   return FilterSet(name, f);
 }
 
-List<Option> toOptionList(FilterSet filterSet) {
-  List<Option> l = List.empty(growable: true);
-  for (Filter f in filterSet.filterList) {
+List<Filter> toOptionList(FilterSet filterSet) {
+  List<Filter> l = List.empty(growable: true);
+  for (FilterDB f in filterSet.filterList) {
     l.add(optionFactory(
-        optionField: f.optionField, value: f.value, value2: f.value2));
+        filterEnum: f.filter, value: f.value, value2: f.value2));
   }
   return l;
 }
 
 @embedded
-class Filter {
+class FilterDB {
 
   String? value;
   String? value2;
   @enumerated
-  late OptionField optionField;
+  late FilterEnum filter;
 
-  Filter(
-      {this.optionField = OptionField.nameContains, this.value, this.value2});
+  FilterDB(
+      {this.filter = FilterEnum.nameContains, this.value, this.value2});
 }

@@ -1,8 +1,8 @@
-import 'package:bgsearchapp/2_application/options/options.dart';
+import 'package:bgsearchapp/2_application/options/filters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../2_application/options/library/option_fields.dart';
+import '../../2_application/options/library/filter_types.dart';
 import '../../2_application/state_manager.dart';
 
 class FilterSelection extends StatelessWidget {
@@ -29,7 +29,7 @@ class FilterSelection extends StatelessWidget {
                 spacing: 20.0, // Horizontal space between buttons
                 runSpacing: 20.0, // Vertical space between lines
                 alignment: WrapAlignment.center,
-                children: OptionField.values.map((OptionField optionField) {
+                children: FilterEnum.values.map((FilterEnum optionField) {
                   return ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white, backgroundColor: Theme.of(context).primaryColor, padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
@@ -38,7 +38,7 @@ class FilterSelection extends StatelessWidget {
                       ),
                     ),
                     onPressed: !context.read<StateManager>().isOptionSelected(optionField) ? () {
-                      context.read<StateManager>().addSearchOption(optionFactory(optionField: optionField));
+                      context.read<StateManager>().addSearchOption(optionFactory(filterEnum: optionField));
                       Navigator.pop(context);
                     }  : null,
                     child: Text(

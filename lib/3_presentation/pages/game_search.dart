@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 
-import '../../2_application/options/options.dart';
+import '../../2_application/options/filters.dart';
 import '../options/option.dart';
 import '../options/option_add.dart';
 
@@ -20,7 +20,7 @@ class GameSearch extends StatefulWidget {
 class _GameSearchState extends State<GameSearch> {
   @override
   Widget build(BuildContext context) {
-    List<Option> searchOptions = context.watch<StateManager>().searchOptions;
+    List<Filter> searchOptions = context.watch<StateManager>().searchOptions;
     Isar isar = context.read<StateManager>().isar;
 
     void doSearch(BuildContext context) {

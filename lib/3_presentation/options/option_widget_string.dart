@@ -1,4 +1,4 @@
-import 'package:bgsearchapp/2_application/options/options.dart';
+import 'package:bgsearchapp/2_application/options/filters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +8,7 @@ import 'option_delete.dart';
 class OptionWidgetString extends StatefulWidget {
   const OptionWidgetString({super.key, required this.option});
 
-  final OptionString option;
+  final FilterString option;
 
   @override
   State<StatefulWidget> createState() => _OptionWidgetStringState();
@@ -50,7 +50,7 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.option.optionField.displayString),
+                Text(widget.option.filterType.displayString),
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextFormField(

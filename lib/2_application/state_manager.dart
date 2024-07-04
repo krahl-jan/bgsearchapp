@@ -1,6 +1,5 @@
 import 'package:bgsearchapp/1_domain/favourite_list.dart';
-import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
-import 'package:bgsearchapp/2_application/options/library/option_int_ranges.dart';
+import 'package:bgsearchapp/2_application/options/library/filter_types.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
@@ -8,7 +7,7 @@ import '../0_data/repository.dart';
 import '../1_domain/game_entity.dart';
 import '../1_domain/repository_interface.dart';
 import '../3_presentation/pages/settings.dart';
-import 'options/options.dart';
+import 'options/filters.dart';
 
 class StateManager extends ChangeNotifier {
   StateManager(this.isar);
@@ -16,13 +15,13 @@ class StateManager extends ChangeNotifier {
   // todo implement repository pattern with interface
   int pageIndex = 0;
 
-  List<Option> searchOptions = [
+  List<Filter> searchOptions = [
 
   ];
 
-  bool isOptionSelected(OptionField optionField) {
+  bool isOptionSelected(FilterEnum optionField) {
     for (var o in searchOptions) {
-      if (o.optionField.displayString == optionField.displayString) {
+      if (o.filterType.displayString == optionField.displayString) {
         return true;
       }
     }
@@ -100,19 +99,19 @@ class StateManager extends ChangeNotifier {
     }
   }
 
-  addSearchOption(Option option) {
+  addSearchOption(Filter option) {
     searchOptions.add(option);
     hasNewFilters = true;
     notifyListeners();
   }
 
-  removeSearchOption(Option option) {
+  removeSearchOption(Filter option) {
     searchOptions.remove(option);
     hasNewFilters = true;
     notifyListeners();
   }
 
-  setSearchOptions(List<Option> newSearchOptions) {
+  setSearchOptions(List<Filter> newSearchOptions) {
     searchOptions = newSearchOptions;
     hasNewFilters = true;
     notifyListeners();
