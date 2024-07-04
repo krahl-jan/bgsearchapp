@@ -34,23 +34,23 @@ class _ResultsPageBodyState extends State<ResultsPageBody> {
         itemBuilder: (context, index) {
           return ExpansionTile(
             onExpansionChanged: (bool isExpanded) {
-              context.read<StateManager>().retrieveDetailedInfo(map[page]![index].id);
+              context.read<StateManager>().retrieveDetailedInfo(map[page]![index].id!);
             },
             title: Row(
               children: [
-                map[page]![index].imageUri.isNotEmpty
+                map[page]![index].imageUri!.isNotEmpty
                     ? SizedBox(
                         height: 100,
                         width: 100,
                         child: Image.network(
-                          map[page]![index].imageUri,
+                          map[page]![index].imageUri!,
                           fit: BoxFit.cover,
                           alignment: Alignment.topCenter,
                         ))
                     : const SizedBox(),
                 Expanded(child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Text(map[page]![index].name),
+                  child: Text(map[page]![index].name!),
                 ))
               ],
             ),
@@ -64,23 +64,23 @@ class _ResultsPageBodyState extends State<ResultsPageBody> {
                       icon: const Icon(Icons.link)),
                   IconButton(
                       onPressed: () {
-                        if (favourites.contains(map[page]![index].id)) {
+                        if (favourites.contains(map[page]![index])) {
                           context
                               .read<StateManager>()
-                              .removeFavourite(map[page]![index].id);
+                              .removeFavourite(map[page]![index]);
                         } else {
                           context
                               .read<StateManager>()
-                              .addFavourite(map[page]![index].id);
+                              .addFavourite(map[page]![index]);
                         }
                       },
-                      color: favourites.contains(map[page]![index].id)
+                      color: favourites.contains(map[page]![index])
                           ? Colors.red
                           : Theme.of(context).disabledColor,
                       icon: const Icon(Icons.favorite)),
                 ],
               ),
-              GameDetails(gameId: map[page]![index].id),
+              GameDetails(gameId: map[page]![index].id!),
 
             ],
           );

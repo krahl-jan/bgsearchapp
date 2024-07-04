@@ -1,3 +1,4 @@
+import 'package:bgsearchapp/1_domain/favourite_list.dart';
 import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
 import 'package:bgsearchapp/2_application/options/library/option_int_ranges.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class StateManager extends ChangeNotifier {
     return false;
   }
 
-  List<int> favourites = [];
+  List<GameShortInfo> favourites = List.empty(growable: true);
 
   Map<int, List<GameShortInfo>> searchResultPages = {};
   Map<int, GameDetailedInfo> searchResultsDetails= {};
@@ -50,6 +51,7 @@ class StateManager extends ChangeNotifier {
   SearchRepository repository = HttpSearchRepository();
 
   ExtendedThemeMode themeMode = ExtendedThemeMode.system;
+
 
   setPageIndex(int i) {
     pageIndex = i;
@@ -79,19 +81,21 @@ class StateManager extends ChangeNotifier {
     }
   }
 
-  addFavourite(int id) {
-    if (!favourites.contains(id)) {
-      favourites.add(id);
+  addFavourite(GameShortInfo info) {
+    if (!favourites.contains(info)) {
+      favourites.add(info);
       notifyListeners();
-      print("Added $id to favourites");
+      print("Added ${info.id} to favourites");
+      saveFavourites();
     }
   }
 
-  removeFavourite(int id) {
-    if (favourites.contains(id)) {
-      favourites.remove(id);
+  removeFavourite(GameShortInfo info) {
+    if (favourites.contains(info)) {
+      favourites.remove(info);
       notifyListeners();
-      print("Removed $id to favourites");
+      print("Removed $info to favourites");
+      saveFavourites();
     }
   }
 
@@ -116,5 +120,25 @@ class StateManager extends ChangeNotifier {
   setThemeModeToggle(int index) {
     themeMode = themeMode.getFromIndex(index);
     notifyListeners();
+  }
+
+  saveFavourites() async {
+    isar
+        .writeTxn(() =>
+        isar.favouriteListDBs.put(toFavouriteListDB(favourites)));
+  }
+
+  bool isFavouritesLoaded = false;
+
+  loadFavourites() async {
+    if (!isFavouritesLoaded) {
+      isFavouritesLoaded = true;
+      var res = await isar.favouriteListDBs.where().findAll();
+      if (res.isEmpty) {
+        return;
+      }
+      favourites.insertAll(0, res[0].favouriteList);
+      notifyListeners();
+    }
   }
 }

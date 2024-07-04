@@ -40,7 +40,6 @@ List<Option> toOptionList(FilterSet filterSet) {
 class Filter {
 
   String? value;
-  @enumerated
   String? value2;
   @enumerated
   late OptionField optionField;

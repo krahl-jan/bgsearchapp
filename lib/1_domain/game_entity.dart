@@ -2,14 +2,13 @@ import 'package:isar/isar.dart';
 
 part 'game_entity.g.dart';
 
-@collection
+@embedded
 class GameShortInfo {
-  Id dbId = Isar.autoIncrement;
-  int id;
-  String name;
-  String imageUri;
+  int? id;
+  String? name;
+  String? imageUri;
 
-  GameShortInfo(this.id, this.name, this.imageUri);
+  GameShortInfo({this.id, this.name, this.imageUri});
 }
 
 class GameDetailedInfo {

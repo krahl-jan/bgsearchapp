@@ -678,6 +678,7 @@ const _FilteroptionFieldEnumValueMap = {
   'maxPlayers': 5,
   'bestPlayers': 6,
   'bestOrGoodPlayerCount': 7,
+  'releaseYear': 8,
 };
 const _FilteroptionFieldValueEnumMap = {
   0: OptionField.nameContains,
@@ -688,6 +689,7 @@ const _FilteroptionFieldValueEnumMap = {
   5: OptionField.maxPlayers,
   6: OptionField.bestPlayers,
   7: OptionField.bestOrGoodPlayerCount,
+  8: OptionField.releaseYear,
 };
 
 extension FilterQueryFilter on QueryBuilder<Filter, Filter, QFilterCondition> {

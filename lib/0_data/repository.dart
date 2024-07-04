@@ -29,7 +29,7 @@ class HttpSearchRepository implements SearchRepository{
       int id = int.parse(match.group(2) ?? "-1");
       String name = match.group(3) ?? "error";
       String imageUri = match.group(1) ?? "";
-      result.add(GameShortInfo(id, name, imageUri));
+      result.add(GameShortInfo(id: id, name: name, imageUri: imageUri));
     }
 
     return result;
