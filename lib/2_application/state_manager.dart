@@ -141,4 +141,10 @@ class StateManager extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  clearFavourites() async {
+    isar.writeTxn(() => isar.favouriteListDBs.clear());
+    favourites.clear();
+    notifyListeners();
+  }
 }

@@ -69,8 +69,7 @@ class _SettingsState extends State<Settings> {
                         const Color.fromRGBO(143, 6, 6, 0.95),
                       ),
                     ),
-                    onPressed: () => isar
-                        .writeTxn(() => isar.filterSets.clear())
+                    onPressed: () => context.read<StateManager>().clearFavourites()
                         .whenComplete(() => ScaffoldMessenger.of(context)
                         .showSnackBar(const SnackBar(
                       behavior: SnackBarBehavior.floating,
