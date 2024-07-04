@@ -21,6 +21,7 @@ void main() {
     final mockIsar = MockIsar();
     final stateManager = StateManager(mockIsar);
 
+    // initial filter elements
     stateManager.setSearchFilters([
       FilterString(filterType:  FilterEnum.nameContains),
       FilterInt(FilterEnum.age, OptionIntRange.age, 3, 10),
@@ -35,7 +36,7 @@ void main() {
         child: const MaterialApp(home: GameSearch())),
     );
 
-
+    // test initial filter element widgets are present
     expect(find.byType(RangeSlider), findsNWidgets(2));
     expect(find.byType(TextFormField), findsNWidgets(2));
     expect(find.text('Age'), findsOneWidget);
