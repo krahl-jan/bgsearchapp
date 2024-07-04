@@ -73,8 +73,13 @@ class _GameSearchState extends State<GameSearch> {
         isar
             .writeTxn(() =>
                 isar.filterSets.put(toDbFilterSet(enteredText, searchOptions)))
-            .whenComplete(() => ScaffoldMessenger.of(context)
-                .showSnackBar(const SnackBar(content: Text("filter saved"))));
+            .whenComplete(
+                () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Text("filter saved"),
+                      duration: Duration(milliseconds: 500),
+                      width: 200,
+                    )));
       }
     }
 
