@@ -17,8 +17,7 @@ class StateManager extends ChangeNotifier {
   int pageIndex = 0;
 
   List<Option> searchOptions = [
-    OptionString(optionField: OptionField.nameContains),
-    OptionInt(OptionField.age, OptionIntRange.age, null, null)
+
   ];
 
   bool isOptionSelected(OptionField optionField) {
