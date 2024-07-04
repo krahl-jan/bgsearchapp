@@ -82,6 +82,7 @@ class StateManager extends ChangeNotifier {
   }
 
   addFavourite(GameShortInfo info) {
+    loadFavourites();
     if (!favourites.contains(info)) {
       favourites.add(info);
       notifyListeners();
@@ -91,6 +92,7 @@ class StateManager extends ChangeNotifier {
   }
 
   removeFavourite(GameShortInfo info) {
+    loadFavourites();
     if (favourites.contains(info)) {
       favourites.remove(info);
       notifyListeners();
