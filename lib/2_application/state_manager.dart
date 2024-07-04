@@ -17,10 +17,6 @@ class StateManager extends ChangeNotifier {
 
   List<Filter> searchFilters = [];
 
-  List<Filter> getSearchFilters() {
-    return searchFilters;
-  }
-
   bool isFilterSelected(FilterEnum filter) {
     for (var o in searchFilters) {
       if (o.filterType.displayString == filter.displayString) {
