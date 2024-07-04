@@ -1,5 +1,7 @@
+import 'package:bgsearchapp/1_domain/filter_set.dart';
 import 'package:bgsearchapp/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
@@ -12,27 +14,77 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
-    final ExtendedThemeMode extThemeMode = context.watch<StateManager>().themeMode;
+    Isar isar = context.read<StateManager>().isar;
+    final ExtendedThemeMode extThemeMode =
+        context.watch<StateManager>().themeMode;
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            const Text(
-              'Select theme',
-            ),
-            const SizedBox(height: 5),
-            ToggleButtons(
-              direction: Axis.horizontal,
-              onPressed: (int index) => context.read<StateManager>().setThemeModeToggle(index),
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              constraints: const BoxConstraints(
-                minHeight: 40.0,
-                minWidth: 80.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const Text(
+                'Select theme',
               ),
-              isSelected: extThemeMode.themeModeToggle,
-              children: extThemeMode.getIcons(),
-            ),
-          ],
+              const SizedBox(height: 5),
+              ToggleButtons(
+                direction: Axis.horizontal,
+                onPressed: (int index) =>
+                    context.read<StateManager>().setThemeModeToggle(index),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                constraints: const BoxConstraints(
+                  minHeight: 40.0,
+                  minWidth: 80.0,
+                ),
+                isSelected: extThemeMode.themeModeToggle,
+                children: extThemeMode.getIcons(),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Delete saved data',
+              ),
+              const SizedBox(height: 5),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                      const Color.fromRGBO(143, 6, 6, 0.95),
+                    )),
+                    onPressed: () => isar
+                        .writeTxn(() => isar.filterSets.clear())
+                        .whenComplete(() => ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              content: Center(child: Text("saved filters deleted")),
+                              duration: Duration(milliseconds: 500),
+                              width: 200,
+                            ))),
+                    child: const Text(
+                      "Delete all Filters",
+                      style: TextStyle(color: Colors.white),
+                    )),
+                ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                        const Color.fromRGBO(143, 6, 6, 0.95),
+                      ),
+                    ),
+                    onPressed: () => isar
+                        .writeTxn(() => isar.filterSets.clear())
+                        .whenComplete(() => ScaffoldMessenger.of(context)
+                        .showSnackBar(const SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Center(child: Text("favourites deleted")),
+                      duration: Duration(milliseconds: 500),
+                      width: 200,
+                    ))),
+                    child: const Text(
+                      "Delete all Favourites",
+                      style: TextStyle(color: Colors.white),
+                    )),
+              ])
+            ],
+          ),
         ),
       ),
     );

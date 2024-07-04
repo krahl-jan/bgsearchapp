@@ -76,7 +76,7 @@ class _GameSearchState extends State<GameSearch> {
             .whenComplete(
                 () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       behavior: SnackBarBehavior.floating,
-                      content: Text("filter saved"),
+                      content: Center(child: Text("filter saved")),
                       duration: Duration(milliseconds: 500),
                       width: 200,
                     )));
