@@ -1,4 +1,4 @@
-package com.example.bgsearchapp
+package edu.hm.bgsearch
 
 import io.flutter.embedding.android.FlutterActivity
 
