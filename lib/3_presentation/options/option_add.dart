@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../pages/option_selection.dart';
+import '../pages/filter_selection.dart';
 
 class OptionWidgetAddOption extends StatefulWidget {
   const OptionWidgetAddOption({super.key});
@@ -19,7 +19,7 @@ class _OptionWidgetAddOptionState extends State<OptionWidgetAddOption> {
         barrierLabel: "Add Option", // label for barrier
         transitionDuration: const Duration(milliseconds: 300), // how long it takes to popup dialog after button click
     pageBuilder: (_, __, ___) {
-          return const OptionSelection();
+          return const FilterSelection();
     },);
   }
 
