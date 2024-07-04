@@ -1,4 +1,4 @@
-import 'package:bgsearchapp/2_application/filters/library/dropdown_element.dart';
+import 'package:bgsearch/2_application/filters/library/dropdown_element.dart';
 
 enum CategoriesList implements DropdownListElement{
   cardGame(displayString: "Card Game", linkString: "card-game"),

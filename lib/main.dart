@@ -1,9 +1,9 @@
-import 'package:bgsearchapp/1_domain/favourite_list.dart';
-import 'package:bgsearchapp/2_application/state_manager.dart';
-import 'package:bgsearchapp/3_presentation/pages/settings/theme/global_theme_data.dart';
-import 'package:bgsearchapp/3_presentation/home.dart';
-import 'package:bgsearchapp/3_presentation/pages/settings/settings.dart';
-import 'package:bgsearchapp/3_presentation/pages/settings/theme/util.dart';
+import 'package:bgsearch/1_domain/favourite_list.dart';
+import 'package:bgsearch/2_application/state_manager.dart';
+import 'package:bgsearch/3_presentation/pages/settings/theme/global_theme_data.dart';
+import 'package:bgsearch/3_presentation/home.dart';
+import 'package:bgsearch/3_presentation/pages/settings/settings.dart';
+import 'package:bgsearch/3_presentation/pages/settings/theme/util.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';

@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:bgsearchapp/1_domain/repository_interface.dart';
+import 'package:bgsearch/1_domain/repository_interface.dart';
 import 'package:html_unescape/html_unescape.dart';
-import 'package:bgsearchapp/1_domain/game_entity.dart';
-import 'package:bgsearchapp/2_application/filters/library/filter_types.dart';
-import 'package:bgsearchapp/2_application/filters/filters.dart';
+import 'package:bgsearch/1_domain/game_entity.dart';
+import 'package:bgsearch/2_application/filters/library/filter_types.dart';
+import 'package:bgsearch/2_application/filters/filters.dart';
 
 import 'package:http/http.dart' as http;
 

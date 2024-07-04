@@ -1,4 +1,4 @@
-import 'package:bgsearchapp/1_domain/game_entity.dart';
+import 'package:bgsearch/1_domain/game_entity.dart';
 import 'package:isar/isar.dart';
 
 part 'favourite_list.g.dart';

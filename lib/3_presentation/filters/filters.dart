@@ -1,5 +1,5 @@
-import 'package:bgsearchapp/2_application/filters/filters.dart';
-import 'package:bgsearchapp/3_presentation/filters/filter_dropdown.dart';
+import 'package:bgsearch/2_application/filters/filters.dart';
+import 'package:bgsearch/3_presentation/filters/filter_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

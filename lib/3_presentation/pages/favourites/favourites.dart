@@ -1,4 +1,4 @@
-import 'package:bgsearchapp/2_application/state_manager.dart';
+import 'package:bgsearch/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
