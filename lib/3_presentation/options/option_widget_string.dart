@@ -15,8 +15,27 @@ class OptionWidgetString extends StatefulWidget {
 }
 
 class _OptionWidgetStringState extends State<OptionWidgetString> {
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    myController.addListener(() {context.read<StateManager>().hasNewFilters = true;
+    widget.option.value = myController.text;});
+  }
+
   @override
   Widget build(BuildContext context) {
+    myController.text = widget.option.value ?? "";
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -32,14 +51,10 @@ class _OptionWidgetStringState extends State<OptionWidgetString> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.option.optionField.displayString),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10),
                 Expanded(
                   child: TextFormField(
-                    initialValue: widget.option.value,
-                    onChanged: (name) {
-                      context.read<StateManager>().hasNewFilters = true;
-                      widget.option.value = name;
-                    },
+                    controller: myController,
                   ),
                 ),
                 OptionWidgetDeleteOption(option: widget.option),
