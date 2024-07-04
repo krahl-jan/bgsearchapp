@@ -93,43 +93,45 @@ class _GameSearchState extends State<GameSearch> {
         onPressed: () => doSearch(context),
         child: const Icon(Icons.search),
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) => Column(
-          children: [
-            ConstrainedBox(
-              constraints: BoxConstraints.loose(
-                  Size.fromHeight(constraints.maxHeight * 0.9)),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: searchOptions.length,
-                  itemBuilder: (context, i) {
-                    return OptionWidgetImp(option: searchOptions[i]);
-                  },
+      body: SingleChildScrollView(
+        child: LayoutBuilder(
+          builder: (context, constraints) => Column(
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints.loose(
+                    Size.fromHeight(constraints.maxHeight * 0.9)),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: searchOptions.length,
+                    itemBuilder: (context, i) {
+                      return OptionWidgetImp(option: searchOptions[i]);
+                    },
+                  ),
                 ),
               ),
-            ),
-            const OptionWidgetAddOption(),
-            SizedBox(
-                height: 30,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Row(children: [
-                    FilledButton(
-                      onPressed: () => saveFilters(context),
-                      child: const Text("save"),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    FilledButton(
-                      onPressed: () => loadFilters(context),
-                      child: const Text("load"),
-                    ),
-                  ]),
-                ))
-          ],
+              const OptionWidgetAddOption(),
+              SizedBox(
+                  height: 30,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Row(children: [
+                      FilledButton(
+                        onPressed: () => saveFilters(context),
+                        child: const Text("save"),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      FilledButton(
+                        onPressed: () => loadFilters(context),
+                        child: const Text("load"),
+                      ),
+                    ]),
+                  ))
+            ],
+          ),
         ),
       ),
     );
