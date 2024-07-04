@@ -1,10 +1,10 @@
-import 'package:bgsearchapp/2_application/options/filters.dart';
-import 'package:bgsearchapp/3_presentation/options/option_widget_dropdown.dart';
+import 'package:bgsearchapp/2_application/filters/filters.dart';
+import 'package:bgsearchapp/3_presentation/filters/filter_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'option_widget_int.dart';
-import 'option_widget_string.dart';
+import 'filter_int_slider.dart';
+import 'filter_string.dart';
 
 class OptionWidgetImp extends StatefulWidget {
   const OptionWidgetImp({super.key, required this.option});

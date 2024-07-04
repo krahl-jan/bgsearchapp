@@ -1,4 +1,4 @@
-import 'package:bgsearchapp/2_application/options/library/filter_int_ranges.dart';
+import 'filter_int_ranges.dart';
 
 enum FilterEnum {
   nameContains(

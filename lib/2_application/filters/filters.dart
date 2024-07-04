@@ -5,7 +5,7 @@
 // boolean
 // select string(s) from choice
 
-import 'package:bgsearchapp/2_application/options/library/categories.dart';
+import 'package:bgsearchapp/2_application/filters/library/categories.dart';
 import 'library/dropdown_element.dart';
 import 'library/filter_types.dart';
 import 'library/filter_int_ranges.dart';

@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:bgsearchapp/2_application/options/filters.dart';
+import 'package:bgsearchapp/2_application/filters/filters.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../2_application/state_manager.dart';
-import 'option_delete.dart';
+import 'filter_delete.dart';
 
 class OptionWidgetInt extends StatefulWidget {
   const OptionWidgetInt({super.key, required this.option});

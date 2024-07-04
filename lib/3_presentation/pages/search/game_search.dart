@@ -1,14 +1,14 @@
 import 'package:bgsearchapp/1_domain/filter_set.dart';
 import 'package:bgsearchapp/2_application/state_manager.dart';
-import 'package:bgsearchapp/3_presentation/pages/filter_set_selection.dart';
+import 'package:bgsearchapp/3_presentation/pages/search/filter_set_selection.dart';
 import 'package:bgsearchapp/3_presentation/pages/search_results/search_results.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 
-import '../../2_application/options/filters.dart';
-import '../options/option.dart';
-import '../options/option_add.dart';
+import '../../../2_application/filters/filters.dart';
+import '../../filters/filters.dart';
+import '../../filters/filter_add.dart';
 
 class GameSearch extends StatefulWidget {
   const GameSearch({super.key});

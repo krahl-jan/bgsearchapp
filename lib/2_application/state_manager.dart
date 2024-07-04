@@ -1,13 +1,13 @@
 import 'package:bgsearchapp/1_domain/favourite_list.dart';
-import 'package:bgsearchapp/2_application/options/library/filter_types.dart';
+import 'package:bgsearchapp/2_application/filters/library/filter_types.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
 import '../0_data/repository.dart';
 import '../1_domain/game_entity.dart';
 import '../1_domain/repository_interface.dart';
-import '../3_presentation/pages/settings.dart';
-import 'options/filters.dart';
+import '../3_presentation/pages/settings/settings.dart';
+import 'filters/filters.dart';
 
 class StateManager extends ChangeNotifier {
   StateManager(this.isar);

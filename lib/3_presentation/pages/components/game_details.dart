@@ -2,7 +2,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../2_application/state_manager.dart';
+import '../../../2_application/state_manager.dart';
 
 class GameDetails extends StatefulWidget {
   final int gameId;

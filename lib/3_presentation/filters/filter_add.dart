@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../pages/filter_selection.dart';
+import '../pages/search/filter_selection.dart';
 
 class OptionWidgetAddOption extends StatefulWidget {
   const OptionWidgetAddOption({super.key});

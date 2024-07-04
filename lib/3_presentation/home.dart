@@ -1,10 +1,10 @@
 import 'package:bgsearchapp/2_application/state_manager.dart';
-import 'package:bgsearchapp/3_presentation/pages/favourites.dart';
+import 'package:bgsearchapp/3_presentation/pages/favourites/favourites.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'pages/game_search.dart';
-import 'pages/settings.dart';
+import 'pages/search/game_search.dart';
+import 'pages/settings/settings.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

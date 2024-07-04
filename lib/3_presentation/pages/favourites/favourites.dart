@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'game_details.dart';
+import '../components/game_details.dart';
 
 class FavouritesPage extends StatefulWidget {
   const FavouritesPage({super.key});

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bgsearchapp/1_domain/game_entity.dart';
-import 'package:bgsearchapp/2_application/options/filters.dart';
+import 'package:bgsearchapp/2_application/filters/filters.dart';
 
 
 

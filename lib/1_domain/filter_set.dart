@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
 
-import '../2_application/options/library/filter_types.dart';
-import '../2_application/options/filters.dart';
+import '../2_application/filters/library/filter_types.dart';
+import '../2_application/filters/filters.dart';
 
 part 'filter_set.g.dart';
 

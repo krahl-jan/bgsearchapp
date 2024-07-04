@@ -4,8 +4,7 @@ import 'package:isar/isar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../2_application/state_manager.dart';
-import '../options/option_set_view.dart';
+import '../../../2_application/state_manager.dart';
 
 class FilterSetSelection extends StatefulWidget {
   const FilterSetSelection({super.key});
@@ -52,13 +51,6 @@ class _FilterSetSelectionState extends State<FilterSetSelection> {
               heightFactor: 7,
               child: LoadingAnimationWidget.inkDrop(
                   color: Colors.blueAccent, size: 30)),
-    );
-  }
-
-  Widget setWidget(FilterSet set) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[for (var o in set.filterList) FilterDbView(filter: o)],
     );
   }
 }
