@@ -5,6 +5,7 @@ import 'package:isar/isar.dart';
 
 import '../0_data/repository.dart';
 import '../1_domain/game_entity.dart';
+import '../1_domain/repository_interface.dart';
 import '../3_presentation/pages/settings.dart';
 import 'options/options.dart';
 
@@ -46,7 +47,7 @@ class StateManager extends ChangeNotifier {
 
   bool hasNewFilters = true;
 
-  HttpSearchRepository repository = HttpSearchRepository();
+  SearchRepository repository = HttpSearchRepository();
 
   ExtendedThemeMode themeMode = ExtendedThemeMode.system;
 
