@@ -25,7 +25,7 @@ class _FilterSetSelectionState extends State<FilterSetSelection> {
   }
 
   void setFilterSet(BuildContext context, FilterSet set) {
-    context.read<StateManager>().setSearchOptions(toOptionList(set));
+    context.read<StateManager>().setSearchFilters(toOptionList(set));
     Navigator.pop(context);
   }
 

@@ -37,8 +37,8 @@ class FilterSelection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
-                    onPressed: !context.read<StateManager>().isOptionSelected(optionField) ? () {
-                      context.read<StateManager>().addSearchOption(optionFactory(filterEnum: optionField));
+                    onPressed: !context.read<StateManager>().isFilterSelected(optionField) ? () {
+                      context.read<StateManager>().addSearchFilter(optionFactory(filterEnum: optionField));
                       Navigator.pop(context);
                     }  : null,
                     child: Text(

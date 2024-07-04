@@ -16,7 +16,7 @@ class OptionWidgetDeleteOption extends StatefulWidget {
 class _OptionWidgetDeleteOptionState extends State<OptionWidgetDeleteOption> {
 
   _deleteOption(BuildContext context) {
-    context.read<StateManager>().removeSearchOption(widget.option);
+    context.read<StateManager>().removeSearchFilter(widget.option);
   }
 
     @override
