@@ -31,42 +31,50 @@ class _GameSearchState extends State<GameSearch> {
 
     Future<String?> showTextFieldDialog(BuildContext context) async {
       TextEditingController _textFieldController = TextEditingController();
+      bool inputInTextField = false;
       String? result = await showDialog<String>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Name your Filter'),
-            content: TextField(
-              controller: _textFieldController,
-              decoration:
-                  const InputDecoration(hintText: "card games for four"),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
+          context: context,
+          builder: (context) => StatefulBuilder(
+                builder: (context, setState) {
+                  return AlertDialog(
+                    title: const Text('Name your Filter'),
+                    content: TextField(
+                      controller: _textFieldController,
+                      onChanged: (value) => setState(() {
+                        inputInTextField = value.isNotEmpty;
+                      }),
+                      decoration: const InputDecoration(
+                          hintText: "card games for four"),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        onPressed: inputInTextField
+                            ? () => Navigator.of(context)
+                                .pop(_textFieldController.text)
+                            : null,
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  );
                 },
-              ),
-              TextButton(
-                onPressed: _textFieldController.text.isEmpty
-                    ? null
-                    : () =>
-                        Navigator.of(context).pop(_textFieldController.text),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+              ));
       return result;
     }
 
     void saveFilters(BuildContext context) async {
       String? enteredText = await showTextFieldDialog(context);
       if (enteredText != null && enteredText.isNotEmpty) {
-        isar.writeTxn(() =>
-            isar.filterSets.put(toDbFilterSet(enteredText, searchOptions)));
+        isar
+            .writeTxn(() =>
+                isar.filterSets.put(toDbFilterSet(enteredText, searchOptions)))
+            .whenComplete(() => ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text("filter saved"))));
       }
     }
 
