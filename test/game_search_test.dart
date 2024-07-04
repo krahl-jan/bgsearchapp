@@ -43,6 +43,7 @@ void main() {
     expect(find.text('Description contains'), findsOneWidget);
     expect(find.text('Max. Player Count'), findsOneWidget);
     expect(find.text('Playtime'), findsNothing);
+    expect(find.text('Release Year'), findsNothing);
 
     // delete first filter (name)
     await tester.tap(find.byIcon(Icons.delete).first);
@@ -55,6 +56,7 @@ void main() {
     expect(find.text('Description contains'), findsOneWidget);
     expect(find.text('Max. Player Count'), findsOneWidget);
     expect(find.text('Playtime'), findsNothing);
+    expect(find.text('Release Year'), findsNothing);
 
     // delete second filter (age)
     await tester.tap(find.byIcon(Icons.delete).first);
@@ -67,6 +69,22 @@ void main() {
     expect(find.text('Description contains'), findsOneWidget);
     expect(find.text('Max. Player Count'), findsOneWidget);
     expect(find.text('Playtime'), findsNothing);
+    expect(find.text('Release Year'), findsNothing);
+
+    // add new filter (Release Year)
+    await tester.tap(find.byIcon(Icons.add).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text("Release Year"));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(RangeSlider), findsNWidgets(2));
+    expect(find.byType(TextFormField), findsNWidgets(1));
+    expect(find.text('Age'), findsNothing);
+    expect(find.text('Name contains'), findsNothing);
+    expect(find.text('Description contains'), findsOneWidget);
+    expect(find.text('Max. Player Count'), findsOneWidget);
+    expect(find.text('Playtime'), findsNothing);
+    expect(find.text('Release Year'), findsOneWidget);
 
 
   });
