@@ -18,7 +18,6 @@ class GameSearch extends StatefulWidget {
 }
 
 class _GameSearchState extends State<GameSearch> {
-
   @override
   Widget build(BuildContext context) {
     List<Option> searchOptions = context.watch<StateManager>().searchOptions;
@@ -26,8 +25,8 @@ class _GameSearchState extends State<GameSearch> {
 
     void doSearch(BuildContext context) {
       context.read<StateManager>().retrieveSearchResults(0);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const ResultsPage()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ResultsPage()));
     }
 
     Future<String?> showTextFieldDialog(BuildContext context) async {
@@ -36,23 +35,25 @@ class _GameSearchState extends State<GameSearch> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Enter Text'),
+            title: const Text('Name your Filter'),
             content: TextField(
               controller: _textFieldController,
-              decoration: InputDecoration(hintText: "Type something"),
+              decoration:
+                  const InputDecoration(hintText: "card games for four"),
             ),
             actions: <Widget>[
               TextButton(
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop(_textFieldController.text);
-                },
+                onPressed: _textFieldController.text.isEmpty
+                    ? null
+                    : () =>
+                        Navigator.of(context).pop(_textFieldController.text),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -64,9 +65,9 @@ class _GameSearchState extends State<GameSearch> {
     void saveFilters(BuildContext context) async {
       String? enteredText = await showTextFieldDialog(context);
       if (enteredText != null && enteredText.isNotEmpty) {
-        isar.writeTxn(() => isar.filterSets.put(toDbFilterSet(enteredText ,searchOptions)));
+        isar.writeTxn(() =>
+            isar.filterSets.put(toDbFilterSet(enteredText, searchOptions)));
       }
-
     }
 
     void loadFilters(BuildContext context) {
@@ -83,7 +84,8 @@ class _GameSearchState extends State<GameSearch> {
         builder: (context, constraints) => Column(
           children: [
             ConstrainedBox(
-              constraints: BoxConstraints.loose(Size.fromHeight(constraints.maxHeight * 0.9)),
+              constraints: BoxConstraints.loose(
+                  Size.fromHeight(constraints.maxHeight * 0.9)),
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                 child: ListView.builder(
