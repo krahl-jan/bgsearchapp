@@ -74,6 +74,9 @@ void main() {
     // add new filter (Release Year)
     await tester.tap(find.byIcon(Icons.add).first);
     await tester.pumpAndSettle();
+
+    expect(find.text('Select an Option'), findsOneWidget);
+
     await tester.tap(find.text("Release Year"));
     await tester.pumpAndSettle();
 
