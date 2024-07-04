@@ -24,7 +24,7 @@ samples, guidance on mobile development, and a full API reference.
 - [x] App Icon
 - [x] fix overflow bug
 - [ ] fix favourite bug (done?)
-- [ ] fix link bug
+- [x] fix link bug
 - [ ] Unit/Widget Tests for one screen
 - [ ] User Flow video
 - [ ] Play store submission

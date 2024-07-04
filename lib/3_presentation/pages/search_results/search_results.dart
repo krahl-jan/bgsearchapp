@@ -14,9 +14,10 @@ class ResultsPage extends StatefulWidget {
 
 class _ResultsPageState extends State<ResultsPage> {
   Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
+    Uri uri = Uri.parse(url);
+    try {
+      await launchUrl(uri);
+    } on Error {
       throw 'Could not launch $url';
     }
   }
