@@ -23,12 +23,12 @@ samples, guidance on mobile development, and a full API reference.
 - [x] Splash/Start Screen
 - [x] App Icon
 - [x] fix overflow bug
-- [] fix favourite bug (done?)
-- [] fix link bug
-- [] Unit/Widget Tests for one screen
-- [] User Flow video
-- [] Play store submission
-- [] optional: in browser webview
-- [] optional: Plays/Wins tracker
-- [] optional: Name begins with
-- [] optional: Create credits section
+- [ ] fix favourite bug (done?)
+- [ ] fix link bug
+- [ ] Unit/Widget Tests for one screen
+- [ ] User Flow video
+- [ ] Play store submission
+- [ ] optional: in browser webview
+- [ ] optional: Plays/Wins tracker
+- [ ] optional: Name begins with
+- [ ] optional: Create credits section
