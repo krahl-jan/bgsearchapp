@@ -28,8 +28,9 @@ samples, guidance on mobile development, and a full API reference.
 - [ ] Unit/Widget Tests for one screen
 - [ ] User Flow video
 - [ ] Play store submission
+- [ ] optional: Create credits section
 - [ ] optional: delete are you sure dialogue
-- [ ] optional: in browser webview
+- [ ] optional: in-browser webview for detail view
 - [ ] optional: Plays/Wins tracker
 - [ ] optional: Name begins with
-- [ ] optional: Create credits section
+- [ ] optional: Database solution, either on device or hosted
