@@ -23,10 +23,10 @@ samples, guidance on mobile development, and a full API reference.
 - [x] Splash/Start Screen
 - [x] App Icon
 - [x] fix overflow bug
-- [ ] fix favourite bug (done?)
+- [x] fix favourite bug
 - [x] fix link bug
-- [ ] Unit/Widget Tests for one screen
-- [ ] User Flow video
+- [ ] Unit/Widget Tests for one screen (in progress)
+- [x] User Flow video
 - [x] Play store submission (Internal testing on HM Account)
 - [ ] optional: Create credits section
 - [ ] optional: delete are you sure dialogue
