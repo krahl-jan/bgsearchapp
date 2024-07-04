@@ -27,7 +27,7 @@ samples, guidance on mobile development, and a full API reference.
 - [x] fix link bug
 - [ ] Unit/Widget Tests for one screen
 - [ ] User Flow video
-- [ ] Play store submission
+- [x] Play store submission (Internal testing on HM Account)
 - [ ] optional: Create credits section
 - [ ] optional: delete are you sure dialogue
 - [ ] optional: in-browser webview for detail view
