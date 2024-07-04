@@ -48,6 +48,7 @@ dependencies:
   number_paginator: ^0.4.1
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.0
+  expandable_text: ^2.3.0
 
 flutter_launcher_icons:
   android: true
@@ -64,6 +65,7 @@ flutter_native_splash:
     image: "lib/3_presentation/assets/icon.png"
     color: "#FFDAD6"
     color_dark: "#2C1511"
+
 
 dev_dependencies:
   isar_generator: ^3.1.0+1

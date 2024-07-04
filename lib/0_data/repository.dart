@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bgsearchapp/1_domain/repository_interface.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:bgsearchapp/1_domain/game_entity.dart';
 import 'package:bgsearchapp/2_application/options/library/option_fields.dart';
@@ -8,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 String baseUri = "https://bgs.nafarlee.dev/";
 
-class HttpSearchRepository {
+class HttpSearchRepository implements SearchRepository{
   int resultsPerPage = 10;
   Future<List<GameShortInfo>> getShortGameInfos(List<Option> options, int page) async {
     String query =

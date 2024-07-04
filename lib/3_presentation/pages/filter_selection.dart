@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import '../../2_application/options/library/option_fields.dart';
 import '../../2_application/state_manager.dart';
 
-class OptionSelection extends StatelessWidget {
-  const OptionSelection({super.key});
+class FilterSelection extends StatelessWidget {
+  const FilterSelection({super.key});
 
   @override
   Widget build(BuildContext context) {
