@@ -20,7 +20,7 @@ class GameSearch extends StatefulWidget {
 class _GameSearchState extends State<GameSearch> {
   @override
   Widget build(BuildContext context) {
-    List<Filter> searchOptions = context.watch<StateManager>().searchOptions;
+    List<Filter> searchOptions = context.watch<StateManager>().searchFilters;
     Isar isar = context.read<StateManager>().isar;
 
     void doSearch(BuildContext context) {

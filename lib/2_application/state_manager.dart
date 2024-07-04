@@ -15,13 +15,15 @@ class StateManager extends ChangeNotifier {
   // todo implement repository pattern with interface
   int pageIndex = 0;
 
-  List<Filter> searchOptions = [
+  List<Filter> searchFilters = [];
 
-  ];
+  List<Filter> getSearchFilters() {
+    return searchFilters;
+  }
 
-  bool isOptionSelected(FilterEnum optionField) {
-    for (var o in searchOptions) {
-      if (o.filterType.displayString == optionField.displayString) {
+  bool isFilterSelected(FilterEnum filter) {
+    for (var o in searchFilters) {
+      if (o.filterType.displayString == filter.displayString) {
         return true;
       }
     }
@@ -34,7 +36,6 @@ class StateManager extends ChangeNotifier {
   Map<int, GameDetailedInfo> searchResultsDetails= {};
 
   late Isar isar;
-  late Stream<void> searchOptionsChanged;
 
   int results_page = 0;
 
@@ -60,12 +61,12 @@ class StateManager extends ChangeNotifier {
     if (hasNewFilters) {
       hasNewFilters = false;
       searchResultPages.clear();
-      var infos = await repository.getShortGameInfos(searchOptions, page);
+      var infos = await repository.getShortGameInfos(searchFilters, page);
       searchResultPages[page] = infos;
       notifyListeners();
     } else {
       if (!searchResultPages.containsKey(page)) {
-        searchResultPages[page] = await repository.getShortGameInfos(searchOptions, page);
+        searchResultPages[page] = await repository.getShortGameInfos(searchFilters, page);
         notifyListeners();
       }
     }
@@ -99,20 +100,20 @@ class StateManager extends ChangeNotifier {
     }
   }
 
-  addSearchOption(Filter option) {
-    searchOptions.add(option);
+  addSearchFilter(Filter filter) {
+    searchFilters.add(filter);
     hasNewFilters = true;
     notifyListeners();
   }
 
-  removeSearchOption(Filter option) {
-    searchOptions.remove(option);
+  removeSearchFilter(Filter filter) {
+    searchFilters.remove(filter);
     hasNewFilters = true;
     notifyListeners();
   }
 
-  setSearchOptions(List<Filter> newSearchOptions) {
-    searchOptions = newSearchOptions;
+  setSearchFilters(List<Filter> newSearchFilters) {
+    searchFilters = newSearchFilters;
     hasNewFilters = true;
     notifyListeners();
   }
