@@ -43,4 +43,18 @@ class GameDetailedInfo {
       this.maxPlayers,
       this.weight,
       this.weightVotes);
+
+  GameDetailedInfo.fromJson(Map<String, dynamic> json)
+      : id = json['bggId'],
+        name = json['name'],
+        imageUri = json['imageUri'],
+        description = json['description'],
+        rating = json['avgRating'],
+        ratingVotes = json['numVotes'],
+        minPlaytime = json['minTime'],
+        maxPlaytime = json['maxTime'],
+        minPlayers = json['minPlayers'],
+        maxPlayers = json['maxPlayers'],
+        weight = json['complexity'],
+        weightVotes = 0; //TODO
 }
