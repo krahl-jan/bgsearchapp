@@ -1,42 +1,74 @@
 import 'dart:async';
-import 'package:bgsearch/1_domain/repository_interface.dart';
-import 'package:html_unescape/html_unescape.dart';
+import 'dart:convert';
+
 import 'package:bgsearch/1_domain/game_entity.dart';
-import 'package:bgsearch/2_application/filters/library/filter_types.dart';
+import 'package:bgsearch/1_domain/repository_interface.dart';
 import 'package:bgsearch/2_application/filters/filters.dart';
-
+import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart' as http;
+import 'package:xml/xml.dart';
 
-String baseUri = "https://bgs.nafarlee.dev/";
+String bgSearchUri = "https://bgsearch.duckdns.org";
+String shortInfoUri = "$bgSearchUri/boardgame/short";
+String bggBaseUri = 'https://boardgamegeek.com/xmlapi/boardgame';
 
-class HttpSearchRepository implements SearchRepository{
+class HttpSearchRepository implements SearchRepository {
   int resultsPerPage = 10;
-  Future<List<GameShortInfo>> getShortGameInfos(List<Filter> options, int page) async {
-    String query =
-        [for (var option in options) optionToQueryString(option)].join(" ");
-    print("query: $query");
 
-    http.Response response = await http.get(Uri.parse(
-        "${baseUri}search?query=$query&limit=$resultsPerPage&order=bayes_rating&direction=DESC&offset=${page * resultsPerPage}"));
+  Future<List<GameShortInfo>> getShortGameInfos(
+      List<Filter> options, int page) async {
+    String jsonBody = getRequestBody(options);
 
-    Iterable<RegExpMatch> matches =
-        RegExp(r'img src="/image-mirror/([^"]*).*?/games/(\d+)">([^<]*)')
-            .allMatches(response.body);
+    http.Response response = await http.post(
+        Uri.parse(
+            "$shortInfoUri?pageNumber=$page&pageSize=$resultsPerPage"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonBody);
 
-    List<GameShortInfo> result = [];
+    print(jsonBody);
+    print(response.request);
+    print(response.body);
 
-    for (final match in matches) {
-      int id = int.parse(match.group(2) ?? "-1");
-      String name = match.group(3) ?? "error";
-      String imageUri = match.group(1) ?? "";
-      result.add(GameShortInfo(id: id, name: name, imageUri: imageUri));
+    Map<String, dynamic> decoded = jsonDecode(utf8.decode(response.bodyBytes));
+    if (decoded['boardGameItems'] == null) {
+      return [];
+    }
+    List<dynamic> boardGameItems = decoded['boardGameItems'] as List<dynamic>;
+    int totalElements = decoded['totalElements'] as int;
+
+    Map<int, GameShortInfo> result = {};
+    for (var e in boardGameItems) {
+      var gameShortInfo = GameShortInfo.fromJson(e);
+      if (gameShortInfo.id != null) {
+        result[gameShortInfo.id!] = gameShortInfo;
+      }
     }
 
-    return result;
+    String ids = result.keys.map((k) => k.toString()).join(',');
+    http.Response imageUriResponse =
+        await http.get(Uri.parse("$bggBaseUri/$ids"));
+    print(imageUriResponse.request);
+    print(imageUriResponse.body);
+    XmlDocument xmlDoc = XmlDocument.parse(imageUriResponse.body);
+    Iterable<XmlElement> boardGames = xmlDoc.findAllElements('boardgame');;
+    for (XmlElement game in boardGames) {
+      // Get image element
+      XmlElement? imageElement = game.findElements('image').firstOrNull;
+      if (imageElement != null) {
+        String? id = game.getAttribute('objectid');
+        if (id != null) {
+          String? imageUri = imageElement.innerText.trim();
+          result[int.parse(id)]?.imageUri = imageUri;
+        }
+      }
+    }
+    return result.values.toList();
   }
 
   Future<GameDetailedInfo> getDetailedInfo(int id) async {
-    http.Response response = await http.get(Uri.parse("${baseUri}games/$id"));
+    http.Response response = await http.get(Uri.parse("${bgSearchUri}games/$id"));
     Iterable<RegExpMatch> matches = RegExp(
             r'<h1 class="text-center">([^<]*)</h1>[\s\S]*?src=".*?image-mirror/([^"]*)[\s\S]*?<summary>Description</summary>[\s\S]*?<p>([\s\S]*?)</p>[\s\S]*?<summary>Rating</summary>[\s\S]*?Votes: ([\s\S]*?)</li>[\s\S]*?Average: ([\s\S]*?)</li>[\s\S]*?<summary>Playtime</summary>[\s\S]*?Minimum: ([\s\S]*?)</li>[\s\S]*?Maximum: ([\s\S]*?)</li>[\s\S]*?<summary>Players</summary>[\s\S]*?Minimum: ([\s\S]*?)</li>[\s\S]*?Maximum: ([\s\S]*?)</li>[\s\S]*?<summary>Weight</summary>[\s\S]*?Votes: ([\s\S]*?)</li>[\s\S]*?Average: ([\s\S]*?)</li>')
         .allMatches(response.body);
@@ -70,28 +102,13 @@ class HttpSearchRepository implements SearchRepository{
     return result;
   }
 
-  String optionToQueryString(Filter option) {
-    if (!option.hasValue()) {
-      return "";
+  String getRequestBody(List<Filter> options) {
+    List<Map<String, dynamic>> filterConditionList = [];
+    for (var option in options) {
+      filterConditionList.addAll(option.toJson());
     }
-    return switch (option.filterType) {
-      FilterEnum.nameContains =>
-        'name:"${(option as FilterString).value.toString()}"',
-      FilterEnum.age =>
-        "age>=${(option as FilterInt).lowValue.toString()} age<=${(option).getValue2().toString()}",
-      FilterEnum.maxPlaytime =>
-        "max-playtime>=${(option as FilterInt).lowValue.toString()} max-playtime<=${(option).getValue2().toString()}",
-      FilterEnum.category =>
-        'category:"${(option as OptionDropdownList).value.getDisplayString()}"',
-      FilterEnum.bestPlayers =>
-        "best-players>=${(option as FilterInt).lowValue.toString()} best-players<=${(option).getValue2().toString()}",
-      FilterEnum.maxPlayers =>
-        "max-players>=${(option as FilterInt).lowValue.toString()} max-players<=${(option).getValue2().toString()}",
-      FilterEnum.bestOrGoodPlayerCount =>
-        "quorum-players>=${(option as FilterInt).lowValue.toString()} quorum-players<=${(option).getValue2().toString()}",
-      FilterEnum.descriptionContains =>
-        'desc:"${(option as FilterString).value.toString()}"',
-      FilterEnum.releaseYear =>  "year>=${(option as FilterInt).lowValue.toString()} year<=${(option).getValue2().toString()}",
-    };
+    return jsonEncode({
+      "filterConditions": filterConditionList
+    });
   }
 }

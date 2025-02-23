@@ -9,6 +9,11 @@ class GameShortInfo {
   String? imageUri;
 
   GameShortInfo({this.id, this.name, this.imageUri});
+
+  GameShortInfo.fromJson(Map<String, dynamic> json)
+      : id = json['bggId'],
+        name = json['name'],
+        imageUri = json['imageUri'];
 }
 
 class GameDetailedInfo {
