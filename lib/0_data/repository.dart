@@ -6,7 +6,7 @@ import 'package:bgsearch/1_domain/repository_interface.dart';
 import 'package:bgsearch/2_application/filters/filters.dart';
 import 'package:http/http.dart' as http;
 
-String bgSearchUri = "https://bgsearch.duckdns.org";
+String bgSearchUri = "https://bgsearch.toxx.dev";
 String shortInfoUri = "$bgSearchUri/boardgame/short";
 String detailedInfoUri = "$bgSearchUri/boardgame";
 String bggBaseUri = 'https://boardgamegeek.com/xmlapi/boardgame';
