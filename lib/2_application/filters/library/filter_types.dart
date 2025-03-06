@@ -3,9 +3,6 @@ import 'filter_int_ranges.dart';
 enum FilterEnum {
   nameContains(
       displayString: "Name contains", filterType: FilterType.string, searchKey: "NAME"),
-  descriptionContains(
-      displayString: "Description contains",
-      filterType: FilterType.string, searchKey: "TODO" ), //TODO: implement, for now skip
   age(displayString: "Age", filterType: FilterType.int, searchKey: "MIN_AGE"),
   maxPlaytime(
       displayString: "Max. Playtime", filterType: FilterType.int, searchKey: "MAX_TIME"),

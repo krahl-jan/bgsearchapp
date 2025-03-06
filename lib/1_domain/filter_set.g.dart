@@ -671,25 +671,23 @@ P _filterDBDeserializeProp<P>(
 
 const _FilterDBfilterEnumValueMap = {
   'nameContains': 0,
-  'descriptionContains': 1,
-  'age': 2,
-  'maxPlaytime': 3,
-  'category': 4,
-  'maxPlayers': 5,
-  'bestPlayers': 6,
-  'bestOrGoodPlayerCount': 7,
-  'releaseYear': 8,
+  'age': 1,
+  'maxPlaytime': 2,
+  'category': 3,
+  'maxPlayers': 4,
+  'bestPlayers': 5,
+  'bestOrGoodPlayerCount': 6,
+  'releaseYear': 7,
 };
 const _FilterDBfilterValueEnumMap = {
   0: FilterEnum.nameContains,
-  1: FilterEnum.descriptionContains,
-  2: FilterEnum.age,
-  3: FilterEnum.maxPlaytime,
-  4: FilterEnum.category,
-  5: FilterEnum.maxPlayers,
-  6: FilterEnum.bestPlayers,
-  7: FilterEnum.bestOrGoodPlayerCount,
-  8: FilterEnum.releaseYear,
+  1: FilterEnum.age,
+  2: FilterEnum.maxPlaytime,
+  3: FilterEnum.category,
+  4: FilterEnum.maxPlayers,
+  5: FilterEnum.bestPlayers,
+  6: FilterEnum.bestOrGoodPlayerCount,
+  7: FilterEnum.releaseYear,
 };
 
 extension FilterDBQueryFilter

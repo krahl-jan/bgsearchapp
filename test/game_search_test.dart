@@ -25,7 +25,6 @@ void main() {
     stateManager.setSearchFilters([
       FilterString(filterType:  FilterEnum.nameContains),
       FilterInt(FilterEnum.age, OptionIntRange.age, 3, 10),
-      FilterString(filterType:  FilterEnum.descriptionContains),
       FilterInt(FilterEnum.maxPlayers, OptionIntRange.maxPlayers, 2, 5),
     ]);
 
