@@ -17,6 +17,7 @@ class HttpSearchRepository implements SearchRepository {
   Future<List<GameShortInfo>> getShortGameInfos(
       List<Filter> options, int page) async {
     String jsonBody = getRequestBody(options);
+    print(jsonBody);
 
     http.Response response = await http.post(
         Uri.parse(
@@ -26,7 +27,6 @@ class HttpSearchRepository implements SearchRepository {
         },
         body: jsonBody);
 
-    print(jsonBody);
     print(response.request);
     print(response.body);
 
@@ -54,7 +54,7 @@ class HttpSearchRepository implements SearchRepository {
       ]
     });
     http.Response response = await http.post(
-        Uri.parse("$detailedInfoUri?&loadMetaDataIfMissing=true"),
+        Uri.parse("$detailedInfoUri?loadMetaDataIfMissing=true"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
