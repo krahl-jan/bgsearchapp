@@ -19,8 +19,8 @@ class GameShortInfo {
 class GameDetailedInfo {
   int id;
   String name;
-  String imageUri;
-  String description;
+  String? imageUri;
+  String? description;
   float rating;
   int ratingVotes;
   int minPlaytime;

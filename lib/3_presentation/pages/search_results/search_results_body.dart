@@ -39,7 +39,7 @@ class _ResultsPageBodyState extends State<ResultsPageBody> {
             },
             title: Row(
               children: [
-                map[page]![index].imageUri!.isNotEmpty
+                (map[page]![index].imageUri != null && map[page]![index].imageUri!.isNotEmpty)
                     ? SizedBox(
                         height: 100,
                         width: 100,
@@ -48,7 +48,11 @@ class _ResultsPageBodyState extends State<ResultsPageBody> {
                           fit: BoxFit.cover,
                           alignment: Alignment.topCenter,
                         ))
-                    : const SizedBox(),
+                    : const SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: Icon(Icons.image_not_supported, size: 50),
+                      ),
                 Expanded(child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(map[page]![index].name!),
