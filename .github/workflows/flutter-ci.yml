@@ -16,20 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Cache Dart/Flutter packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.pub-cache
-            .dart_tool
-          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-
-
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version-file: pubspec.yaml
+          channel: stable
+          cache: true
 
       - name: Setup Java (for Android builds)
         uses: actions/setup-java@v4
@@ -68,21 +60,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Cache Dart/Flutter packages and CocoaPods
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.pub-cache
-            .dart_tool
-            ios/Pods
-          key: ${{ runner.os }}-pub-pods-${{ hashFiles('**/pubspec.yaml') }}-${{ hashFiles('ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-pods-
-
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version-file: pubspec.yaml
+          channel: stable
+          cache: true
 
       - name: Install CocoaPods
         run: |
