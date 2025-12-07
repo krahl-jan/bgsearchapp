@@ -29,7 +29,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version-file: .fvmrc
+          flutter-version-file: pubspec.yaml
 
       - name: Setup Java (for Android builds)
         uses: actions/setup-java@v4
@@ -82,7 +82,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version-file: .fvmrc
+          flutter-version-file: pubspec.yaml
 
       - name: Install CocoaPods
         run: |
