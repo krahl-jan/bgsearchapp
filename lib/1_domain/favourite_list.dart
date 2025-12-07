@@ -1,5 +1,5 @@
 import 'package:bgsearch/1_domain/game_entity.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 
 part 'favourite_list.g.dart';
 

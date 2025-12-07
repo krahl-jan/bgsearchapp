@@ -1,7 +1,7 @@
 import 'package:bgsearch/1_domain/favourite_list.dart';
 import 'package:bgsearch/2_application/filters/library/filter_types.dart';
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 
 import '../0_data/repository.dart';
 import '../1_domain/game_entity.dart';

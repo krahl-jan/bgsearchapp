@@ -40,7 +40,7 @@ const FilterSetSchema = CollectionSchema(
   getId: _filterSetGetId,
   getLinks: _filterSetGetLinks,
   attach: _filterSetAttach,
-  version: '3.1.0+1',
+  version: '3.3.0',
 );
 
 int _filterSetEstimateSize(

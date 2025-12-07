@@ -3,7 +3,7 @@ import 'package:bgsearch/2_application/state_manager.dart';
 import 'package:bgsearch/3_presentation/pages/search/filter_set_selection.dart';
 import 'package:bgsearch/3_presentation/pages/search_results/search_results.dart';
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../2_application/filters/filters.dart';

@@ -5,7 +5,7 @@ import 'package:bgsearch/2_application/state_manager.dart';
 import 'package:bgsearch/3_presentation/pages/search/game_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 

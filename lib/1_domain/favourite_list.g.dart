@@ -35,7 +35,7 @@ const FavouriteListDBSchema = CollectionSchema(
   getId: _favouriteListDBGetId,
   getLinks: _favouriteListDBGetLinks,
   attach: _favouriteListDBAttach,
-  version: '3.1.0+1',
+  version: '3.3.0',
 );
 
 int _favouriteListDBEstimateSize(
