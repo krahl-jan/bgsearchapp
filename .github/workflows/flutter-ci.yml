@@ -1,0 +1,118 @@
+name: Flutter CI
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write  # Required to upload assets to releases
+
+jobs:
+  android:
+    name: Android APK (Ubuntu)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Cache Dart/Flutter packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: .fvmrc
+
+      - name: Setup Java (for Android builds)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Build APK (release)
+        run: flutter build apk --release
+
+      - name: Rename APK with version
+        run: |
+          mv build/app/outputs/flutter-apk/app-release.apk \
+             build/app/outputs/flutter-apk/bgsearch-${{ github.event.release.tag_name }}.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: android-apk
+          path: build/app/outputs/flutter-apk/*.apk
+
+      - name: Upload APK to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: build/app/outputs/flutter-apk/*.apk
+
+  ios:
+    name: iOS IPA (macOS)
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Cache Dart/Flutter packages and CocoaPods
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            ios/Pods
+          key: ${{ runner.os }}-pub-pods-${{ hashFiles('**/pubspec.yaml') }}-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-pods-
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: .fvmrc
+
+      - name: Install CocoaPods
+        run: |
+          brew install cocoapods || true
+          pod --version
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Install iOS pods
+        working-directory: ios
+        run: pod install --repo-update
+
+      - name: Build unsigned IPA (no codesign)
+        run: flutter build ipa --no-codesign --release
+
+      - name: Rename IPA with version
+        run: |
+          mv build/ios/ipa/*.ipa \
+             build/ios/ipa/bgsearch-${{ github.event.release.tag_name }}.ipa
+
+      - name: Upload iOS artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: ios-ipa
+          path: build/ios/ipa/*.ipa
+
+      - name: Upload IPA to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: build/ios/ipa/*.ipa
+
