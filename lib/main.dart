@@ -5,7 +5,7 @@ import 'package:bgsearch/3_presentation/home.dart';
 import 'package:bgsearch/3_presentation/pages/settings/settings.dart';
 import 'package:bgsearch/3_presentation/pages/settings/theme/util.dart';
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 

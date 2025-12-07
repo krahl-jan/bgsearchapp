@@ -1,4 +1,4 @@
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 
 import '../2_application/filters/library/filter_types.dart';
 import '../2_application/filters/filters.dart';
