@@ -76,7 +76,7 @@ class GameDetailsState extends State<GameDetails> {
                         }
                       },
                       collapseOnTextTap: true,
-                      info.description,
+                      info.description ?? "No description available.",
                       expandText: 'show more',
                       collapseText: 'show less',
                       maxLines: 4,

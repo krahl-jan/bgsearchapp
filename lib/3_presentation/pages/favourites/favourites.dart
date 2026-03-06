@@ -40,7 +40,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
           },
           title: Row(
             children: [
-              favourites[index].imageUri!.isNotEmpty
+              (favourites[index].imageUri != null && favourites[index].imageUri!.isNotEmpty)
                   ? SizedBox(
                   height: 100,
                   width: 100,
@@ -49,7 +49,11 @@ class _FavouritesPageState extends State<FavouritesPage> {
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                   ))
-                  : const SizedBox(),
+                  : const SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Icon(Icons.image_not_supported, size: 50),
+                    ),
               Expanded(child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(favourites[index].name!),

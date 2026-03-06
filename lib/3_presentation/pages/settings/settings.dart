@@ -3,6 +3,7 @@ import 'package:bgsearch/2_application/state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:isar_community/isar.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -12,6 +13,9 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  static const String bggLogoPath =
+      'lib/3_presentation/assets/powered-by-bgg-rgb.svg';
+
   @override
   Widget build(BuildContext context) {
     Isar isar = context.read<StateManager>().isar;
@@ -55,7 +59,8 @@ class _SettingsState extends State<Settings> {
                         .whenComplete(() => ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               behavior: SnackBarBehavior.floating,
-                              content: Center(child: Text("saved filters deleted")),
+                              content:
+                                  Center(child: Text("saved filters deleted")),
                               duration: Duration(milliseconds: 500),
                               width: 200,
                             ))),
@@ -69,19 +74,24 @@ class _SettingsState extends State<Settings> {
                         const Color.fromRGBO(143, 6, 6, 0.95),
                       ),
                     ),
-                    onPressed: () => context.read<StateManager>().clearFavourites()
+                    onPressed: () => context
+                        .read<StateManager>()
+                        .clearFavourites()
                         .whenComplete(() => ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                      content: Center(child: Text("favourites deleted")),
-                      duration: Duration(milliseconds: 500),
-                      width: 200,
-                    ))),
+                                .showSnackBar(const SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              content:
+                                  Center(child: Text("favourites deleted")),
+                              duration: Duration(milliseconds: 500),
+                              width: 200,
+                            ))),
                     child: const Text(
                       "Delete all Favourites",
                       style: TextStyle(color: Colors.white),
                     )),
-              ])
+              ]),
+              const SizedBox(height: 100),
+              SvgPicture.asset(bggLogoPath, semanticsLabel: 'Bgg Logo'),
             ],
           ),
         ),

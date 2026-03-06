@@ -1,0 +1,106 @@
+name: Flutter CI
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write  # Required to upload assets to releases
+
+jobs:
+  android:
+    name: Android APK (Ubuntu)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: pubspec.yaml
+          channel: stable
+          cache: true
+
+      - name: Setup Java (for Android builds)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Build APK (release)
+        run: flutter build apk --release
+
+      - name: Rename APK with version
+        run: |
+          mv build/app/outputs/flutter-apk/app-release.apk \
+             build/app/outputs/flutter-apk/bgsearch-${{ github.event.release.tag_name }}.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: android-apk
+          path: build/app/outputs/flutter-apk/*.apk
+
+      - name: Upload APK to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: build/app/outputs/flutter-apk/*.apk
+
+  ios:
+    name: iOS Build (macOS)
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: pubspec.yaml
+          channel: stable
+          cache: true
+
+      - name: Install CocoaPods
+        run: |
+          brew install cocoapods || true
+          pod --version
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Install iOS pods
+        working-directory: ios
+        run: pod install --repo-update
+
+      - name: Build iOS app (no codesign)
+        run: flutter build ios --no-codesign --release
+
+      # Note: A proper .ipa requires code signing with an Apple Developer account ($99/year).
+      # Without signing, we can only create a .zip of the .app bundle.
+      # This can be installed on jailbroken devices or via sideloading tools (AltStore, Sideloadly).
+      - name: Create iOS app archive
+        run: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r bgsearch-${{ github.event.release.tag_name }}-ios-unsigned.zip Payload
+          rm -rf Payload
+
+      - name: Upload iOS artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: ios-app-unsigned
+          path: bgsearch-*-ios-unsigned.zip
+
+      - name: Upload iOS archive to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: bgsearch-*-ios-unsigned.zip
+

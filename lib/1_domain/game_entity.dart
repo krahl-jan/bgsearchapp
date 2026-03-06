@@ -9,13 +9,18 @@ class GameShortInfo {
   String? imageUri;
 
   GameShortInfo({this.id, this.name, this.imageUri});
+
+  GameShortInfo.fromJson(Map<String, dynamic> json)
+      : id = json['bggId'],
+        name = json['name'],
+        imageUri = json['imageUri'];
 }
 
 class GameDetailedInfo {
   int id;
   String name;
-  String imageUri;
-  String description;
+  String? imageUri;
+  String? description;
   float rating;
   int ratingVotes;
   int minPlaytime;
@@ -38,4 +43,18 @@ class GameDetailedInfo {
       this.maxPlayers,
       this.weight,
       this.weightVotes);
+
+  GameDetailedInfo.fromJson(Map<String, dynamic> json)
+      : id = json['bggId'],
+        name = json['name'],
+        imageUri = json['imageUri'],
+        description = json['description'],
+        rating = json['avgRating'],
+        ratingVotes = json['numVotes'],
+        minPlaytime = json['minTime'],
+        maxPlaytime = json['maxTime'],
+        minPlayers = json['minPlayers'],
+        maxPlayers = json['maxPlayers'],
+        weight = json['complexity'],
+        weightVotes = 0; //TODO
 }

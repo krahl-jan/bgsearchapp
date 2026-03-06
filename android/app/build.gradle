@@ -32,27 +32,31 @@ if (flutterVersionName == null) {
 android {
     namespace = "edu.hm.bgsearch"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-    signingConfigs {
-        debug {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
+    kotlinOptions {
+        jvmTarget = '17'
     }
+
+//    signingConfigs {
+//        debug {
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
+//        }
+//        release {
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
+//        }
+//    }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
@@ -67,16 +71,27 @@ android {
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
+//            signingConfig signingConfigs.debug
         }
         release {
             minifyEnabled true
             shrinkResources true
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
 }
 
 flutter {
     source = "../.."
+}
+dependencies {
+    // Kotlin standard library
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.1.10"
+
+    // Core AndroidX libraries for modern Android development
+    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+
+    // Material design components from Google
+    implementation 'com.google.android.material:material:1.12.0'
 }

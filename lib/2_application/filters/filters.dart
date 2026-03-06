@@ -6,9 +6,10 @@
 // select string(s) from choice
 
 import 'package:bgsearch/2_application/filters/library/categories.dart';
+
 import 'library/dropdown_element.dart';
-import 'library/filter_types.dart';
 import 'library/filter_int_ranges.dart';
+import 'library/filter_types.dart';
 
 abstract class Filter {
   final FilterEnum filterType;
@@ -16,10 +17,12 @@ abstract class Filter {
   bool hasValue();
 
   getValue();
+
   getValue2();
 
-  Filter(
-      {required this.filterType, required FilterType optionFieldType}) {
+  List<Map<String, dynamic>> toJson();
+
+  Filter({required this.filterType, required FilterType optionFieldType}) {
     if (filterType.filterType != optionFieldType) {
       throw const FormatException("option field types dont match");
     }
@@ -29,8 +32,7 @@ abstract class Filter {
 Filter optionFactory(
     {required FilterEnum filterEnum, String? value, String? value2}) {
   return switch (filterEnum.filterType) {
-    FilterType.string =>
-      FilterString(filterType: filterEnum, value: value),
+    FilterType.string => FilterString(filterType: filterEnum, value: value),
     FilterType.int => FilterInt(
         filterEnum,
         intRangeMap[filterEnum] ?? OptionIntRange.fallback,
@@ -42,7 +44,6 @@ Filter optionFactory(
             ? CategoriesList.values.byName(value)
             : CategoriesList.values.first),
     FilterType.boolean => throw UnimplementedError(),
-
   };
 }
 
@@ -71,6 +72,16 @@ class FilterString extends Filter {
     return "";
   }
 
+  @override
+  List<Map<String, dynamic>> toJson() {
+    return [
+      {
+        'field': filterType.searchKey,
+        'operator': 'LIKE',
+        'filterValue': value,
+      }
+    ];
+  }
 }
 
 class FilterInt extends Filter {
@@ -78,7 +89,8 @@ class FilterInt extends Filter {
   int lowValue;
   int highValue;
 
-  factory FilterInt(FilterEnum optionField, OptionIntRange optionIntRange, int? low, int? high) {
+  factory FilterInt(FilterEnum optionField, OptionIntRange optionIntRange,
+      int? low, int? high) {
     int lowValue = low ?? optionIntRange.low.round();
     int highValue = high ?? optionIntRange.high.round();
     if (lowValue < optionIntRange.low.round()) {
@@ -88,9 +100,12 @@ class FilterInt extends Filter {
       highValue = optionIntRange.high.round();
     }
 
-    return  FilterInt._(filterType: optionField, range: optionIntRange, lowValue:  lowValue, highValue:  highValue);
+    return FilterInt._(
+        filterType: optionField,
+        range: optionIntRange,
+        lowValue: lowValue,
+        highValue: highValue);
   }
-
 
   FilterInt._(
       {required super.filterType,
@@ -104,7 +119,6 @@ class FilterInt extends Filter {
     return true;
   }
 
-
   @override
   getValue() {
     return lowValue;
@@ -117,6 +131,22 @@ class FilterInt extends Filter {
       return 10000;
     }
     return highValue;
+  }
+
+  @override
+  List<Map<String, dynamic>> toJson() {
+    return [
+      {
+        'field': filterType.searchKey,
+        'operator': 'GREATER_THAN_OR_EQUALS',
+        'filterValue': lowValue,
+      },
+      {
+        'field': filterType.searchKey,
+        'operator': 'LESS_THAN_OR_EQUALS',
+        'filterValue': highValue,
+      }
+    ];
   }
 }
 
@@ -134,7 +164,6 @@ class OptionDropdownList<T extends Enum> extends Filter {
     return true;
   }
 
-
   @override
   getValue() {
     return value.getName();
@@ -143,5 +172,16 @@ class OptionDropdownList<T extends Enum> extends Filter {
   @override
   getValue2() {
     return "";
+  }
+
+  @override
+  List<Map<String, dynamic>> toJson() {
+    return [
+      {
+        'field': filterType.searchKey,
+        'operator': 'EQUALS',
+        'filterValue': value.getLinkString(),
+      }
+    ];
   }
 }

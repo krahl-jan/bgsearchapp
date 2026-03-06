@@ -13,6 +13,18 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.force 'androidx.core:core-ktx:1.15.0'
+    }
+    if (project.name == 'isar_flutter_libs') {
+        project.plugins.apply('com.android.library')
+        android {
+            namespace "dev.isar.isar_flutter_libs"
+        }
+    }
+}
+
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
